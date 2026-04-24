@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ishan Suthar — Clinical Epidemiologist & RWE Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f1923;
+      --paper: #f5f0e8;
+      --paper-2: #ede7d9;
+      --amber: #c8892a;
+      --amber-light: #e8a93a;
+      --teal: #2a7a7c;
+      --teal-light: #3a9a9c;
+      --muted: #6b7280;
+      --border: rgba(15,25,35,0.12);
+      --shadow: 0 4px 32px rgba(15,25,35,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(245, 240, 232, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--amber); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+
+    .hero-text { position: relative; }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block; width: 32px; height: 1px;
+      background: var(--teal);
+    }
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--amber);
+    }
+    .hero-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin: 1rem 0 1.8rem;
+    }
+    .hero-summary {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #374151;
+      max-width: 500px;
+      font-weight: 300;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 2px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--ink); color: var(--paper);
+    }
+    .btn-primary:hover { background: var(--amber); color: var(--ink); }
+    .btn-outline {
+      background: transparent; color: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+    .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* Hero right: stats panel */
+    .hero-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .stat-card {
+      background: var(--paper-2);
+      padding: 2rem 1.75rem;
+      transition: background 0.2s;
+    }
+    .stat-card:hover { background: #e5dece; }
+    .stat-value {
+      font-family: 'Fraunces', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-value span { color: var(--amber); font-size: 1.8rem; }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .stat-card.wide { grid-column: 1 / -1; background: var(--ink); }
+    .stat-card.wide .stat-value { color: var(--paper); }
+    .stat-card.wide .stat-label { color: rgba(245,240,232,0.5); }
+    .stat-card.wide .stat-value span { color: var(--amber-light); }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.6rem;
+    }
+    h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 3rem;
+    }
+    h2 em { font-style: italic; font-weight: 300; color: var(--amber); }
+
+    /* ─── SKILLS ─── */
+    #skills { background: var(--ink); color: var(--paper); }
+    #skills h2 { color: var(--paper); }
+    #skills h2 em { color: var(--amber-light); }
+    #skills .section-label { color: var(--amber-light); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: rgba(245,240,232,0.08);
+      border: 1px solid rgba(245,240,232,0.08);
+    }
+    .skill-group {
+      padding: 2rem;
+      background: var(--ink);
+      transition: background 0.2s;
+    }
+    .skill-group:hover { background: #1a2535; }
+    .skill-group-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .skill-group-title::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(200,137,42,0.3);
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-tag {
+      padding: 0.35rem 0.8rem;
+      border: 1px solid rgba(245,240,232,0.15);
+      border-radius: 1px;
+      font-size: 0.78rem;
+      color: rgba(245,240,232,0.75);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      transition: all 0.2s;
+    }
+    .skill-tag:hover {
+      border-color: var(--amber);
+      color: var(--amber-light);
+    }
+    .skill-tag.highlight {
+      border-color: var(--amber);
+      color: var(--amber-light);
+      background: rgba(200,137,42,0.1);
+    }
+
+    /* ─── EXPERIENCE ─── */
+    #experience { background: var(--paper); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0.5rem; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .job {
+      position: relative;
+      padding: 0 0 3.5rem 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    .job.visible { opacity: 1; transform: none; }
+    .job::before {
+      content: '';
+      position: absolute; left: -4.5px; top: 0.45rem;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--paper); border: 2px solid var(--amber);
+    }
+    .job-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+    .job-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .job-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .job-org {
+      font-size: 0.85rem;
+      color: var(--teal);
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+    }
+    .job-desc {
+      font-size: 0.88rem;
+      color: #374151;
+      line-height: 1.65;
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+    .job-bullets { list-style: none; }
+    .job-bullets li {
+      font-size: 0.86rem;
+      color: #374151;
+      line-height: 1.65;
+      padding: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+      font-weight: 300;
+    }
+    .job-bullets li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--amber); font-size: 0.8rem;
+    }
+    .impact-badge {
+      display: inline-block;
+      background: rgba(200,137,42,0.12);
+      color: var(--amber);
+      border: 1px solid rgba(200,137,42,0.3);
+      border-radius: 1px;
+      padding: 0.1rem 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+
+    /* ─── RESEARCH ─── */
+    #research { background: var(--paper-2); }
+    .pubs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .pub-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 1.75rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .pub-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--border);
+      transition: background 0.2s;
+    }
+    .pub-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .pub-card:hover::before { background: var(--amber); }
+    .pub-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .pub-title {
+      font-family: 'Fraunces', serif;
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+    .pub-venue {
+      font-size: 0.78rem;
+      color: var(--teal);
+      font-weight: 500;
+    }
+    .pub-authors {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      font-weight: 300;
+    }
+
+    /* ─── EDUCATION ─── */
+    #education { background: var(--paper); }
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .edu-card {
+      background: var(--paper);
+      padding: 2.5rem 2rem;
+      transition: background 0.2s;
+    }
+    .edu-card:hover { background: var(--paper-2); }
+    .edu-degree {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .edu-field {
+      font-size: 0.85rem; color: var(--teal); font-weight: 500; margin-bottom: 0.3rem;
+    }
+    .edu-school { font-size: 0.82rem; color: var(--muted); }
+    .edu-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      color: var(--amber); margin-top: 1rem;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--ink); color: var(--paper);
+      text-align: center;
+    }
+    #contact h2 { color: var(--paper); margin-bottom: 1rem; }
+    #contact h2 em { color: var(--amber-light); }
+    #contact .section-label { color: var(--amber-light); }
+    .contact-sub {
+      font-size: 1rem; color: rgba(245,240,232,0.6);
+      font-weight: 300; margin-bottom: 3rem; max-width: 480px; margin-left: auto; margin-right: auto;
+    }
+    .contact-links {
+      display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+    }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      border: 1px solid rgba(245,240,232,0.15);
+      border-radius: 2px;
+      color: var(--paper);
+      text-decoration: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+    }
+    .contact-link:hover {
+      background: var(--amber); color: var(--ink);
+      border-color: var(--amber);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #080f17;
+      padding: 2rem 4rem;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: rgba(245,240,232,0.3);
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+      section { padding: 4rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Ishan <span>Suthar</span></a>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-text">
+      <div class="hero-eyebrow">Clinical Epidemiologist</div>
+      <h1>Ishan<br><em>Suthar</em></h1>
+      <p class="hero-title">MBBS · MPH · PhD Candidate (Epidemiology)</p>
+      <p class="hero-summary">
+        Turning large-scale real-world data into evidence that drives clinical, payer, and policy decisions.
+        Specialist in RWE, HEOR, and causal inference — with 7+ years bridging medicine and data science.
+      </p>
+      <div class="hero-cta">
+        <a href="mailto:i.ishan.2812@gmail.com" class="btn btn-primary">Get in Touch</a>
+        <a href="https://www.linkedin.com/in/isuthar/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="hero-stats fade-in">
+      <div class="stat-card">
+        <div class="stat-value">7<span>+</span></div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">12<span>k+</span></div>
+        <div class="stat-label">Program Participants</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">4</div>
+        <div class="stat-label">Conference Presentations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Peer-Reviewed Publications</div>
+      </div>
+      <div class="stat-card wide">
+        <div class="stat-value">$6<span>k</span> per capita projected savings</div>
+        <div class="stat-label">NIH-funded periodontal RWE study · Medicaid dataset</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">Expertise</p>
+    <h2>Core <em>Capabilities</em></h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Domains</div>
+        <div class="skill-tags">
+          <span class="skill-tag highlight">Real-World Evidence</span>
+          <span class="skill-tag highlight">HEOR</span>
+          <span class="skill-tag">Comparative Effectiveness</span>
+          <span class="skill-tag">Clinical Epidemiology</span>
+          <span class="skill-tag">Drug Safety</span>
+          <span class="skill-tag">HTA</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Methods</div>
+        <div class="skill-tags">
+          <span class="skill-tag highlight">Causal Inference</span>
+          <span class="skill-tag highlight">Survival Analysis</span>
+          <span class="skill-tag">G-Estimation</span>
+          <span class="skill-tag">GLMs</span>
+          <span class="skill-tag">Longitudinal Data</span>
+          <span class="skill-tag">Cost-Effectiveness Analysis</span>
+          <span class="skill-tag">Economic Modeling</span>
+          <span class="skill-tag">Target Trial Emulation</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Technical Stack</div>
+        <div class="skill-tags">
+          <span class="skill-tag highlight">SAS</span>
+          <span class="skill-tag highlight">R</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">REDCap</span>
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Git</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Data Types</div>
+        <div class="skill-tags">
+          <span class="skill-tag highlight">EHR Data</span>
+          <span class="skill-tag highlight">Claims (Medicaid)</span>
+          <span class="skill-tag">RCT Data</span>
+          <span class="skill-tag">Observational Studies</span>
+          <span class="skill-tag">Longitudinal Cohorts</span>
+          <span class="skill-tag">Nationwide RWD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">Career</p>
+    <h2>Professional <em>Experience</em></h2>
+    <div class="timeline">
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Research Assistant</div>
+          <div class="job-meta">Aug 2023 – Present</div>
+        </div>
+        <div class="job-org">University of South Carolina · Columbia, SC</div>
+        <p class="job-desc">Supported an NIH-funded ($1.5M) study generating real-world evidence on the cost-effectiveness of periodontal treatment in pregnant women, collaborating across three institutions.</p>
+        <ul class="job-bullets">
+          <li>Developed weighted cost models using nationwide Medicaid fee schedule data, projecting <span class="impact-badge">$6k savings/capita/yr</span></li>
+          <li>Applied G-estimation causal inference — demonstrated a <span class="impact-badge">24% risk reduction</span> in periodontitis during pregnancy</li>
+          <li>Defined the clinical responder endpoint for periodontitis treatment, establishing an industry-relevant benchmark</li>
+          <li>Currently building a long-term tooth-loss risk prediction model</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Program Evaluator</div>
+          <div class="job-meta">Jan 2024 – Present</div>
+        </div>
+        <div class="job-org">PRISMA Health (HRSA Healthy Start, $5M) · Columbia, SC</div>
+        <p class="job-desc">Evaluating a federally funded maternal and child health program leveraging real-world longitudinal data across 12,000+ participants.</p>
+        <ul class="job-bullets">
+          <li>Designed and managed REDCap longitudinal systems for 5,000+ participants; improved data accuracy to <span class="impact-badge">95%</span>, cut errors by <span class="impact-badge">30%+</span></li>
+          <li>Conducted statistical analyses in R/SAS to evaluate maternal health outcomes; presented at APHA and HRSA national conferences</li>
+          <li>Ensured 100% on-time federal performance report submissions; led full digital migration saving 2 hrs/day per staff</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Consulting Practicum</div>
+          <div class="job-meta">Jan 2025 – May 2025</div>
+        </div>
+        <div class="job-org">Lexington Medical Center · Columbia, SC</div>
+        <p class="job-desc">Led a data-driven consulting engagement using EHR data from 250,000+ patient records to identify drivers of hospital-acquired infections (HAIs) and length of stay.</p>
+        <ul class="job-bullets">
+          <li>Built survival and segmented logistic regression models (R/SAS) to identify high-risk patient clusters and care pathway inefficiencies</li>
+          <li>Delivered a strategic plan projecting a <span class="impact-badge">15% reduction in HAIs</span> via workflow redesign and automated alerts</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Physician</div>
+          <div class="job-meta">Sep 2019 – Jul 2021</div>
+        </div>
+        <div class="job-org">Sunshine Global Hospital & Manjalpur Private Clinic · Vadodara, India</div>
+        <p class="job-desc">Delivered inpatient and outpatient care across hospital and primary care settings.</p>
+        <ul class="job-bullets">
+          <li>Managed 600+ COVID-19 patients, including ICU cases requiring ventilation and advanced life support</li>
+          <li>Applied clinical and diagnostic data for treatment decisions across oncology, orthopedic, and multisystem conditions</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <p class="section-label">Scholarship</p>
+    <h2>Publications & <em>Presentations</em></h2>
+    <div class="pubs-grid">
+
+      <div class="pub-card fade-in">
+        <div class="pub-type">Journal Article · 2023</div>
+        <div class="pub-title">The Inner Circle: A Community of Practice for National Diabetes Prevention Program Lifestyle Coaches</div>
+        <div class="pub-venue">ADCES in Practice</div>
+        <div class="pub-authors">Ankrom B, Curry K, Mandelbaum J, <strong>Suthar I</strong>, Myers K · DOI: 10.1177/2633559X221150807</div>
+      </div>
+
+      <div class="pub-card fade-in">
+        <div class="pub-type">Journal Article · 2023</div>
+        <div class="pub-title">Virtual Expansion of the Y-USA Blood Pressure Self-Monitoring Program Using Telehealth</div>
+        <div class="pub-venue">Journal of Public Health Management and Practice</div>
+        <div class="pub-authors">Grant B, Myers K, <strong>Suthar I</strong>, et al. · DOI: 10.1097/PHH.0000000000001898</div>
+      </div>
+
+      <div class="pub-card fade-in">
+        <div class="pub-type">Manuscript in Preparation</div>
+        <div class="pub-title">Quantifying the Benefits of Preventive Periodontal Care in Pregnancy Using Advanced Causal Inference Methods</div>
+        <div class="pub-venue">Target: High-impact epidemiology journal</div>
+        <div class="pub-authors"><strong>Suthar I</strong>, Merchant A, Rokonuzzaman SM</div>
+      </div>
+
+      <div class="pub-card fade-in">
+        <div class="pub-type">Conference · SER 2026 (Accepted)</div>
+        <div class="pub-title">Causal Decision Modules in the EHR: Sequential Target Trials for Care in Acute Decompensated Heart Failure</div>
+        <div class="pub-venue">Society for Epidemiologic Research Annual Meeting</div>
+        <div class="pub-authors"><strong>Ishan Suthar</strong></div>
+      </div>
+
+      <div class="pub-card fade-in">
+        <div class="pub-type">Conference · APHA 2025</div>
+        <div class="pub-title">Dental Care Utilization in Childbearing Aged Women with Patient-Reported Systemic Conditions: A National Cross-Sectional Study</div>
+        <div class="pub-venue">American Public Health Association Annual Meeting</div>
+        <div class="pub-authors"><strong>Ishan Suthar</strong></div>
+      </div>
+
+      <div class="pub-card fade-in">
+        <div class="pub-type">Conference · SPER 2025</div>
+        <div class="pub-title">Relapse and Mortality in Children Undergoing Allogeneic Transplantation for Severe Aplastic Anemia</div>
+        <div class="pub-venue">Society for Pediatric and Perinatal Epidemiologic Research</div>
+        <div class="pub-authors"><strong>Ishan Suthar</strong></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">Background</p>
+    <h2>Education & <em>Training</em></h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-degree">PhD Candidate</div>
+        <div class="edu-field">Epidemiology (Final Year)</div>
+        <div class="edu-school">University of South Carolina · Columbia, SC</div>
+        <div class="edu-year">AUG 2023 — EXP. MAY 2027</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">MPH</div>
+        <div class="edu-field">Epidemiology</div>
+        <div class="edu-school">University of South Carolina · Columbia, SC</div>
+        <div class="edu-year">AUG 2021 — MAY 2023</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">MBBS</div>
+        <div class="edu-field">Medicine</div>
+        <div class="edu-school">Gujarat University · Ahmedabad, India</div>
+        <div class="edu-year">AUG 2013 — MAY 2019</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">Graduate Biostatistics Certificate</div>
+        <div class="edu-field">Biostatistics</div>
+        <div class="edu-school">University of South Carolina</div>
+        <div class="edu-year">EXP. MAY 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Let's Connect</p>
+    <h2>Open to <em>Opportunities</em></h2>
+    <p class="contact-sub">
+      Actively seeking roles in RWE, HEOR, and clinical epidemiology within pharma, biotech, and health consulting.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:i.ishan.2812@gmail.com" class="contact-link">
+        ✉ i.ishan.2812@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/isuthar/" target="_blank" class="contact-link">
+        ↗ LinkedIn
+      </a>
+      <a href="tel:+18037355932" class="contact-link">
+        ✆ 803-735-5932
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Ishan Suthar · Clinical Epidemiologist · RWE & HEOR</p>
+    <p>Charlotte, NC · Built with GitHub Pages</p>
+  </footer>
+
+  <!-- JS: SCROLL ANIMATIONS -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in, .job').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
