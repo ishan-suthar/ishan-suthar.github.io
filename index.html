@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ishan Suthar — Clinical Epidemiologist | RWE & HEOR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #0d1b2a;
+      --navy-2: #132035;
+      --navy-3: #1a2d45;
+      --teal:   #0891b2;
+      --teal-bright: #22d3ee;
+      --teal-dim: #164e63;
+      --gold:   #d97706;
+      --gold-bright: #fbbf24;
+      --gold-pale: #fef3c7;
+      --paper:  #ffffff;
+      --paper-2:#f0f6fa;
+      --paper-3:#e2edf5;
+      --ink:    #0d1b2a;
+      --muted:  #64748b;
+      --muted-2:#94a3b8;
+      --border: rgba(13,27,42,0.1);
+      --border-bright: rgba(13,27,42,0.18);
+      --shadow-sm: 0 1px 8px rgba(13,27,42,0.07);
+      --shadow:    0 4px 24px rgba(13,27,42,0.1);
+      --shadow-lg: 0 12px 48px rgba(13,27,42,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:200;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 1rem 4rem;
+      background: rgba(13,27,42,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem;
+      color:#fff; text-decoration:none; letter-spacing:-0.01em;
+    }
+    .nav-logo span { color: var(--teal-bright); }
+    .nav-links { display:flex; gap:2rem; list-style:none; align-items:center; }
+    .nav-links a {
+      font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.1em;
+      text-transform:uppercase; color:rgba(255,255,255,0.55); text-decoration:none; transition:color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--teal-bright); }
+    .nav-cta {
+      padding:0.5rem 1.25rem; background: var(--teal); color:#fff; border-radius:3px;
+      font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.08em;
+      text-transform:uppercase; text-decoration:none; transition:background .2s;
+    }
+    .nav-cta:hover { background: var(--teal-bright); color: var(--navy); }
+
+    /* ═══ HERO ═══ */
+    #hero {
+      min-height:100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 50%, #0f2a3d 100%);
+      display:grid; grid-template-columns:1fr 1fr;
+      align-items:center; padding:9rem 4rem 5rem;
+      gap:4rem; position:relative; overflow:hidden;
+    }
+    /* animated grid */
+    #hero::before {
+      content:'';
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(rgba(8,145,178,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8,145,178,0.08) 1px, transparent 1px);
+      background-size:64px 64px;
+      animation: gridFloat 20s linear infinite;
+    }
+    @keyframes gridFloat { 0%{background-position:0 0} 100%{background-position:64px 64px} }
+    /* glow blob */
+    #hero::after {
+      content:''; position:absolute;
+      width:600px; height:600px;
+      background: radial-gradient(circle, rgba(8,145,178,0.15) 0%, transparent 70%);
+      right:-100px; top:50%; transform:translateY(-50%);
+      pointer-events:none;
+    }
+
+    .hero-text { position:relative; z-index:1; }
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:0.6rem;
+      font-family:'JetBrains Mono',monospace; font-size:0.7rem;
+      letter-spacing:0.2em; text-transform:uppercase; color: var(--teal-bright);
+      margin-bottom:1.4rem;
+    }
+    .hero-eyebrow::before { content:''; width:28px; height:1px; background:var(--teal-bright); }
+    h1 {
+      font-family:'Playfair Display',serif;
+      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+      font-weight:900; line-height:0.95; letter-spacing:-0.03em;
+      color:#fff; margin-bottom:0.5rem;
+    }
+    h1 em { display:block; font-style:italic; font-weight:400; color:var(--teal-bright); }
+    .hero-titles {
+      display:flex; flex-wrap:wrap; gap:0.5rem; margin:1.4rem 0;
+    }
+    .hero-badge {
+      font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.06em;
+      padding:0.3rem 0.75rem; border:1px solid rgba(8,145,178,0.4);
+      border-radius:2px; color:rgba(255,255,255,0.65);
+    }
+    .hero-summary {
+      font-size:1.05rem; line-height:1.8; color:rgba(255,255,255,0.65);
+      font-weight:300; max-width:480px; margin-bottom:2.5rem;
+    }
+    .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; }
+    .btn {
+      display:inline-flex; align-items:center; gap:0.5rem;
+      padding:0.85rem 2rem; border-radius:3px;
+      font-family:'JetBrains Mono',monospace; font-size:0.72rem;
+      letter-spacing:0.08em; text-transform:uppercase;
+      text-decoration:none; border:none; cursor:pointer; transition:all .2s;
+    }
+    .btn-primary { background:var(--teal); color:#fff; }
+    .btn-primary:hover { background:var(--teal-bright); color:var(--navy); }
+    .btn-outline { background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,0.3); }
+    .btn-outline:hover { border-color:var(--teal-bright); color:var(--teal-bright); }
+    .btn-gold { background:var(--gold); color:#fff; }
+    .btn-gold:hover { background:var(--gold-bright); color:var(--navy); }
+
+    /* Hero right: animated stats */
+    .hero-stats { position:relative; z-index:1; }
+    .stats-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:2px;
+      background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+      border-radius:4px; overflow:hidden;
+    }
+    .stat {
+      background:rgba(13,27,42,0.7); backdrop-filter:blur(8px);
+      padding:2rem 1.75rem; transition:background .2s;
+    }
+    .stat:hover { background:rgba(8,145,178,0.15); }
+    .stat-num {
+      font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900;
+      color:#fff; line-height:1;
+    }
+    .stat-num sup { font-size:1.4rem; color:var(--teal-bright); }
+    .stat-label {
+      font-family:'JetBrains Mono',monospace; font-size:0.65rem;
+      letter-spacing:0.1em; text-transform:uppercase;
+      color:rgba(255,255,255,0.4); margin-top:0.4rem;
+    }
+    .stat.wide { grid-column:1/-1; background:rgba(8,145,178,0.12); }
+    .stat.wide .stat-num { font-size:2.2rem; }
+
+    /* ═══ SHARED SECTION ═══ */
+    section { padding:6rem 4rem; }
+    .section-tag {
+      font-family:'JetBrains Mono',monospace; font-size:0.65rem;
+      letter-spacing:0.2em; text-transform:uppercase; color:var(--teal);
+      margin-bottom:0.5rem;
+    }
+    h2 {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,3.5vw,3rem); font-weight:700;
+      letter-spacing:-0.02em; color:var(--ink); margin-bottom:3rem; line-height:1.1;
+    }
+    h2 em { font-style:italic; font-weight:400; color:var(--teal); }
+    h2 .gold { color:var(--gold); font-style:italic; font-weight:400; }
+
+    /* ═══ ABOUT / SNAPSHOT ═══ */
+    #about { background:var(--paper-2); }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
+    .about-text p {
+      font-size:1rem; line-height:1.85; color:#374151; font-weight:300; margin-bottom:1.2rem;
+    }
+    .about-text strong { color:var(--ink); font-weight:600; }
+    .credential-row { display:flex; flex-direction:column; gap:0.75rem; margin-top:1rem; }
+    .credential {
+      display:flex; align-items:center; gap:1rem;
+      padding:1rem 1.25rem; background:var(--paper);
+      border:1px solid var(--border); border-left:3px solid var(--teal);
+      border-radius:2px; transition:box-shadow .2s;
+    }
+    .credential:hover { box-shadow:var(--shadow); }
+    .cred-title { font-weight:600; font-size:0.9rem; color:var(--ink); }
+    .cred-sub { font-size:0.78rem; color:var(--muted); }
+    .cred-icon { font-size:1.3rem; flex-shrink:0; }
+
+    /* ═══ SKILLS — interactive filter ═══ */
+    #skills { background:var(--navy); }
+    #skills h2 { color:#fff; }
+    #skills h2 em { color:var(--teal-bright); }
+    #skills .section-tag { color:var(--teal-bright); }
+
+    .skill-filter { display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:2.5rem; }
+    .filter-btn {
+      padding:0.45rem 1rem; border-radius:2px;
+      font-family:'JetBrains Mono',monospace; font-size:0.68rem;
+      letter-spacing:0.08em; text-transform:uppercase; border:none; cursor:pointer;
+      background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.5); transition:all .2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background:var(--teal); color:#fff;
+    }
+
+    .skills-wrap { display:flex; flex-wrap:wrap; gap:0.6rem; }
+    .stag {
+      padding:0.45rem 1rem; border:1px solid rgba(255,255,255,0.12); border-radius:2px;
+      font-size:0.82rem; color:rgba(255,255,255,0.65); cursor:default;
+      transition:all .25s; position:relative;
+    }
+    .stag[data-cat="methods"] { border-color:rgba(8,145,178,0.35); }
+    .stag[data-cat="technical"] { border-color:rgba(217,119,6,0.35); }
+    .stag[data-cat="domains"] { border-color:rgba(124,58,237,0.35); }
+    .stag[data-cat="data"] { border-color:rgba(16,185,129,0.35); }
+    .stag.hidden { opacity:0; pointer-events:none; transform:scale(0.9); }
+    .stag:hover, .stag.highlight {
+      background:rgba(8,145,178,0.2); border-color:var(--teal-bright); color:#fff;
+    }
+    .stag[data-cat="technical"]:hover { background:rgba(217,119,6,0.2); border-color:var(--gold-bright); }
+
+    /* Proficiency bars */
+    .proficiency-row { margin-top:3rem; }
+    .prof-label {
+      font-family:'JetBrains Mono',monospace; font-size:0.65rem;
+      letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.4);
+      margin-bottom:1.2rem;
+    }
+    .prof-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
+    .prof-item { }
+    .prof-name {
+      display:flex; justify-content:space-between; align-items:center;
+      font-size:0.82rem; color:rgba(255,255,255,0.7); margin-bottom:0.4rem;
+    }
+    .prof-pct { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--teal-bright); }
+    .prof-bar { height:3px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; }
+    .prof-fill { height:100%; background:linear-gradient(90deg,var(--teal),var(--teal-bright)); border-radius:2px; width:0; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
+
+    /* ═══ EXPERIENCE ═══ */
+    #experience { background:var(--paper); }
+    .timeline { position:relative; padding-left:1.5rem; }
+    .timeline::before { content:''; position:absolute; left:0; top:0.5rem; bottom:0; width:1px; background:var(--border-bright); }
+    .job {
+      position:relative; padding:0 0 3.5rem 2.5rem;
+      opacity:0; transform:translateX(-16px); transition:all .55s ease;
+    }
+    .job.visible { opacity:1; transform:none; }
+    .job::before {
+      content:''; position:absolute; left:-5px; top:0.5rem;
+      width:10px; height:10px; border-radius:50%;
+      background:var(--paper); border:2px solid var(--teal);
+    }
+    .job-meta-row { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .job-title { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; color:var(--ink); }
+    .job-date {
+      font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.08em;
+      color:var(--muted); white-space:nowrap;
+    }
+    .job-org { font-size:0.88rem; color:var(--teal); font-weight:600; margin-bottom:0.75rem; }
+    .job-tags { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.9rem; }
+    .job-tag {
+      font-family:'JetBrains Mono',monospace; font-size:0.63rem; letter-spacing:0.06em;
+      padding:0.2rem 0.6rem; background:var(--paper-2); border:1px solid var(--border);
+      border-radius:2px; color:var(--muted);
+    }
+    .job-desc { font-size:0.88rem; color:#374151; line-height:1.7; font-weight:300; margin-bottom:0.8rem; }
+    .job-bullets { list-style:none; }
+    .job-bullets li {
+      font-size:0.85rem; color:#374151; line-height:1.7; padding:0.28rem 0 0.28rem 1.3rem;
+      position:relative; font-weight:300;
+    }
+    .job-bullets li::before { content:'→'; position:absolute; left:0; color:var(--teal); font-size:0.8rem; }
+    .impact { display:inline-block; background:var(--gold-pale); color:var(--gold);
+      border:1px solid rgba(217,119,6,0.2); border-radius:2px; padding:0.1rem 0.45rem;
+      font-family:'JetBrains Mono',monospace; font-size:0.65rem; margin-left:0.3rem; vertical-align:middle; }
+
+    /* ═══ RESEARCH PREVIEW ═══ */
+    #research-preview { background:var(--paper-2); }
+    .research-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
+    .rcard {
+      background:var(--paper); border:1px solid var(--border);
+      border-radius:4px; padding:1.75rem; position:relative;
+      transition:all .25s; overflow:hidden; cursor:pointer;
+    }
+    .rcard::before {
+      content:''; position:absolute; top:0; left:0;
+      width:100%; height:3px;
+      background:linear-gradient(90deg, var(--teal), var(--teal-bright));
+      transform:scaleX(0); transform-origin:left; transition:transform .3s;
+    }
+    .rcard:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+    .rcard:hover::before { transform:scaleX(1); }
+    .rcard-num {
+      font-family:'Playfair Display',serif; font-size:3rem; font-weight:900;
+      color:var(--paper-3); line-height:1; position:absolute; top:1.25rem; right:1.5rem;
+    }
+    .rcard-type { font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--teal); margin-bottom:0.6rem; }
+    .rcard-title { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--ink); line-height:1.35; margin-bottom:0.6rem; }
+    .rcard-desc { font-size:0.83rem; color:var(--muted); line-height:1.65; font-weight:300; }
+    .rcard-impact { display:inline-block; margin-top:1rem; padding:0.25rem 0.7rem; background:var(--gold-pale); color:var(--gold); border:1px solid rgba(217,119,6,0.2); border-radius:2px; font-family:'JetBrains Mono',monospace; font-size:0.65rem; }
+
+    /* Dissertation hero card */
+    .dissertation-card {
+      background:linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+      border:1px solid rgba(8,145,178,0.3); border-radius:4px;
+      padding:3rem; margin-bottom:2rem; position:relative; overflow:hidden;
+    }
+    .dissertation-card::after {
+      content:''; position:absolute; right:-60px; top:-60px;
+      width:300px; height:300px; border-radius:50%;
+      background:radial-gradient(circle, rgba(8,145,178,0.12) 0%, transparent 70%);
+    }
+    .dis-badge {
+      display:inline-block; padding:0.3rem 0.8rem; background:rgba(8,145,178,0.2);
+      border:1px solid rgba(8,145,178,0.4); border-radius:2px;
+      font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.12em;
+      text-transform:uppercase; color:var(--teal-bright); margin-bottom:1.2rem;
+    }
+    .dis-badge.gold { background:rgba(217,119,6,0.2); border-color:rgba(217,119,6,0.4); color:var(--gold-bright); }
+    .dis-title { font-family:'Playfair Display',serif; font-size:1.7rem; font-weight:700; color:#fff; line-height:1.25; margin-bottom:1rem; }
+    .dis-title em { font-style:italic; color:var(--teal-bright); }
+    .dis-body { font-size:0.92rem; color:rgba(255,255,255,0.65); line-height:1.8; font-weight:300; max-width:680px; margin-bottom:1.5rem; }
+    .dis-pills { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.75rem; }
+    .dis-pill {
+      padding:0.3rem 0.8rem; border:1px solid rgba(255,255,255,0.15); border-radius:2px;
+      font-size:0.78rem; color:rgba(255,255,255,0.55); font-family:'JetBrains Mono',monospace; font-size:0.65rem;
+    }
+
+    /* ═══ PUBLICATIONS ═══ */
+    #publications { background:var(--paper); }
+    .pub-list { display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:3px; overflow:hidden; }
+    .pub-item {
+      background:var(--paper); padding:1.5rem 2rem;
+      display:grid; grid-template-columns:auto 1fr; gap:1.5rem; align-items:start;
+      transition:background .2s;
+    }
+    .pub-item:hover { background:var(--paper-2); }
+    .pub-venue-badge {
+      font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.1em;
+      text-transform:uppercase; padding:0.3rem 0.6rem;
+      border-radius:2px; white-space:nowrap; align-self:start; margin-top:0.15rem;
+    }
+    .badge-conf { background:rgba(8,145,178,0.1); color:var(--teal); border:1px solid rgba(8,145,178,0.2); }
+    .badge-journal { background:var(--gold-pale); color:var(--gold); border:1px solid rgba(217,119,6,0.2); }
+    .badge-prep { background:#f3f4f6; color:var(--muted); border:1px solid var(--border); }
+    .pub-title-text { font-size:0.9rem; color:var(--ink); font-weight:500; line-height:1.5; margin-bottom:0.3rem; }
+    .pub-authors-text { font-size:0.78rem; color:var(--muted); font-weight:300; }
+    .pub-award { display:inline-flex; align-items:center; gap:0.3rem; font-size:0.73rem; color:var(--gold); font-weight:600; margin-left:0.5rem; }
+
+    /* ═══ CONTACT ═══ */
+    #contact {
+      background:linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+      text-align:center; position:relative; overflow:hidden;
+    }
+    #contact::before {
+      content:''; position:absolute; inset:0;
+      background-image: linear-gradient(rgba(8,145,178,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(8,145,178,0.06) 1px, transparent 1px);
+      background-size:60px 60px;
+    }
+    #contact h2 { color:#fff; position:relative; }
+    #contact h2 em { color:var(--teal-bright); }
+    #contact .section-tag { color:var(--teal-bright); position:relative; }
+    .contact-sub { font-size:1rem; color:rgba(255,255,255,0.5); font-weight:300; max-width:500px; margin:0 auto 3rem; position:relative; }
+    .contact-links { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; position:relative; }
+    .contact-link {
+      display:inline-flex; align-items:center; gap:0.6rem;
+      padding:0.9rem 1.75rem; border:1px solid rgba(255,255,255,0.15);
+      border-radius:3px; color:rgba(255,255,255,0.8); text-decoration:none;
+      font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.08em;
+      transition:all .2s;
+    }
+    .contact-link:hover { border-color:var(--teal-bright); color:var(--teal-bright); background:rgba(8,145,178,0.1); }
+    .contact-link.linktree { border-color:rgba(100,200,120,0.4); color:rgba(100,200,120,0.9); }
+    .contact-link.linktree:hover { border-color:#43e97b; color:#43e97b; background:rgba(67,233,123,0.08); }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      background:#060e18; padding:2rem 4rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
+    }
+    footer p { font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.08em; color:rgba(255,255,255,0.2); }
+    footer a { color:rgba(255,255,255,0.2); text-decoration:none; transition:color .2s; }
+    footer a:hover { color:var(--teal-bright); }
+
+    /* ═══ ANIM ═══ */
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity .6s ease,transform .6s ease; }
+    .fade-up.visible { opacity:1; transform:none; }
+    .fade-up.d1 { transition-delay:.1s; }
+    .fade-up.d2 { transition-delay:.2s; }
+    .fade-up.d3 { transition-delay:.3s; }
+
+    /* ═══ MOBILE ═══ */
+    @media(max-width:768px){
+      nav { padding:1rem 1.5rem; }
+      .nav-links { display:none; }
+      #hero { grid-template-columns:1fr; padding:8rem 1.5rem 4rem; }
+      section { padding:4rem 1.5rem; }
+      .about-grid { grid-template-columns:1fr; }
+      footer { padding:2rem 1.5rem; flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Ishan <span>Suthar</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#research-preview">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="hobbies.html">Hobbies</a></li>
+    <li><a href="https://linktr.ee/i.ishan.2812" target="_blank" class="nav-cta">Connect ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Clinical Epidemiologist</div>
+    <h1>Ishan<br><em>Suthar</em></h1>
+    <div class="hero-titles">
+      <span class="hero-badge">MBBS</span>
+      <span class="hero-badge">MPH — Epidemiology</span>
+      <span class="hero-badge">PhD Candidate</span>
+    </div>
+    <p class="hero-summary">
+      Turning messy real-world data into clinical, payer, and policy evidence. 7+ years bridging medicine, causal inference, and health economics — from the ICU to the dataset.
+    </p>
+    <div class="hero-cta">
+      <a href="https://linktr.ee/i.ishan.2812" target="_blank" class="btn btn-primary">Connect with Me ↗</a>
+      <a href="research.html" class="btn btn-outline">View Research →</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num" data-count="7"><sup>+</sup></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">$27<sup>M+</sup></div>
+        <div class="stat-label">Grant-Funded Research Contributed To</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-count="5"><sup>+</sup></div>
+        <div class="stat-label">Conf. Presentations</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-count="3"></div>
+        <div class="stat-label">Peer-Reviewed Publications</div>
+      </div>
+      <div class="stat wide">
+        <div class="stat-num">$6<sup>k</sup>/capita/yr</div>
+        <div class="stat-label">Projected Medicaid savings — NIH-funded RWE study</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="section-tag">Background</p>
+      <h2>Clinician <em>turned</em><br>Data Scientist</h2>
+      <p>I started my career as a practicing physician in India, managing 600+ COVID-19 patients — including ICU cases — before pivoting to population-level evidence. That clinical foundation is what makes my epidemiologic work different: I understand the endpoints, the EHR workflows, and the clinical context that most data scientists don't.</p>
+      <p>Today I operate at the intersection of <strong>real-world evidence</strong>, <strong>causal inference</strong>, and <strong>health economics</strong> — building the kind of analysis that informs payer decisions, clinical guidelines, and drug strategy.</p>
+      <p>I'm actively seeking roles in <strong>pharma, biotech, and health consulting</strong> focused on RWE, HEOR, and clinical epidemiology.</p>
+    </div>
+    <div>
+      <div class="credential-row">
+        <div class="credential">
+          <span class="cred-icon">🎓</span>
+          <div>
+            <div class="cred-title">PhD Candidate — Epidemiology</div>
+            <div class="cred-sub">University of South Carolina · Final Year · Exp. 2027</div>
+          </div>
+        </div>
+        <div class="credential">
+          <span class="cred-icon">🎓</span>
+          <div>
+            <div class="cred-title">MPH — Epidemiology</div>
+            <div class="cred-sub">University of South Carolina · 2023</div>
+          </div>
+        </div>
+        <div class="credential">
+          <span class="cred-icon">🩺</span>
+          <div>
+            <div class="cred-title">MBBS — Medicine</div>
+            <div class="cred-sub">Gujarat University · 2019</div>
+          </div>
+        </div>
+        <div class="credential">
+          <span class="cred-icon">📊</span>
+          <div>
+            <div class="cred-title">Graduate Biostatistics Certificate</div>
+            <div class="cred-sub">University of South Carolina · Exp. 2026</div>
+          </div>
+        </div>
+        <div class="credential">
+          <span class="cred-icon">🤖</span>
+          <div>
+            <div class="cred-title">AI Foundations Associate</div>
+            <div class="cred-sub">Oracle Learning · 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-tag">Expertise</p>
+  <h2 style="color:#fff">Core <em>Capabilities</em></h2>
+
+  <div class="skill-filter">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="domains">Domains</button>
+    <button class="filter-btn" data-filter="methods">Methods</button>
+    <button class="filter-btn" data-filter="technical">Technical</button>
+    <button class="filter-btn" data-filter="data">Data Types</button>
+  </div>
+
+  <div class="skills-wrap">
+    <span class="stag" data-cat="domains">Real-World Evidence (RWE)</span>
+    <span class="stag" data-cat="domains">HEOR</span>
+    <span class="stag" data-cat="domains">Comparative Effectiveness</span>
+    <span class="stag" data-cat="domains">Clinical Epidemiology</span>
+    <span class="stag" data-cat="domains">Biostatistics</span>
+    <span class="stag" data-cat="domains">Drug Safety</span>
+    <span class="stag" data-cat="domains">HTA</span>
+    <span class="stag" data-cat="domains">Program Evaluation</span>
+    <span class="stag" data-cat="methods">Causal Inference</span>
+    <span class="stag" data-cat="methods">G-Estimation</span>
+    <span class="stag" data-cat="methods">Marginal Structural Models</span>
+    <span class="stag" data-cat="methods">Target Trial Emulation</span>
+    <span class="stag" data-cat="methods">Survival Analysis</span>
+    <span class="stag" data-cat="methods">Competing-Risk Models</span>
+    <span class="stag" data-cat="methods">GLMs</span>
+    <span class="stag" data-cat="methods">Longitudinal Analysis</span>
+    <span class="stag" data-cat="methods">Cost-Effectiveness Analysis</span>
+    <span class="stag" data-cat="methods">Economic Modeling</span>
+    <span class="stag" data-cat="technical">SAS</span>
+    <span class="stag" data-cat="technical">R</span>
+    <span class="stag" data-cat="technical">Python</span>
+    <span class="stag" data-cat="technical">SQL</span>
+    <span class="stag" data-cat="technical">REDCap</span>
+    <span class="stag" data-cat="technical">Tableau</span>
+    <span class="stag" data-cat="technical">Power BI</span>
+    <span class="stag" data-cat="technical">Git</span>
+    <span class="stag" data-cat="technical">AI/LLMs & NLP</span>
+    <span class="stag" data-cat="technical">Clinical Text Mining</span>
+    <span class="stag" data-cat="data">EHR Data</span>
+    <span class="stag" data-cat="data">Medicaid Claims</span>
+    <span class="stag" data-cat="data">RCT Data</span>
+    <span class="stag" data-cat="data">Observational Cohorts</span>
+    <span class="stag" data-cat="data">Registry Data</span>
+    <span class="stag" data-cat="data">REDCap Longitudinal</span>
+  </div>
+
+  <div class="proficiency-row">
+    <div class="prof-label">Technical Proficiency</div>
+    <div class="prof-grid">
+      <div class="prof-item">
+        <div class="prof-name"><span>SAS</span><span class="prof-pct">95%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="95"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-name"><span>R</span><span class="prof-pct">92%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="92"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-name"><span>Python</span><span class="prof-pct">80%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="80"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-name"><span>SQL</span><span class="prof-pct">78%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="78"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-name"><span>REDCap</span><span class="prof-pct">90%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="90"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-name"><span>Tableau / Power BI</span><span class="prof-pct">75%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="75"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-tag">Career</p>
+  <h2>Professional <em>Experience</em></h2>
+  <div class="timeline">
+
+    <div class="job">
+      <div class="job-meta-row">
+        <div class="job-title">Research Assistant (Co-Investigator)</div>
+        <div class="job-date">Aug 2023 – Present</div>
+      </div>
+      <div class="job-org">University of South Carolina · NIH R01 Grant ($1.5M) · Columbia, SC</div>
+      <div class="job-tags">
+        <span class="job-tag">HEOR</span><span class="job-tag">Causal Inference</span>
+        <span class="job-tag">Medicaid Claims</span><span class="job-tag">Cost-Effectiveness</span>
+      </div>
+      <p class="job-desc">Lead analyst on a 3-institution NIH-funded study generating real-world evidence on the cost-effectiveness of periodontal treatment in pregnant women.</p>
+      <ul class="job-bullets">
+        <li>Applied G-estimation & marginal structural models — showed <span class="impact">24% risk reduction</span> in periodontitis during pregnancy</li>
+        <li>Built weighted cost models using 50-state Medicaid fee schedules, projecting <span class="impact">$6k savings/capita/yr</span></li>
+        <li>Defined the first clinical responder endpoint for periodontitis treatment — a crucial industry benchmark</li>
+        <li>Developing a 5–10 year tooth-loss prediction model using the BigMouth national database</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-meta-row">
+        <div class="job-title">Program Evaluator</div>
+        <div class="job-date">Jan 2024 – Present</div>
+      </div>
+      <div class="job-org">PRISMA Health · HRSA Healthy Start ($5M) · Columbia, SC</div>
+      <div class="job-tags">
+        <span class="job-tag">RWE</span><span class="job-tag">Longitudinal Data</span>
+        <span class="job-tag">REDCap</span><span class="job-tag">Maternal Health</span>
+      </div>
+      <p class="job-desc">Evaluating a federally-funded maternal & child health program across 12,000+ participants, leading data systems and statistical analysis.</p>
+      <ul class="job-bullets">
+        <li>Designed & managed REDCap longitudinal systems for 5,000+ participants; improved data accuracy to <span class="impact">95%</span></li>
+        <li>Led full digital migration saving <span class="impact">2 hrs/day per staff</span> and cutting errors by 30%+</li>
+        <li>Youngest presenter at HRSA National All-Grantee Meeting 2025</li>
+        <li>100% on-time federal performance report submissions across all reporting periods</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-meta-row">
+        <div class="job-title">Consulting Practicum — EHR Analytics</div>
+        <div class="job-date">Jan 2025 – May 2025</div>
+      </div>
+      <div class="job-org">Lexington Medical Center · Columbia, SC</div>
+      <div class="job-tags">
+        <span class="job-tag">EHR Analytics</span><span class="job-tag">Survival Modeling</span>
+        <span class="job-tag">HAI Prevention</span><span class="job-tag">Consulting</span>
+      </div>
+      <ul class="job-bullets">
+        <li>Built survival & segmented logistic regression models on 250,000+ EHR records to identify high-risk patient clusters</li>
+        <li>Strategic plan projected a <span class="impact">15% HAI reduction</span> through workflow redesign and automated alerts</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-meta-row">
+        <div class="job-title">Physician</div>
+        <div class="job-date">Sep 2019 – Jul 2021</div>
+      </div>
+      <div class="job-org">Sunshine Global Hospital & Manjalpur Private Clinic · Vadodara, India</div>
+      <div class="job-tags">
+        <span class="job-tag">Clinical Medicine</span><span class="job-tag">ICU</span>
+        <span class="job-tag">COVID-19</span>
+      </div>
+      <ul class="job-bullets">
+        <li>Managed 600+ COVID-19 patients including ICU cases requiring ventilation and advanced life support</li>
+        <li>Active clinical practice across oncology, orthopedic, and multisystem conditions</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESEARCH PREVIEW -->
+<section id="research-preview">
+  <p class="section-tag">Research & Projects</p>
+  <h2>Featured <em>Work</em></h2>
+
+  <!-- Dissertation hero -->
+  <div class="dissertation-card fade-up">
+    <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1rem">
+      <span class="dis-badge">📌 PhD Dissertation</span>
+      <span class="dis-badge gold">✅ Accepted · SER 2026</span>
+    </div>
+    <div class="dis-title">Sequential Target Trial Emulation<br><em>for Acute Decompensated Heart Failure</em></div>
+    <p class="dis-body">
+      My dissertation asks a deceptively simple question: can we emulate the randomized trial we wish we had — using only messy, real-world EHR data? Using sequential target trial frameworks, I'm building a causal inference approach to evaluate time-varying treatment strategies in acutely ill inpatients. The core challenge is translating rigorous trial logic into observational data where treatment is confounded by indication, timing is dynamic, and patients drop out in non-random ways.
+    </p>
+    <p class="dis-body" style="color:rgba(255,255,255,0.45);font-size:0.85rem;">
+      The full methodology and findings are being prepared for publication — but the implications are direct: if this framework works, it creates a template for evidence generation in populations that can't easily be randomized, with applications across pharma RWE strategy and payer decision-making.
+    </p>
+    <div class="dis-pills">
+      <span class="dis-pill">Target Trial Emulation</span>
+      <span class="dis-pill">Causal Inference</span>
+      <span class="dis-pill">Sequential Treatment Strategies</span>
+      <span class="dis-pill">EHR Data</span>
+      <span class="dis-pill">Time-Varying Confounding</span>
+      <span class="dis-pill">Heart Failure</span>
+    </div>
+    <a href="research.html" class="btn btn-primary">See All Research Projects →</a>
+  </div>
+
+  <!-- Project cards -->
+  <div class="research-grid">
+    <div class="rcard fade-up">
+      <div class="rcard-num">02</div>
+      <div class="rcard-type">HEOR · RWE</div>
+      <div class="rcard-title">NIH R01 — Periodontal Care in Pregnancy ($1.5M)</div>
+      <div class="rcard-desc">G-estimation, MSMs, cost-effectiveness modeling, and clinical endpoint definition across a 3-institution collaboration.</div>
+      <span class="rcard-impact">24% risk reduction · $6k/capita savings</span>
+    </div>
+    <div class="rcard fade-up d1">
+      <div class="rcard-num">03</div>
+      <div class="rcard-type">EHR Analytics · Consulting</div>
+      <div class="rcard-title">HAI Predictive Analytics — Lexington Medical</div>
+      <div class="rcard-desc">Survival models & logistic regression on 250k+ EHR records to identify high-risk clusters and redesign care pathways.</div>
+      <span class="rcard-impact">15% projected HAI reduction</span>
+    </div>
+    <div class="rcard fade-up d2">
+      <div class="rcard-num">07</div>
+      <div class="rcard-type">AI · Data Science</div>
+      <div class="rcard-title">AI & Data Science Tools Portfolio</div>
+      <div class="rcard-desc">Backtesting engine, automated univariate analysis app, and NLP clinical notes tool built in Python, Flask, spaCy, and LLMs.</div>
+      <span class="rcard-impact">Scalable analytic workflows</span>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:2.5rem">
+    <a href="research.html" class="btn btn-outline" style="color:var(--ink);border-color:var(--border-bright)">View All 7 Projects →</a>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <p class="section-tag">Scholarship</p>
+  <h2>Publications & <em>Presentations</em></h2>
+  <div class="pub-list">
+
+    <div class="pub-item fade-up">
+      <span class="pub-venue-badge badge-conf">SER 2026<br>Accepted</span>
+      <div>
+        <div class="pub-title-text">Causal Decision Modules in the EHR: Sequential Target Trials for Care in Acute Decompensated Heart Failure</div>
+        <div class="pub-authors-text">Ishan Suthar — Society for Epidemiologic Research Annual Meeting, 2026</div>
+      </div>
+    </div>
+
+    <div class="pub-item fade-up">
+      <span class="pub-venue-badge badge-conf">SER 2025<br>Presented</span>
+      <div>
+        <div class="pub-title-text">Quantifying the Benefits of Preventive Periodontal Care in Pregnancy Using Advanced Causal Inference Methods</div>
+        <div class="pub-authors-text">Suthar I, Merchant A, Rokonuzzaman SM</div>
+      </div>
+    </div>
+
+    <div class="pub-item fade-up">
+      <span class="pub-venue-badge badge-conf">APHA 2025<br>Presented</span>
+      <div>
+        <div class="pub-title-text">Dental Care Utilization in Childbearing Aged Women with Patient-Reported Systemic Conditions: A National Cross-Sectional Study
+          <span class="pub-award">🏆 Certificate of Excellence in Oral Health Research</span>
+        </div>
+        <div class="pub-authors-text">Ishan Suthar — American Public Health Association Annual Meeting, 2025</div>
+      </div>
+    </div>
+
+    <div class="pub-item fade-up">
+      <span class="pub-venue-badge badge-conf">SPER 2025<br>Presented</span>
+      <div>
+        <div class="pub-title-text">Relapse and Mortality in Children Undergoing Allogeneic Transplantation for Severe Aplastic Anemia</div>
+        <div class="pub-authors-text">Ishan Suthar — Society for Pediatric and Perinatal Epidemiologic Research, 2025</div>
+      </div>
+    </div>
+
+    <div class="pub-item fade-up">
+      <span class="pub-venue-badge badge-conf">HRSA 2025<br>Presented</span>
+      <div>
+        <div class="pub-title-text">Healthy Start Program Evaluation — Youngest Presenter at HRSA National All-Grantee Meeting</div>
+        <div class="pub-authors-text">Ishan Suthar — HRSA National All-Grantee Meeting, 2025</div>
+      </div>
+    </div>
+
+    <div class="pub-item fade-up">
+      <span class="pub-venue-badge badge-prep">In Prep</span>
+      <div>
+        <div class="pub-title-text">Quantifying the Benefits of Preventive Periodontal Care in Pregnancy Using Advanced Causal Inference Methods</div>
+        <div class="pub-authors-text">Suthar I, Merchant A, Rokonuzzaman SM · Target: high-impact epidemiology journal</div>
+      </div>
+    </div>
+
+    <div class="pub-item fade-up">
+      <span class="pub-venue-badge badge-journal">ADCES<br>2023</span>
+      <div>
+        <div class="pub-title-text">The Inner Circle: A Community of Practice for National Diabetes Prevention Program Lifestyle Coaches</div>
+        <div class="pub-authors-text">Ankrom B, Curry K, Mandelbaum J, Suthar I, Myers K · ADCES in Practice · DOI: 10.1177/2633559X221150807</div>
+      </div>
+    </div>
+
+    <div class="pub-item fade-up">
+      <span class="pub-venue-badge badge-journal">JPHMP<br>2024</span>
+      <div>
+        <div class="pub-title-text">Virtual Expansion of the Y-USA Blood Pressure Self-Monitoring Program Using Telehealth</div>
+        <div class="pub-authors-text">Grant B, Myers K, Suthar I, et al. · Journal of Public Health Management & Practice · DOI: 10.1097/PHH.0000000000001898</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-tag">Let's Connect</p>
+  <h2>Open to <em>Opportunities</em></h2>
+  <p class="contact-sub">Actively seeking RWE, HEOR, and clinical epidemiology roles in pharma, biotech, and health consulting.</p>
+  <div class="contact-links">
+    <a href="https://linktr.ee/i.ishan.2812" target="_blank" class="contact-link linktree">🌿 Linktree ↗</a>
+    <a href="mailto:i.ishan.2812@gmail.com" class="contact-link">✉ Email</a>
+    <a href="https://www.linkedin.com/in/isuthar/" target="_blank" class="contact-link">↗ LinkedIn</a>
+    <a href="tel:+18037355932" class="contact-link">✆ 803-735-5932</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Ishan Suthar · Clinical Epidemiologist · RWE & HEOR · Charlotte, NC</p>
+  <p>
+    <a href="research.html">Research →</a> &nbsp;·&nbsp;
+    <a href="hobbies.html">Hobbies →</a> &nbsp;·&nbsp;
+    <a href="https://linktr.ee/i.ishan.2812" target="_blank">Linktree ↗</a>
+  </p>
+</footer>
+
+<script>
+  // Intersection observer
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); } });
+  },{threshold:0.1});
+  document.querySelectorAll('.fade-up,.job').forEach(el=>io.observe(el));
+
+  // Skill filter
+  document.querySelectorAll('.filter-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f=btn.dataset.filter;
+      document.querySelectorAll('.stag').forEach(tag=>{
+        if(f==='all'||tag.dataset.cat===f){ tag.classList.remove('hidden'); }
+        else { tag.classList.add('hidden'); }
+      });
+    });
+  });
+
+  // Proficiency bars — animate on scroll
+  const barObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.prof-fill').forEach(fill=>{
+          fill.style.width = fill.dataset.w + '%';
+        });
+      }
+    });
+  },{threshold:0.2});
+  const profRow = document.querySelector('.proficiency-row');
+  if(profRow) barObs.observe(profRow);
+
+  // Counter animation
+  const counterObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('[data-count]').forEach(el=>{
+          const target = parseInt(el.dataset.count);
+          const sup = el.querySelector('sup');
+          let count=0;
+          const step = Math.ceil(target/40);
+          const sup_html = sup ? sup.outerHTML : '';
+          const t = setInterval(()=>{
+            count = Math.min(count+step,target);
+            el.innerHTML = count + sup_html;
+            if(count>=target) clearInterval(t);
+          },30);
+        });
+      }
+    });
+  },{threshold:0.3});
+  const statsGrid = document.querySelector('.stats-grid');
+  if(statsGrid) counterObs.observe(statsGrid);
+</script>
+</body>
+</html>

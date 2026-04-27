@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ishan Suthar — Research & Projects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #0d1b2a;
+      --navy-2: #132035;
+      --navy-3: #1a2d45;
+      --teal:   #0891b2;
+      --teal-bright: #22d3ee;
+      --gold:   #d97706;
+      --gold-bright: #fbbf24;
+      --gold-pale: #fef3c7;
+      --paper:  #ffffff;
+      --paper-2:#f0f6fa;
+      --paper-3:#e2edf5;
+      --ink:    #0d1b2a;
+      --muted:  #64748b;
+      --border: rgba(13,27,42,0.1);
+      --border-bright: rgba(13,27,42,0.18);
+      --shadow: 0 4px 24px rgba(13,27,42,0.1);
+      --shadow-lg: 0 12px 48px rgba(13,27,42,0.15);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;overflow-x:hidden;}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(13,27,42,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);}
+    .nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;color:#fff;text-decoration:none;}
+    .nav-logo span{color:var(--teal-bright);}
+    .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+    .nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;transition:color .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--teal-bright);}
+    .nav-cta{padding:0.5rem 1.25rem;background:var(--teal);color:#fff;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
+    .nav-cta:hover{background:var(--teal-bright);color:var(--navy);}
+
+    /* PAGE HERO */
+    .page-hero{
+      min-height:55vh; display:flex; flex-direction:column; justify-content:flex-end;
+      padding:10rem 4rem 5rem;
+      background:linear-gradient(135deg,var(--navy) 0%,var(--navy-3) 60%,#0f2a3d 100%);
+      position:relative;overflow:hidden;
+    }
+    .page-hero::before{
+      content:'';position:absolute;inset:0;
+      background-image:linear-gradient(rgba(8,145,178,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(8,145,178,0.07) 1px,transparent 1px);
+      background-size:64px 64px; animation:gridFloat 20s linear infinite;
+    }
+    @keyframes gridFloat{0%{background-position:0 0}100%{background-position:64px 64px}}
+    .page-hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-bright);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;position:relative;}
+    .page-hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--teal-bright);}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5rem);font-weight:900;letter-spacing:-0.03em;color:#fff;line-height:.95;margin-bottom:1.2rem;position:relative;}
+    .page-hero h1 em{font-style:italic;font-weight:400;color:var(--teal-bright);}
+    .page-hero-sub{font-size:1rem;color:rgba(255,255,255,0.5);font-weight:300;max-width:560px;position:relative;}
+    .back-link{display:inline-flex;align-items:center;gap:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;margin-bottom:2.5rem;transition:color .2s;position:relative;}
+    .back-link:hover{color:var(--teal-bright);}
+
+    /* PROJECT NAV */
+    .proj-nav{
+      background:var(--paper-2); border-bottom:1px solid var(--border);
+      padding:1.25rem 4rem; display:flex; gap:1rem; flex-wrap:wrap;
+      position:sticky; top:64px; z-index:100;
+    }
+    .pnav-btn{
+      font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;
+      text-transform:uppercase;padding:0.4rem 1rem;border-radius:2px;
+      background:transparent;border:1px solid var(--border);color:var(--muted);
+      cursor:pointer;text-decoration:none;transition:all .2s;
+    }
+    .pnav-btn:hover,.pnav-btn.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+    /* SECTIONS */
+    .proj-section{padding:5rem 4rem;}
+    .proj-section:nth-child(even){background:var(--paper-2);}
+
+    .section-tag{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;}
+    h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;letter-spacing:-0.02em;color:var(--ink);line-height:1.1;margin-bottom:0.5rem;}
+    h2 em{font-style:italic;font-weight:400;color:var(--teal);}
+    h2 .gold{color:var(--gold);font-style:italic;font-weight:400;}
+
+    /* DISSERTATION — special full-width */
+    #dissertation{
+      background:linear-gradient(135deg,var(--navy) 0%,#0f2d45 100%);
+      padding:6rem 4rem; position:relative; overflow:hidden;
+    }
+    #dissertation::before{
+      content:'';position:absolute;inset:0;
+      background-image:linear-gradient(rgba(8,145,178,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(8,145,178,0.06) 1px,transparent 1px);
+      background-size:64px 64px;
+    }
+    #dissertation h2{color:#fff;margin-bottom:1.5rem;}
+    #dissertation h2 em{color:var(--teal-bright);}
+    #dissertation .section-tag{color:var(--teal-bright);}
+    .dis-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;position:relative;}
+    .dis-text p{font-size:0.95rem;line-height:1.85;color:rgba(255,255,255,0.65);font-weight:300;margin-bottom:1rem;}
+    .dis-text p strong{color:rgba(255,255,255,0.9);font-weight:600;}
+    .dis-badge-row{display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+    .dbadge{display:inline-block;padding:0.3rem 0.8rem;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:0.63rem;letter-spacing:0.1em;text-transform:uppercase;}
+    .dbadge-teal{background:rgba(8,145,178,0.2);border:1px solid rgba(8,145,178,0.4);color:var(--teal-bright);}
+    .dbadge-gold{background:rgba(217,119,6,0.2);border:1px solid rgba(217,119,6,0.4);color:var(--gold-bright);}
+
+    .dis-details{display:flex;flex-direction:column;gap:1.2rem;}
+    .dis-detail-card{
+      background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+      border-radius:3px;padding:1.25rem 1.5rem;
+    }
+    .ddc-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal-bright);margin-bottom:0.5rem;}
+    .ddc-content{font-size:0.88rem;color:rgba(255,255,255,0.6);line-height:1.65;font-weight:300;}
+    .ddc-content strong{color:rgba(255,255,255,0.85);}
+
+    /* STANDARD PROJECT CARDS */
+    .proj-detail{display:grid;grid-template-columns:2fr 1fr;gap:3rem;align-items:start;margin-bottom:0;}
+    .proj-num{
+      font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;
+      color:var(--paper-3);line-height:1;margin-bottom:-0.5rem;
+    }
+    .proj-type{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:0.4rem;}
+    .proj-desc{font-size:0.92rem;color:#374151;line-height:1.8;font-weight:300;margin:1rem 0;}
+    .proj-bullets{list-style:none;margin-bottom:1rem;}
+    .proj-bullets li{font-size:0.88rem;color:#374151;line-height:1.7;padding:0.3rem 0 0.3rem 1.3rem;position:relative;font-weight:300;}
+    .proj-bullets li::before{content:'→';position:absolute;left:0;color:var(--teal);}
+    .proj-impact{display:inline-block;padding:0.25rem 0.7rem;background:var(--gold-pale);color:var(--gold);border:1px solid rgba(217,119,6,0.2);border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:0.65rem;margin-left:0.3rem;vertical-align:middle;}
+
+    .proj-sidebar{display:flex;flex-direction:column;gap:1rem;}
+    .sidebar-card{background:var(--paper);border:1px solid var(--border);border-radius:3px;padding:1.25rem;transition:box-shadow .2s;}
+    .proj-section:nth-child(even) .sidebar-card{background:var(--paper-3);}
+    .sidebar-card:hover{box-shadow:var(--shadow);}
+    .sc-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
+    .sc-value{font-size:0.85rem;color:var(--ink);font-weight:500;line-height:1.5;}
+    .sc-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem;}
+    .sc-tag{font-family:'JetBrains Mono',monospace;font-size:0.62rem;padding:0.2rem 0.55rem;background:var(--paper-2);border:1px solid var(--border);border-radius:2px;color:var(--muted);}
+    .proj-section:nth-child(even) .sc-tag{background:var(--paper);}
+    .impact-callout{
+      background:linear-gradient(135deg,var(--teal) 0%,#0e7490 100%);
+      border-radius:3px;padding:1.25rem;text-align:center;
+    }
+    .ic-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:#fff;line-height:1;}
+    .ic-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-top:0.3rem;}
+
+    /* AI TOOLS — grid */
+    .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:1.5rem;}
+    .tool-card{
+      background:var(--paper);border:1px solid var(--border);border-radius:4px;
+      padding:1.75rem;transition:all .25s;position:relative;overflow:hidden;
+    }
+    .proj-section:nth-child(even) .tool-card{background:var(--paper-3);}
+    .tool-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+    .tool-icon{font-size:1.75rem;margin-bottom:0.75rem;}
+    .tool-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:0.5rem;}
+    .tool-stack{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.06em;color:var(--teal);margin-bottom:0.75rem;}
+    .tool-desc{font-size:0.83rem;color:var(--muted);line-height:1.65;font-weight:300;}
+    .tool-relevance{
+      margin-top:1rem;padding:0.6rem 0.9rem;
+      background:var(--gold-pale);border-left:2px solid var(--gold);
+      font-size:0.78rem;color:var(--gold);font-weight:500;
+    }
+
+    /* FADE */
+    .fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+    .fade-up.visible{opacity:1;transform:none;}
+    .fade-up.d1{transition-delay:.1s;}
+    .fade-up.d2{transition-delay:.2s;}
+
+    /* FOOTER */
+    footer{background:#060e18;padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    footer p{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.08em;color:rgba(255,255,255,0.2);}
+    footer a{color:rgba(255,255,255,0.2);text-decoration:none;transition:color .2s;}
+    footer a:hover{color:var(--teal-bright);}
+
+    @media(max-width:768px){
+      nav{padding:1rem 1.5rem;}
+      .nav-links{display:none;}
+      .page-hero,.proj-section,#dissertation{padding:8rem 1.5rem 3rem;}
+      .proj-nav{padding:1rem 1.5rem;top:56px;}
+      .dis-layout,.proj-detail{grid-template-columns:1fr;}
+      footer{padding:2rem 1.5rem;flex-direction:column;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Ishan <span>Suthar</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Portfolio</a></li>
+    <li><a href="research.html" class="active">Research</a></li>
+    <li><a href="hobbies.html">Hobbies</a></li>
+    <li><a href="https://linktr.ee/i.ishan.2812" target="_blank" class="nav-cta">Connect ↗</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <a href="index.html" class="back-link">← Back to Portfolio</a>
+  <div class="page-hero-eyebrow">PhD Candidate · RWE & HEOR</div>
+  <h1>Research &<br><em>Projects</em></h1>
+  <p class="page-hero-sub">7 projects spanning causal inference, health economics, EHR analytics, AI tools, and program evaluation — from dissertation to consulting.</p>
+</div>
+
+<!-- PROJECT NAV -->
+<div class="proj-nav">
+  <a href="#dissertation" class="pnav-btn active">01 · Dissertation</a>
+  <a href="#periodontal" class="pnav-btn">02 · Periodontal RWE</a>
+  <a href="#dental" class="pnav-btn">03 · Dental Study</a>
+  <a href="#hai" class="pnav-btn">04 · HAI Analytics</a>
+  <a href="#healthystart" class="pnav-btn">05 · Healthy Start</a>
+  <a href="#pediatric" class="pnav-btn">06 · Pediatric HCT</a>
+  <a href="#aitools" class="pnav-btn">07 · AI Tools</a>
+</div>
+
+<!-- ═══ 01 DISSERTATION ═══ -->
+<div id="dissertation">
+  <p class="section-tag">01 · PhD Dissertation</p>
+  <h2>Sequential Target Trial Emulation<br><em>for Acute Decompensated Heart Failure</em></h2>
+  <div class="dis-badge-row">
+    <span class="dbadge dbadge-teal">📌 Lead Investigator</span>
+    <span class="dbadge dbadge-gold">✅ Accepted · SER 2026</span>
+  </div>
+  <div class="dis-layout">
+    <div class="dis-text">
+      <p>The central question of my dissertation is <strong>methodological and consequential</strong>: can we rigorously emulate a randomized controlled trial from observational electronic health record data in acutely ill inpatients — where treatment assignment is deeply confounded by indication?</p>
+      <p>Using the framework of <strong>target trial emulation</strong>, I am building a sequential analysis approach to evaluate time-varying treatment strategies in patients hospitalized with acute decompensated heart failure. The real-world EHR environment presents compounding challenges: treatments change with clinical trajectory, patients drop out non-randomly, and the very sickness that drives treatment also drives outcomes.</p>
+      <p>My approach draws on <strong>sequential treatment strategies</strong>, carefully constructed eligibility criteria that mirror a hypothetical trial's enrollment logic, and causal inference methods designed for time-varying exposures. The goal is to produce estimates of treatment effectiveness that are both internally valid and directly relevant to the clinical decision points practitioners actually face.</p>
+      <p>The broader implication: this framework, if validated, creates a <strong>replicable template for evidence generation</strong> in populations that cannot easily be randomized — with direct applications to RWE strategy in pharma drug development, post-market surveillance, and payer coverage decisions.</p>
+      <p style="color:rgba(255,255,255,0.4);font-size:0.85rem;font-style:italic;">Full methodology and findings are in active development and being prepared for manuscript submission. Details available upon request for legitimate research discussion.</p>
+    </div>
+    <div class="dis-details">
+      <div class="dis-detail-card">
+        <div class="ddc-label">Setting</div>
+        <div class="ddc-content">Inpatient EHR data — <strong>real-world treatment decisions</strong> in acutely ill patients</div>
+      </div>
+      <div class="dis-detail-card">
+        <div class="ddc-label">Core Methods</div>
+        <div class="ddc-content">
+          <strong>Target trial emulation</strong> · Sequential treatment strategies · Time-varying confounding · Causal inference from longitudinal EHR data
+        </div>
+      </div>
+      <div class="dis-detail-card">
+        <div class="ddc-label">Key Challenge</div>
+        <div class="ddc-content">Treatment is <strong>confounded by indication and clinical trajectory</strong> — the sickness that drives treatment also drives outcomes</div>
+      </div>
+      <div class="dis-detail-card">
+        <div class="ddc-label">Relevance to Industry</div>
+        <div class="ddc-content">Direct application to <strong>RWE strategy in pharma</strong>, post-market surveillance, payer evidence generation, and clinical guideline development</div>
+      </div>
+      <div class="dis-detail-card">
+        <div class="ddc-label">Status</div>
+        <div class="ddc-content">✅ Accepted presentation <strong>SER 2026</strong> · Manuscript in preparation · PhD milestone complete</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 02 PERIODONTAL ═══ -->
+<div id="periodontal" class="proj-section fade-up">
+  <div class="proj-num">02</div>
+  <p class="proj-type">HEOR · RWE · Causal Inference</p>
+  <h2>NIH R01 — Periodontal Care in <em>Pregnancy</em> <span class="gold">($1.5M)</span></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">Co-investigator and lead analyst on a 3-institution NIH-funded study generating real-world evidence on the cost-effectiveness of periodontal treatment in pregnant women. This project spans four interconnected analyses — each producing standalone evidence with direct payer and clinical relevance.</p>
+      <ul class="proj-bullets">
+        <li>Applied <strong>G-estimation and marginal structural models</strong> to estimate causal effect of preventive periodontal care on periodontitis incidence <span class="proj-impact">24% risk reduction</span></li>
+        <li>Built <strong>50-state Medicaid fee schedule weighted cost models</strong> to estimate per-capita treatment burden and project economic savings <span class="proj-impact">~$6k/capita/yr</span></li>
+        <li>Defined the <strong>first clinical responder endpoint</strong> for periodontitis treatment — a consensus definition with direct industry utility for trial design and regulatory submissions</li>
+        <li>Developing a <strong>5–10 year tooth-loss prediction model</strong> using BigMouth national database — risk modeling across patient subgroups</li>
+        <li>Presented at SER 2025 · Manuscript in preparation for high-impact epidemiology journal</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <div class="impact-callout">
+        <div class="ic-num">$6k</div>
+        <div class="ic-label">Projected savings/capita/year</div>
+      </div>
+      <div class="impact-callout" style="background:linear-gradient(135deg,var(--gold) 0%,#b45309 100%)">
+        <div class="ic-num">24%</div>
+        <div class="ic-label">Risk reduction in periodontitis</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Methods</div>
+        <div class="sc-tags">
+          <span class="sc-tag">G-Estimation</span>
+          <span class="sc-tag">MSMs</span>
+          <span class="sc-tag">CEA</span>
+          <span class="sc-tag">Risk Modeling</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Data</div>
+        <div class="sc-value">50-state Medicaid fee schedules · BigMouth national dental DB</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Tools</div>
+        <div class="sc-tags"><span class="sc-tag">SAS</span><span class="sc-tag">R</span><span class="sc-tag">SQL</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03 DENTAL STUDY ═══ -->
+<div id="dental" class="proj-section fade-up">
+  <div class="proj-num">03</div>
+  <p class="proj-type">Epidemiology · National Population Study</p>
+  <h2>Dental Utilization — <em>ADA National Study</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">A national cross-sectional study in collaboration with the American Dental Association examining dental care utilization patterns among childbearing-aged women with self-reported systemic conditions, using the ADA's national patient-reported outcomes dataset.</p>
+      <ul class="proj-bullets">
+        <li>Designed cross-sectional study examining dental care utilization among women with systemic comorbidities across national ADA patient-reported outcomes data</li>
+        <li>Applied descriptive and inferential statistics in R/SAS to characterize utilization patterns by condition type, demographics, and insurance status</li>
+        <li>Identified key disparities in preventive dental care access in a population with elevated periodontal risk</li>
+        <li>🏆 Received <strong>Certificate of Excellence in Oral Health Research</strong> — presented at APHA 2025</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <div class="sidebar-card">
+        <div class="sc-label">Award</div>
+        <div class="sc-value">🏆 Certificate of Excellence in Oral Health Research · APHA 2025</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Design</div>
+        <div class="sc-value">National cross-sectional study</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Data</div>
+        <div class="sc-value">ADA national patient-reported outcomes dataset</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Tools</div>
+        <div class="sc-tags"><span class="sc-tag">R</span><span class="sc-tag">SAS</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 04 HAI ═══ -->
+<div id="hai" class="proj-section fade-up">
+  <div class="proj-num">04</div>
+  <p class="proj-type">EHR Analytics · Consulting</p>
+  <h2>HAI Predictive Analytics — <em>Lexington Medical</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">A data-driven consulting engagement using EHR data from 250,000+ patient records to identify drivers of hospital-acquired infections (HAIs), length of stay, and clinical outcomes — and deliver an actionable prevention strategy.</p>
+      <ul class="proj-bullets">
+        <li>Built <strong>survival models and segmented logistic regression</strong> using EHR data to evaluate length of stay and mortality</li>
+        <li>Identified high-risk patient clusters in <strong>ICU and med-surg transition settings</strong> — the most vulnerable windows for HAI acquisition</li>
+        <li>Root-cause analysis mapped care pathway inefficiencies across admission types and unit workflows</li>
+        <li>Delivered strategic plan projecting <strong>15% reduction in HAI incidence</strong> through workflow redesign, automated alerts, and targeted prevention protocols</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <div class="impact-callout">
+        <div class="ic-num">15%</div>
+        <div class="ic-label">Projected HAI reduction</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Data Scale</div>
+        <div class="sc-value">250,000+ EHR patient records</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Methods</div>
+        <div class="sc-tags"><span class="sc-tag">Survival Models</span><span class="sc-tag">Logistic Regression</span><span class="sc-tag">Subgroup Analysis</span></div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Tools</div>
+        <div class="sc-tags"><span class="sc-tag">R</span><span class="sc-tag">SAS</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 05 HEALTHY START ═══ -->
+<div id="healthystart" class="proj-section fade-up">
+  <div class="proj-num">05</div>
+  <p class="proj-type">Program Evaluation · Maternal Health</p>
+  <h2>HRSA Healthy Start — <em>Program Evaluation</em> <span class="gold">($5M)</span></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">Evaluating a federally-funded maternal and child health program at PRISMA Health — leveraging real-world longitudinal data to assess maternal and perinatal outcomes across 12,000+ participants.</p>
+      <ul class="proj-bullets">
+        <li>Designed and managed <strong>REDCap longitudinal data systems</strong> for 5,000+ participants across pregnancy and postpartum periods</li>
+        <li>Led QA/QI initiatives: improved data accuracy to <strong>95%</strong>, reduced errors by <strong>30%+</strong>, fully digitized data collection</li>
+        <li>Supervised community health workers and health educators; digital migration saved <strong>2 hrs/day per staff member</strong></li>
+        <li>Conducted R/SAS statistical analyses on maternal and perinatal outcomes; delivered insights improving program scalability</li>
+        <li>Ensured <strong>100% on-time federal performance report submissions</strong> — every reporting period</li>
+        <li>Youngest presenter at HRSA National All-Grantee Meeting 2025</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <div class="impact-callout">
+        <div class="ic-num">12k<sup style="font-size:1rem">+</sup></div>
+        <div class="ic-label">Program participants</div>
+      </div>
+      <div class="impact-callout" style="background:linear-gradient(135deg,var(--gold) 0%,#b45309 100%)">
+        <div class="ic-num">95%</div>
+        <div class="ic-label">Data accuracy achieved</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Platforms</div>
+        <div class="sc-tags"><span class="sc-tag">REDCap</span><span class="sc-tag">R</span><span class="sc-tag">SAS</span></div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Conference</div>
+        <div class="sc-value">HRSA National All-Grantee Meeting 2025 · APHA 2025</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 06 PEDIATRIC HCT ═══ -->
+<div id="pediatric" class="proj-section fade-up">
+  <div class="proj-num">06</div>
+  <p class="proj-type">Survival Analysis · Multi-Center Registry</p>
+  <h2>Post-HCT Survival — <em>Pediatric Aplastic Anemia</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">Multi-center registry analysis examining conditioning regimen effectiveness and survival outcomes in children undergoing allogeneic hematopoietic cell transplantation (HCT) for severe aplastic anemia (SAA) — using competing-risk models to separate relapse from transplant-related mortality.</p>
+      <ul class="proj-bullets">
+        <li>Applied <strong>competing-risk survival models</strong> to disentangle relapse vs. transplant-related mortality — a methodologically critical distinction for this patient population</li>
+        <li>Analyzed multi-center pediatric HCT registry/cohort data across several conditioning regimens</li>
+        <li>Key finding: <strong>Cyclophosphamide identified as optimal conditioning regimen</strong> — evidence with direct implication for future trial protocol design</li>
+        <li>Presented at SPER 2025 — Society for Pediatric and Perinatal Epidemiologic Research</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <div class="sidebar-card">
+        <div class="sc-label">Key Finding</div>
+        <div class="sc-value">Cyclophosphamide identified as optimal conditioning regimen for pediatric HCT in SAA</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Methods</div>
+        <div class="sc-tags"><span class="sc-tag">Competing-Risk Models</span><span class="sc-tag">Survival Analysis</span></div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Data</div>
+        <div class="sc-value">Multi-center pediatric HCT registry / cohort data</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Conference</div>
+        <div class="sc-value">SPER 2025</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 07 AI TOOLS ═══ -->
+<div id="aitools" class="proj-section fade-up">
+  <div class="proj-num">07</div>
+  <p class="proj-type">AI · Data Science · Python</p>
+  <h2>AI & Data Science <em>Tools Portfolio</em></h2>
+  <p class="proj-desc" style="max-width:680px;margin-bottom:0">Building scalable tools that amplify and automate analytic workflows — from clinical NLP to strategy backtesting engines.</p>
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-icon">📈</div>
+      <div class="tool-name">AI-Enabled Strategy Backtester</div>
+      <div class="tool-stack">Python · Pandas · NumPy · OOP Architecture</div>
+      <div class="tool-desc">Modular backtesting engine for multi-timeframe trading strategies. Features scenario modeling, simulation design, and forecasting — built with a clean OOP architecture for extensibility.</div>
+      <div class="tool-relevance">⚡ Directly applicable to clinical trial simulation & resource modeling</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🔬</div>
+      <div class="tool-name">Automated Univariate Analysis App</div>
+      <div class="tool-stack">Python · Flask · SciPy · Matplotlib · Plotly</div>
+      <div class="tool-desc">Full-stack web application that automates the full EDA and regression modeling pipeline: dataset upload → descriptive stats → visualizations → models → odds ratios. Designed to replicate biostatistician workflows at scale.</div>
+      <div class="tool-relevance">⚡ Replicates biostatistician workflows in a scalable, deployable tool</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🤖</div>
+      <div class="tool-name">AI-Assisted Clinical Notes & Research Tool</div>
+      <div class="tool-stack">Python · spaCy · LLMs · Oracle GenAI · Vector Search</div>
+      <div class="tool-desc">NLP engine for clinical text mining and literature synthesis. Combines LLM pipelines, clinical NLP, and vector search to extract structured information from unstructured clinical text and research corpora.</div>
+      <div class="tool-relevance">⚡ EHR data extraction · Unstructured data analysis · Evidence synthesis</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Ishan Suthar · Clinical Epidemiologist · RWE & HEOR · Charlotte, NC</p>
+  <p>
+    <a href="index.html">← Portfolio</a> &nbsp;·&nbsp;
+    <a href="hobbies.html">Hobbies</a> &nbsp;·&nbsp;
+    <a href="https://linktr.ee/i.ishan.2812" target="_blank">Linktree ↗</a>
+  </p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+
+  // Highlight active proj nav on scroll
+  const sections=['dissertation','periodontal','dental','hai','healthystart','pediatric','aitools'];
+  const pnavBtns = document.querySelectorAll('.pnav-btn');
+  window.addEventListener('scroll',()=>{
+    let current='';
+    sections.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el && window.scrollY >= el.offsetTop - 200) current=id;
+    });
+    pnavBtns.forEach(btn=>{
+      btn.classList.toggle('active', btn.getAttribute('href')==='#'+current);
+    });
+  });
+</script>
+</body>
+</html>

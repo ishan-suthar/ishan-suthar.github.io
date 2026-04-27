@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ishan Suthar — Hobbies & Interests</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #0d1b2a;
+      --navy-2: #132035;
+      --navy-3: #1a2d45;
+      --teal:   #0891b2;
+      --teal-bright: #22d3ee;
+      --gold:   #d97706;
+      --gold-bright: #fbbf24;
+      --gold-pale: #fef3c7;
+      --paper:  #ffffff;
+      --paper-2:#f0f6fa;
+      --paper-3:#e2edf5;
+      --ink:    #0d1b2a;
+      --muted:  #64748b;
+      --border: rgba(13,27,42,0.1);
+      --shadow: 0 4px 24px rgba(13,27,42,0.1);
+      --shadow-lg: 0 12px 48px rgba(13,27,42,0.15);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;overflow-x:hidden;}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(13,27,42,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);}
+    .nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;color:#fff;text-decoration:none;}
+    .nav-logo span{color:var(--teal-bright);}
+    .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+    .nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;transition:color .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--teal-bright);}
+    .nav-cta{padding:0.5rem 1.25rem;background:var(--teal);color:#fff;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
+    .nav-cta:hover{background:var(--teal-bright);color:var(--navy);}
+
+    /* HERO */
+    .page-hero{
+      min-height:52vh;display:flex;flex-direction:column;justify-content:flex-end;
+      padding:10rem 4rem 5rem;
+      background:linear-gradient(135deg,var(--navy) 0%,var(--navy-3) 60%,#0f2a3d 100%);
+      position:relative;overflow:hidden;
+    }
+    .page-hero::before{
+      content:'';position:absolute;inset:0;
+      background-image:linear-gradient(rgba(8,145,178,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(8,145,178,0.07) 1px,transparent 1px);
+      background-size:64px 64px;animation:gridFloat 20s linear infinite;
+    }
+    @keyframes gridFloat{0%{background-position:0 0}100%{background-position:64px 64px}}
+    .page-hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-bright);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;position:relative;}
+    .page-hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--teal-bright);}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5rem);font-weight:900;letter-spacing:-0.03em;color:#fff;line-height:.95;margin-bottom:1.2rem;position:relative;}
+    .page-hero h1 em{font-style:italic;font-weight:400;color:var(--teal-bright);}
+    .page-hero-sub{font-size:1rem;color:rgba(255,255,255,0.5);font-weight:300;max-width:520px;position:relative;}
+    .back-link{display:inline-flex;align-items:center;gap:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;margin-bottom:2.5rem;transition:color .2s;position:relative;}
+    .back-link:hover{color:var(--teal-bright);}
+
+    /* SECTIONS */
+    .hobby-section{padding:6rem 4rem;opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+    .hobby-section.visible{opacity:1;transform:none;}
+    .hobby-section:nth-child(even){background:var(--paper-2);}
+
+    .section-tag{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;}
+    h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:700;letter-spacing:-0.02em;color:var(--ink);line-height:1.1;}
+    h2 em{font-style:italic;font-weight:400;color:var(--teal);}
+
+    .hobby-header{display:grid;grid-template-columns:72px 1fr;align-items:start;gap:1.5rem;margin-bottom:2.5rem;}
+    .hobby-icon{width:72px;height:72px;background:var(--navy);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;}
+    .hobby-icon-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:0.4rem;}
+
+    /* MARKETS */
+    .markets-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:3px;overflow:hidden;}
+    .m-card{background:var(--paper);padding:2rem 1.75rem;transition:background .2s;}
+    .m-card:hover{background:var(--paper-2);}
+    .mc-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem;}
+    .mc-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:0.6rem;}
+    .mc-body{font-size:0.85rem;color:#374151;line-height:1.7;font-weight:300;}
+    .mc-tag{display:inline-block;margin-top:0.9rem;padding:0.25rem 0.7rem;background:rgba(8,145,178,0.08);color:var(--teal);border:1px solid rgba(8,145,178,0.2);border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;}
+
+    /* BAKING */
+    .baking-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-bottom:2rem;}
+    .baking-text p{font-size:0.9rem;color:#374151;line-height:1.8;font-weight:300;margin-bottom:1rem;}
+    .baking-text strong{color:var(--ink);font-weight:600;}
+    .bake-items{display:flex;flex-wrap:wrap;gap:0.75rem;}
+    .bake-item{
+      display:flex;align-items:center;gap:0.6rem;
+      padding:0.75rem 1.4rem;border:1.5px solid var(--border);border-radius:3px;
+      font-size:0.88rem;font-weight:500;color:var(--ink);background:var(--paper);
+      transition:all .2s;cursor:default;
+    }
+    .hobby-section:nth-child(even) .bake-item{background:var(--paper);}
+    .bake-item:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-pale);}
+    .bake-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+
+    /* BADMINTON */
+    .badminton-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-bottom:2.5rem;}
+    .b-card{background:var(--paper-2);border:1px solid var(--border);border-radius:3px;padding:1.75rem;transition:all .2s;}
+    .hobby-section:nth-child(even) .b-card{background:var(--paper);}
+    .b-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+    .bc-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:0.6rem;}
+    .bc-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:0.75rem;}
+    .bc-body{font-size:0.85rem;color:#374151;line-height:1.7;font-weight:300;}
+    .bc-highlight{display:inline-block;margin-top:0.9rem;padding:0.25rem 0.7rem;background:var(--gold-pale);color:var(--gold);border:1px solid rgba(217,119,6,0.2);border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;}
+
+    /* TROPHY ROW */
+    .trophy-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
+    .trophy-cell{background:var(--navy);padding:2rem 1.5rem;text-align:center;transition:background .2s;}
+    .trophy-cell:hover{background:var(--navy-3);}
+    .trophy-num{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;color:#fff;line-height:1;}
+    .trophy-num span{color:var(--teal-bright);font-size:1.5rem;}
+    .trophy-lbl{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:0.4rem;}
+
+    /* FOOTER */
+    footer{background:#060e18;padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    footer p{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.08em;color:rgba(255,255,255,0.2);}
+    footer a{color:rgba(255,255,255,0.2);text-decoration:none;transition:color .2s;}
+    footer a:hover{color:var(--teal-bright);}
+
+    @media(max-width:768px){
+      nav{padding:1rem 1.5rem;}
+      .nav-links{display:none;}
+      .page-hero,.hobby-section{padding:8rem 1.5rem 4rem;}
+      .hobby-header{grid-template-columns:1fr;}
+      .markets-grid,.baking-layout,.badminton-layout{grid-template-columns:1fr;}
+      .trophy-row{grid-template-columns:1fr 1fr;}
+      footer{padding:2rem 1.5rem;flex-direction:column;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Ishan <span>Suthar</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Portfolio</a></li>
+    <li><a href="research.html">Research</a></li>
+    <li><a href="hobbies.html" class="active">Hobbies</a></li>
+    <li><a href="https://linktr.ee/i.ishan.2812" target="_blank" class="nav-cta">Connect ↗</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <a href="index.html" class="back-link">← Back to Portfolio</a>
+  <div class="page-hero-eyebrow">Beyond the Research</div>
+  <h1>Hobbies &<br><em>Interests</em></h1>
+  <p class="page-hero-sub">The things that keep me sharp, competitive, and grounded — markets, bread, and badminton.</p>
+</div>
+
+<!-- MARKETS -->
+<div class="hobby-section">
+  <div class="hobby-header">
+    <div class="hobby-icon">📈</div>
+    <div>
+      <div class="hobby-icon-label">Finance & Analysis</div>
+      <h2>Markets &<br><em>Investing</em></h2>
+    </div>
+  </div>
+  <div class="markets-grid">
+    <div class="m-card">
+      <div class="mc-label">TradingView</div>
+      <div class="mc-title">Custom Indicators & Strategies</div>
+      <div class="mc-body">I build and maintain my own Pine Script indicators and systematic trading strategies on TradingView — from momentum signals to custom overlays that map entry and exit zones based on price action, volume, and multi-timeframe confluence.</div>
+      <span class="mc-tag">Pine Script · TradingView</span>
+    </div>
+    <div class="m-card">
+      <div class="mc-label">Research Process</div>
+      <div class="mc-title">Fundamental & Technical Analysis</div>
+      <div class="mc-body">I approach investing the same way I approach epidemiology — through rigorous, evidence-based analysis. I study earnings reports, macro conditions, sector rotation, and price structure before any position. Speculation without a thesis isn't investing, it's noise.</div>
+      <span class="mc-tag">Equities · Macro · Crypto</span>
+    </div>
+    <div class="m-card">
+      <div class="mc-label">The Crossover</div>
+      <div class="mc-title">Epidemiologic Thinking in Markets</div>
+      <div class="mc-body">Working daily with real-world datasets has sharpened how I think about signal vs. noise, confounding, survivorship bias, and the limits of any model. The same skepticism that makes me a better epidemiologist makes me a more disciplined investor — no strategy is infallible, and risk management is everything.</div>
+      <span class="mc-tag">Risk Management · Systems Thinking</span>
+    </div>
+  </div>
+</div>
+
+<!-- BAKING -->
+<div class="hobby-section">
+  <div class="hobby-header">
+    <div class="hobby-icon">🍞</div>
+    <div>
+      <div class="hobby-icon-label">Craft & Patience</div>
+      <h2>Artisan<br><em>Baking</em></h2>
+    </div>
+  </div>
+  <div class="baking-layout">
+    <div class="baking-text">
+      <p>Baking is the closest thing to bench science I do at home. Wild yeast behavior, hydration ratios, fermentation windows, crumb structure — there are variables to control and hypotheses to test in every bake. It demands the same patience that long-term cohort research does.</p>
+      <p>My long-ferment <strong>sourdough</strong> is the anchor of my baking practice, but I push into enriched doughs, laminated breads, and steamed formats regularly. Each loaf is a new experiment in understanding how flour, water, salt, and time interact.</p>
+    </div>
+    <div class="baking-text">
+      <p>There's a particular satisfaction in the gap between what you put in and what you get out — a 72-hour cold-proofed sourdough bears almost no resemblance to its ingredients, and that transformation is genuinely fascinating.</p>
+      <p>Bao buns and stuffed burger buns are the opposite end: fast, forgiving, deeply satisfying. Both extremes have their place.</p>
+    </div>
+  </div>
+  <div class="bake-items">
+    <div class="bake-item"><span class="bake-dot"></span>Sourdough Bread</div>
+    <div class="bake-item"><span class="bake-dot"></span>Bagels</div>
+    <div class="bake-item"><span class="bake-dot"></span>Baguettes</div>
+    <div class="bake-item"><span class="bake-dot"></span>French Bread</div>
+    <div class="bake-item"><span class="bake-dot"></span>Stuffed Burger Buns</div>
+    <div class="bake-item"><span class="bake-dot"></span>Bao Buns</div>
+  </div>
+</div>
+
+<!-- BADMINTON -->
+<div class="hobby-section">
+  <div class="hobby-header">
+    <div class="hobby-icon">🏸</div>
+    <div>
+      <div class="hobby-icon-label">Sport & Competition</div>
+      <h2>Badminton —<br><em>Player & Coach</em></h2>
+    </div>
+  </div>
+  <div class="badminton-layout">
+    <div class="b-card">
+      <div class="bc-label">Playing Career</div>
+      <div class="bc-title">Tournament Competitor Since High School</div>
+      <div class="bc-body">I've been playing badminton competitively since high school — an unbroken thread through medical school, MPH, and PhD. I've competed in numerous tournaments across levels, bringing home 6 trophies. The sport has followed me from India to the US, and every new city means finding a new court.</div>
+      <span class="bc-highlight">🏆 6 Tournament Trophies</span>
+    </div>
+    <div class="b-card">
+      <div class="bc-label">Coaching · Charlotte, NC</div>
+      <div class="bc-title">Badminton Coach at Club7</div>
+      <div class="bc-body">Currently coaching at Club7 in Charlotte, NC — working with players across skill levels on technique, footwork, and match strategy. Coaching has sharpened how I break down complex movement patterns and communicate them simply. That skill translates directly to scientific mentorship and teaching.</div>
+      <span class="bc-highlight">Club7 · Charlotte, NC</span>
+    </div>
+  </div>
+
+  <div class="trophy-row">
+    <div class="trophy-cell">
+      <div class="trophy-num">10<span>+</span></div>
+      <div class="trophy-lbl">Years Playing</div>
+    </div>
+    <div class="trophy-cell">
+      <div class="trophy-num">6</div>
+      <div class="trophy-lbl">Tournament Trophies</div>
+    </div>
+    <div class="trophy-cell">
+      <div class="trophy-num">2</div>
+      <div class="trophy-lbl">Countries Competed</div>
+    </div>
+    <div class="trophy-cell">
+      <div class="trophy-num" style="font-size:1.6rem;padding-top:0.3rem">Coach</div>
+      <div class="trophy-lbl">Club7 · Charlotte</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Ishan Suthar · Charlotte, NC</p>
+  <p>
+    <a href="index.html">← Portfolio</a> &nbsp;·&nbsp;
+    <a href="research.html">Research</a> &nbsp;·&nbsp;
+    <a href="https://linktr.ee/i.ishan.2812" target="_blank">Linktree ↗</a>
+  </p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((e)=>{e.forEach(x=>{ if(x.isIntersecting) x.target.classList.add('visible'); });},{threshold:0.08});
+  document.querySelectorAll('.hobby-section').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
