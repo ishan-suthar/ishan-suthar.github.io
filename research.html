@@ -191,6 +191,7 @@
   <ul class="nav-links">
     <li><a href="index.html">Portfolio</a></li>
     <li><a href="research.html" class="active">Research</a></li>
+    <li><a href="ai-agents.html">AI Agents</a></li>
     <li><a href="hobbies.html">Hobbies</a></li>
     <li><a href="https://linktr.ee/i.ishan.2812" target="_blank" class="nav-cta">Connect ↗</a></li>
   </ul>
@@ -202,6 +203,7 @@
   <div class="page-hero-eyebrow">PhD Candidate · RWE & HEOR</div>
   <h1>Research &<br><em>Projects</em></h1>
   <p class="page-hero-sub">7 projects spanning causal inference, health economics, EHR analytics, AI tools, and program evaluation — from dissertation to consulting.</p>
+  <p class="page-hero-sub" style="margin-top:0.75rem;"><a href="ai-agents.html" style="color:var(--teal-bright);font-weight:600;">🤖 Also see the AI Agents I've built →</a></p>
 </div>
 
 <!-- PROJECT NAV -->
@@ -213,6 +215,7 @@
   <a href="#healthystart" class="pnav-btn">05 · Healthy Start</a>
   <a href="#pediatric" class="pnav-btn">06 · Pediatric HCT</a>
   <a href="#aitools" class="pnav-btn">07 · AI Tools</a>
+  <a href="ai-agents.html" class="pnav-btn" style="background:var(--gold);color:#fff;border-color:var(--gold)">🤖 AI Agents →</a>
 </div>
 
 <!-- ═══ 01 DISSERTATION ═══ -->
@@ -268,6 +271,7 @@
       <p class="proj-desc">Co-investigator and lead analyst on a 3-institution NIH-funded study generating real-world evidence on the cost-effectiveness of periodontal treatment in pregnant women. This project spans four interconnected analyses — each producing standalone evidence with direct payer and clinical relevance.</p>
       <ul class="proj-bullets">
         <li>Applied <strong>G-estimation and marginal structural models</strong> to estimate causal effect of preventive periodontal care on periodontitis incidence <span class="proj-impact">24% risk reduction</span></li>
+        <li>Built a companion <strong>G-estimation causal model (N=834)</strong> using R (geepack, gformula) to quantify bidirectional effects between diabetes and periodontitis progression — harmonizing complex tooth-level and patient-level variables</li>
         <li>Built <strong>50-state Medicaid fee schedule weighted cost models</strong> to estimate per-capita treatment burden and project economic savings <span class="proj-impact">~$6k/capita/yr</span></li>
         <li>Defined the <strong>first clinical responder endpoint</strong> for periodontitis treatment — a consensus definition with direct industry utility for trial design and regulatory submissions</li>
         <li>Developing a <strong>5–10 year tooth-loss prediction model</strong> using BigMouth national database — risk modeling across patient subgroups</li>
@@ -290,6 +294,7 @@
           <span class="sc-tag">MSMs</span>
           <span class="sc-tag">CEA</span>
           <span class="sc-tag">Risk Modeling</span>
+          <span class="sc-tag">geepack/gformula</span>
         </div>
       </div>
       <div class="sidebar-card">
@@ -307,7 +312,7 @@
 <!-- ═══ 03 DENTAL STUDY ═══ -->
 <div id="dental" class="proj-section fade-up">
   <div class="proj-num">03</div>
-  <p class="proj-type">Epidemiology · National Population Study</p>
+  <p class="proj-type">Epidemiology · RWE · National Population Study</p>
   <h2>Dental Utilization — <em>ADA National Study</em></h2>
   <div class="proj-detail">
     <div>
@@ -343,7 +348,7 @@
 <!-- ═══ 04 HAI ═══ -->
 <div id="hai" class="proj-section fade-up">
   <div class="proj-num">04</div>
-  <p class="proj-type">EHR Analytics · Consulting</p>
+  <p class="proj-type">EHR Analytics · RWE · Consulting</p>
   <h2>HAI Predictive Analytics — <em>Lexington Medical</em></h2>
   <div class="proj-detail">
     <div>
@@ -379,7 +384,7 @@
 <!-- ═══ 05 HEALTHY START ═══ -->
 <div id="healthystart" class="proj-section fade-up">
   <div class="proj-num">05</div>
-  <p class="proj-type">Program Evaluation · Maternal Health</p>
+  <p class="proj-type">Program Evaluation · RWE · Maternal Health</p>
   <h2>HRSA Healthy Start — <em>Program Evaluation</em> <span class="gold">($5M)</span></h2>
   <div class="proj-detail">
     <div>
@@ -417,7 +422,7 @@
 <!-- ═══ 06 PEDIATRIC HCT ═══ -->
 <div id="pediatric" class="proj-section fade-up">
   <div class="proj-num">06</div>
-  <p class="proj-type">Survival Analysis · Multi-Center Registry</p>
+  <p class="proj-type">Survival Analysis · RWE · Multi-Center Registry</p>
   <h2>Post-HCT Survival — <em>Pediatric Aplastic Anemia</em></h2>
   <div class="proj-detail">
     <div>
@@ -455,14 +460,14 @@
   <div class="proj-num">07</div>
   <p class="proj-type">AI · Data Science · Python</p>
   <h2>AI & Data Science <em>Tools Portfolio</em></h2>
-  <p class="proj-desc" style="max-width:680px;margin-bottom:0">Building scalable tools that amplify and automate analytic workflows — from clinical NLP to strategy backtesting engines.</p>
+  <p class="proj-desc" style="max-width:680px;margin-bottom:0">Building scalable tools that amplify and automate analytic workflows — from clinical NLP to options-screening engines.</p>
   <div class="tools-grid">
     <div class="tool-card">
       <div class="tool-icon">📈</div>
-      <div class="tool-name">AI-Enabled Strategy Backtester</div>
-      <div class="tool-stack">Python · Pandas · NumPy · OOP Architecture</div>
-      <div class="tool-desc">Modular backtesting engine for multi-timeframe trading strategies. Features scenario modeling, simulation design, and forecasting — built with a clean OOP architecture for extensibility.</div>
-      <div class="tool-relevance">⚡ Directly applicable to clinical trial simulation & resource modeling</div>
+      <div class="tool-name">LiquidAI — Options Screening & Backtesting Engine</div>
+      <div class="tool-stack">Python · FastAPI · Next.js · TypeScript · Tailwind · ShadCN UI · Schwab Market Data</div>
+      <div class="tool-desc">Full-stack options-research platform that scans the S&P 500 and ranks options by expected value, premium affordability, entry/target/stop levels, and risk diagnostics. Features expiry-bucket classification, near-the-money contract filtering, paper-trade tracking, and an explainable BUY_CANDIDATE / WATCHLIST / AVOID recommendation dashboard.</div>
+      <div class="tool-relevance">⚡ OOP architecture & systematic backtesting directly transferable to trial simulation and resource modeling</div>
     </div>
     <div class="tool-card">
       <div class="tool-icon">🔬</div>
@@ -479,12 +484,22 @@
       <div class="tool-relevance">⚡ EHR data extraction · Unstructured data analysis · Evidence synthesis</div>
     </div>
   </div>
+
+  <div style="margin-top:2.5rem;padding:2rem;background:linear-gradient(135deg,var(--navy) 0%,#0f2d45 100%);border-radius:4px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal-bright);margin-bottom:0.4rem;">Beyond analytic tools</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#fff;">I also build autonomous AI agents</div>
+      <div style="font-size:0.85rem;color:rgba(255,255,255,0.55);margin-top:0.4rem;max-width:520px;">Voice-based clinical intake, automated content pipelines, and a job-search agent that finds, scores, and drafts outreach for opportunities on its own.</div>
+    </div>
+    <a href="ai-agents.html" class="btn btn-gold">🤖 View AI Agents →</a>
+  </div>
 </div>
 
 <footer>
   <p>© 2025 Ishan Suthar · Clinical Epidemiologist · RWE & HEOR · Charlotte, NC</p>
   <p>
     <a href="index.html">← Portfolio</a> &nbsp;·&nbsp;
+    <a href="ai-agents.html">AI Agents</a> &nbsp;·&nbsp;
     <a href="hobbies.html">Hobbies</a> &nbsp;·&nbsp;
     <a href="https://linktr.ee/i.ishan.2812" target="_blank">Linktree ↗</a>
   </p>
