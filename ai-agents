@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ishan Suthar — AI Agents & Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #0d1b2a;
+      --navy-2: #132035;
+      --navy-3: #1a2d45;
+      --teal:   #0891b2;
+      --teal-bright: #22d3ee;
+      --gold:   #d97706;
+      --gold-bright: #fbbf24;
+      --gold-pale: #fef3c7;
+      --paper:  #ffffff;
+      --paper-2:#f0f6fa;
+      --paper-3:#e2edf5;
+      --ink:    #0d1b2a;
+      --muted:  #64748b;
+      --border: rgba(13,27,42,0.1);
+      --border-bright: rgba(13,27,42,0.18);
+      --shadow: 0 4px 24px rgba(13,27,42,0.1);
+      --shadow-lg: 0 12px 48px rgba(13,27,42,0.15);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;overflow-x:hidden;}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(13,27,42,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);}
+    .nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;color:#fff;text-decoration:none;}
+    .nav-logo span{color:var(--teal-bright);}
+    .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+    .nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;transition:color .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--teal-bright);}
+    .nav-cta{padding:0.5rem 1.25rem;background:var(--teal);color:#fff;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
+    .nav-cta:hover{background:var(--teal-bright);color:var(--navy);}
+
+    /* PAGE HERO */
+    .page-hero{
+      min-height:55vh; display:flex; flex-direction:column; justify-content:flex-end;
+      padding:10rem 4rem 5rem;
+      background:linear-gradient(135deg,var(--navy) 0%,var(--navy-3) 60%,#0f2a3d 100%);
+      position:relative;overflow:hidden;
+    }
+    .page-hero::before{
+      content:'';position:absolute;inset:0;
+      background-image:linear-gradient(rgba(8,145,178,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(8,145,178,0.07) 1px,transparent 1px);
+      background-size:64px 64px; animation:gridFloat 20s linear infinite;
+    }
+    @keyframes gridFloat{0%{background-position:0 0}100%{background-position:64px 64px}}
+    .page-hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-bright);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;position:relative;}
+    .page-hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--teal-bright);}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5rem);font-weight:900;letter-spacing:-0.03em;color:#fff;line-height:.95;margin-bottom:1.2rem;position:relative;}
+    .page-hero h1 em{font-style:italic;font-weight:400;color:var(--teal-bright);}
+    .page-hero-sub{font-size:1rem;color:rgba(255,255,255,0.5);font-weight:300;max-width:580px;position:relative;}
+    .back-link{display:inline-flex;align-items:center;gap:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;margin-bottom:2.5rem;transition:color .2s;position:relative;}
+    .back-link:hover{color:var(--teal-bright);}
+
+    /* PROJECT NAV */
+    .proj-nav{
+      background:var(--paper-2); border-bottom:1px solid var(--border);
+      padding:1.25rem 4rem; display:flex; gap:1rem; flex-wrap:wrap;
+      position:sticky; top:64px; z-index:100;
+    }
+    .pnav-btn{
+      font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;
+      text-transform:uppercase;padding:0.4rem 1rem;border-radius:2px;
+      background:transparent;border:1px solid var(--border);color:var(--muted);
+      cursor:pointer;text-decoration:none;transition:all .2s;
+    }
+    .pnav-btn:hover,.pnav-btn.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+    /* SECTIONS */
+    .proj-section{padding:5rem 4rem;}
+    .proj-section:nth-child(even){background:var(--paper-2);}
+
+    .section-tag{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;}
+    h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;letter-spacing:-0.02em;color:var(--ink);line-height:1.1;margin-bottom:0.5rem;}
+    h2 em{font-style:italic;font-weight:400;color:var(--teal);}
+    h2 .gold{color:var(--gold);font-style:italic;font-weight:400;}
+
+    /* INTRO — special full-width */
+    #intro{
+      background:linear-gradient(135deg,var(--navy) 0%,#0f2d45 100%);
+      padding:6rem 4rem; position:relative; overflow:hidden;
+    }
+    #intro::before{
+      content:'';position:absolute;inset:0;
+      background-image:linear-gradient(rgba(8,145,178,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(8,145,178,0.06) 1px,transparent 1px);
+      background-size:64px 64px;
+    }
+    #intro h2{color:#fff;margin-bottom:1.5rem;}
+    #intro h2 em{color:var(--teal-bright);}
+    #intro .section-tag{color:var(--teal-bright);}
+    .intro-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:4rem;align-items:start;position:relative;}
+    .intro-text p{font-size:0.95rem;line-height:1.85;color:rgba(255,255,255,0.65);font-weight:300;margin-bottom:1rem;}
+    .intro-text p strong{color:rgba(255,255,255,0.9);font-weight:600;}
+    .intro-stats{display:flex;flex-direction:column;gap:1rem;}
+    .istat{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:3px;padding:1.25rem 1.5rem;}
+    .istat-num{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--teal-bright);line-height:1;}
+    .istat-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:0.4rem;}
+
+    /* AGENT CARDS */
+    .proj-detail{display:grid;grid-template-columns:2fr 1fr;gap:3rem;align-items:start;margin-bottom:0;}
+    .proj-num{
+      font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;
+      color:var(--paper-3);line-height:1;margin-bottom:-0.5rem;
+    }
+    .proj-type{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:0.4rem;}
+    .proj-desc{font-size:0.92rem;color:#374151;line-height:1.8;font-weight:300;margin:1rem 0;}
+    .proj-bullets{list-style:none;margin-bottom:1rem;}
+    .proj-bullets li{font-size:0.88rem;color:#374151;line-height:1.7;padding:0.3rem 0 0.3rem 1.3rem;position:relative;font-weight:300;}
+    .proj-bullets li::before{content:'→';position:absolute;left:0;color:var(--teal);}
+
+    .proj-sidebar{display:flex;flex-direction:column;gap:1rem;}
+    .sidebar-card{background:var(--paper);border:1px solid var(--border);border-radius:3px;padding:1.25rem;transition:box-shadow .2s;}
+    .proj-section:nth-child(even) .sidebar-card{background:var(--paper-3);}
+    .sidebar-card:hover{box-shadow:var(--shadow);}
+    .sc-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
+    .sc-value{font-size:0.85rem;color:var(--ink);font-weight:500;line-height:1.5;}
+    .sc-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem;}
+    .sc-tag{font-family:'JetBrains Mono',monospace;font-size:0.62rem;padding:0.2rem 0.55rem;background:var(--paper-2);border:1px solid var(--border);border-radius:2px;color:var(--muted);}
+    .proj-section:nth-child(even) .sc-tag{background:var(--paper);}
+    .status-pill{display:inline-flex;align-items:center;gap:0.4rem;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.06em;padding:0.3rem 0.7rem;background:var(--gold-pale);color:var(--gold);border:1px solid rgba(217,119,6,0.2);border-radius:2px;}
+    .status-pill::before{content:'●';font-size:0.5rem;}
+
+    /* ARCHITECTURE STRIP */
+    .flow-strip{display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;margin:1.5rem 0;}
+    .flow-step{font-family:'JetBrains Mono',monospace;font-size:0.68rem;padding:0.45rem 0.9rem;background:var(--paper);border:1px solid var(--border-bright);border-radius:2px;color:var(--ink);}
+    .proj-section:nth-child(even) .flow-step{background:var(--paper-3);}
+    .flow-arrow{color:var(--teal);font-size:0.85rem;}
+
+    /* CLOSING CTA */
+    #closing{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-3) 100%);padding:5rem 4rem;text-align:center;position:relative;overflow:hidden;}
+    #closing::after{content:'';position:absolute;right:-80px;top:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle, rgba(8,145,178,0.15) 0%, transparent 70%);}
+    #closing h2{color:#fff;margin-bottom:1rem;position:relative;}
+    #closing h2 em{color:var(--teal-bright);}
+    #closing p{font-size:0.95rem;color:rgba(255,255,255,0.55);max-width:560px;margin:0 auto 2rem;font-weight:300;position:relative;}
+    .btn{
+      display:inline-flex; align-items:center; gap:0.5rem;
+      padding:0.85rem 2rem; border-radius:3px;
+      font-family:'JetBrains Mono',monospace; font-size:0.72rem;
+      letter-spacing:0.08em; text-transform:uppercase;
+      text-decoration:none; border:none; cursor:pointer; transition:all .2s;
+      position:relative;
+    }
+    .btn-primary{background:var(--teal);color:#fff;}
+    .btn-primary:hover{background:var(--teal-bright);color:var(--navy);}
+    .btn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.3);}
+    .btn-outline:hover{border-color:var(--teal-bright);color:var(--teal-bright);}
+
+    /* FADE */
+    .fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+    .fade-up.visible{opacity:1;transform:none;}
+
+    /* FOOTER */
+    footer{background:#060e18;padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    footer p{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.08em;color:rgba(255,255,255,0.2);}
+    footer a{color:rgba(255,255,255,0.2);text-decoration:none;transition:color .2s;}
+    footer a:hover{color:var(--teal-bright);}
+
+    @media(max-width:768px){
+      nav{padding:1rem 1.5rem;}
+      .nav-links{display:none;}
+      .page-hero,.proj-section,#intro,#closing{padding:8rem 1.5rem 3rem;}
+      .proj-nav{padding:1rem 1.5rem;top:56px;}
+      .intro-layout,.proj-detail{grid-template-columns:1fr;}
+      footer{padding:2rem 1.5rem;flex-direction:column;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Ishan <span>Suthar</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Portfolio</a></li>
+    <li><a href="research.html">Research</a></li>
+    <li><a href="ai-agents.html" class="active">AI Agents</a></li>
+    <li><a href="hobbies.html">Hobbies</a></li>
+    <li><a href="https://linktr.ee/i.ishan.2812" target="_blank" class="nav-cta">Connect ↗</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <a href="index.html" class="back-link">← Back to Portfolio</a>
+  <div class="page-hero-eyebrow">Applied AI Engineering</div>
+  <h1>AI Agents &<br><em>Automation</em></h1>
+  <p class="page-hero-sub">3 autonomous AI agents and end-to-end automation systems — built solo, from architecture to deployment — spanning healthcare intake, content automation, and job-search outreach.</p>
+</div>
+
+<!-- PROJECT NAV -->
+<div class="proj-nav">
+  <a href="#grace" class="pnav-btn active">01 · GRACE</a>
+  <a href="#videopipeline" class="pnav-btn">02 · Marketing Video Pipeline</a>
+  <a href="#outreachiq" class="pnav-btn">03 · OutreachIQ</a>
+  <a href="research.html" class="pnav-btn" style="background:var(--teal);color:#fff;border-color:var(--teal)">← Back to Research</a>
+</div>
+
+<!-- ═══ INTRO ═══ -->
+<div id="intro">
+  <p class="section-tag">Why I Build These</p>
+  <h2>Epidemiologic Rigor, <em>Applied to AI Systems</em></h2>
+  <div class="intro-layout">
+    <div class="intro-text">
+      <p>Epidemiology trained me to think in <strong>workflows and decision logic</strong> — eligibility criteria, structured data capture, safety protocols, audit trails. Building AI agents turned out to be a natural extension of that same skill set: defining clear inputs, decision points, and outputs, then automating the workflow end-to-end.</p>
+      <p>Each of these systems was built solo — architecture, backend, API integrations, and (where relevant) the conversational or decision logic itself. They range from a <strong>voice-based clinical intake agent</strong> built for a federally funded maternal health program, to a <strong>fully autonomous content pipeline</strong>, to a <strong>LangGraph-based job-search agent</strong> that has actively supported my own search for RWE and HEOR roles.</p>
+      <p>I see this as directly complementary to clinical epidemiology and RWE work — the same discipline that produces valid causal estimates also produces AI systems with embedded safety logic, structured outputs, and reproducible behavior.</p>
+    </div>
+    <div class="intro-stats">
+      <div class="istat">
+        <div class="istat-num">3</div>
+        <div class="istat-label">Agents built solo, end-to-end</div>
+      </div>
+      <div class="istat">
+        <div class="istat-num">7+</div>
+        <div class="istat-label">External APIs orchestrated (video pipeline alone)</div>
+      </div>
+      <div class="istat">
+        <div class="istat-num">100%</div>
+        <div class="istat-label">Autonomous daily publishing (video pipeline)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 01 GRACE ═══ -->
+<div id="grace" class="proj-section fade-up">
+  <div class="proj-num">01</div>
+  <p class="proj-type">AI Agent · Voice Interface · Healthcare Intake</p>
+  <h2>GRACE — <em>Guided Responsive AI Conversation Engine</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">A prototype voice-enabled AI intake agent built for Healthy Start SC caseworkers — replacing a static paper-based intake form with a conversational agent that conducts the full federal Pregnancy Risk Assessment interview, including clinical safety screening, in natural spoken dialogue.</p>
+      <div class="flow-strip">
+        <span class="flow-step">🎙️ Voice input</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Claude API conversation logic</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">EPDS / IPV safety checks</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">🔊 ElevenLabs voice reply</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">REDCap-ready output</span>
+      </div>
+      <ul class="proj-bullets">
+        <li>Used <strong>Claude API</strong> as the conversational engine, <strong>ElevenLabs TTS</strong> (Sarah voice) for natural voice synthesis, and the <strong>Web Speech API</strong> for live microphone input — creating a full two-way voice interview experience</li>
+        <li>Designed <strong>EPDS depression screening and IPV safety-flagging logic</strong> directly into the AI system prompt, embedding clinical safety protocols at the model level with staff-only field protections</li>
+        <li>Built <strong>JWT-based staff authentication</strong>, a participant-facing voice interview interface, and automated document generation producing <strong>REDCap-ready data entry sheets</strong> from each completed interview</li>
+        <li>Covers the full <strong>Healthy Start SC Pregnancy Risk Assessment form</strong> — translating a 30+ field clinical intake into a guided, adaptive conversation</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <span class="status-pill">Prototype built & demoed internally</span>
+      <div class="sidebar-card">
+        <div class="sc-label">Stack</div>
+        <div class="sc-tags">
+          <span class="sc-tag">Python</span><span class="sc-tag">Flask</span><span class="sc-tag">Claude API</span>
+          <span class="sc-tag">ElevenLabs TTS</span><span class="sc-tag">Web Speech API</span>
+          <span class="sc-tag">JWT</span><span class="sc-tag">REDCap</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Use Case</div>
+        <div class="sc-value">Caseworker-administered voice intake for a $5M federally funded maternal & child health program</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Safety Design</div>
+        <div class="sc-value">Clinical screening logic (EPDS, IPV) embedded at the prompt level with staff-only field protections</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 02 MARKETING VIDEO PIPELINE ═══ -->
+<div id="videopipeline" class="proj-section fade-up">
+  <div class="proj-num">02</div>
+  <p class="proj-type">AI Agent · Content Automation · Multi-API Orchestration</p>
+  <h2>Automated Marketing <em>Video Pipeline</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">A fully autonomous content pipeline that researches trending topics, writes its own scripts, generates voiceovers, assembles finished video, and publishes across platforms — running on a daily schedule with no manual editing step.</p>
+      <div class="flow-strip">
+        <span class="flow-step">🔎 Trend detection</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Claude API script</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">ElevenLabs voiceover</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Shotstack assembly</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">AssemblyAI captions</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">📺 YouTube / TikTok publish</span>
+      </div>
+      <ul class="proj-bullets">
+        <li>Built an automated pipeline that researches trending topics, generates AI-written scripts via <strong>Claude API</strong>, synthesizes voiceovers with <strong>ElevenLabs</strong>, and assembles ~7-minute stock-footage videos with auto-captions using <strong>Shotstack</strong> and <strong>Pexels</strong></li>
+        <li>Integrated <strong>seven external APIs</strong> — trend detection, LLM scripting, TTS, video rendering, transcription (AssemblyAI), and YouTube publishing — into a single modular pipeline with full logging and error handling</li>
+        <li>Implemented <strong>YouTube OAuth2 refresh-token authentication</strong> for unattended daily uploads, automated affiliate-link substitution, and a <strong>TikTok export module</strong> producing platform-optimized 58-second cuts with overlay branding</li>
+        <li>Runs end-to-end on a daily schedule — from topic discovery to multi-platform publishing — with no manual editing step</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <span class="status-pill">Runs autonomously on a daily schedule</span>
+      <div class="sidebar-card">
+        <div class="sc-label">Stack</div>
+        <div class="sc-tags">
+          <span class="sc-tag">Python</span><span class="sc-tag">Claude API</span><span class="sc-tag">ElevenLabs</span>
+          <span class="sc-tag">Shotstack</span><span class="sc-tag">Pexels</span><span class="sc-tag">AssemblyAI</span>
+          <span class="sc-tag">YouTube Data API v3</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Cadence</div>
+        <div class="sc-value">Fully automated daily publishing, no manual step</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Platforms</div>
+        <div class="sc-value">YouTube (7-min videos) + TikTok (58s branded cuts)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03 OUTREACHIQ ═══ -->
+<div id="outreachiq" class="proj-section fade-up">
+  <div class="proj-num">03</div>
+  <p class="proj-type">AI Agent · Job Search Automation · LangGraph</p>
+  <h2>OutreachIQ — <em>Networking Outreach AI Agent</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">An autonomous agent built to scale and systematize my own job search — finding relevant research, epidemiology, biostatistics, and public health roles, scoring fit against my qualifications, and drafting personalized outreach without manual effort for every application.</p>
+      <div class="flow-strip">
+        <span class="flow-step">🔎 Job discovery</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">LLM fit scoring</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Personalized email/cover letter draft</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">📧 Gmail send</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">PostgreSQL tracking</span>
+      </div>
+      <ul class="proj-bullets">
+        <li>Developed an autonomous agent using <strong>LangGraph</strong> that identifies relevant research, epidemiology, biostatistics, and public health job opportunities, analyzes job requirements, and scores candidate fit using <strong>LLM-based profile matching</strong></li>
+        <li>Automated personalized outreach workflows — generating tailored <strong>networking emails, cover letters, and faculty introductions</strong> based on each job description, research interests, publication history, and institutional priorities</li>
+        <li>Integrated <strong>Gmail API, Google Custom Search</strong>, and recruiter/faculty discovery pipelines to identify hiring contacts, track outreach status, and maintain a structured <strong>PostgreSQL database</strong> of applications, responses, and follow-up actions</li>
+        <li>Built as a self-directed tool to scale my own multi-track search across <strong>pharma RWE/HEOR, clinical epidemiology, and academic research roles</strong></li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <span class="status-pill">Actively used in my own job search</span>
+      <div class="sidebar-card">
+        <div class="sc-label">Stack</div>
+        <div class="sc-tags">
+          <span class="sc-tag">Python</span><span class="sc-tag">Claude API</span><span class="sc-tag">OpenAI API</span>
+          <span class="sc-tag">LangGraph</span><span class="sc-tag">Gmail API</span>
+          <span class="sc-tag">Google Custom Search</span><span class="sc-tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Function</div>
+        <div class="sc-value">Job discovery → LLM fit scoring → personalized outreach → application tracking</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Built For</div>
+        <div class="sc-value">My own RWE / HEOR / clinical epidemiology job search</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CLOSING CTA ═══ -->
+<div id="closing">
+  <p class="section-tag" style="color:var(--teal-bright)">Let's Talk</p>
+  <h2>Interested in <em>How I Build?</em></h2>
+  <p>Whether it's causal inference on real-world data or an autonomous agent orchestrating a dozen APIs, I like building things that work end-to-end. Happy to walk through the architecture of any of these.</p>
+  <a href="https://linktr.ee/i.ishan.2812" target="_blank" class="btn btn-primary">Connect with Me ↗</a>
+  <a href="research.html" class="btn btn-outline">View Research Projects →</a>
+</div>
+
+<footer>
+  <p>© 2026 Ishan Suthar · Clinical Epidemiologist · RWE & HEOR · Charlotte, NC</p>
+  <p>
+    <a href="index.html">← Portfolio</a> &nbsp;·&nbsp;
+    <a href="research.html">Research</a> &nbsp;·&nbsp;
+    <a href="hobbies.html">Hobbies</a> &nbsp;·&nbsp;
+    <a href="https://linktr.ee/i.ishan.2812" target="_blank">Linktree ↗</a>
+  </p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+
+  // Highlight active proj nav on scroll
+  const sections=['grace','videopipeline','outreachiq'];
+  const pnavBtns = document.querySelectorAll('.proj-nav .pnav-btn[href^="#"]');
+  window.addEventListener('scroll',()=>{
+    let current='';
+    sections.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el && window.scrollY >= el.offsetTop - 200) current=id;
+    });
+    pnavBtns.forEach(btn=>{
+      btn.classList.toggle('active', btn.getAttribute('href')==='#'+current);
+    });
+  });
+</script>
+</body>
+</html>
