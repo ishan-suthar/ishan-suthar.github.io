@@ -29,15 +29,52 @@
     html{scroll-behavior:smooth;}
     body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;overflow-x:hidden;}
 
+    /* SCROLL PROGRESS BAR */
+    .scroll-progress {
+      position:fixed; top:0; left:0; height:3px; z-index:300;
+      background:linear-gradient(90deg, var(--teal), var(--teal-bright), var(--gold-bright));
+      width:0; transition:width 0.1s linear;
+    }
+
+    /* SCROLL PROGRESS BAR */
+    .scroll-progress {
+      position:fixed; top:0; left:0; height:3px; z-index:300;
+      background:linear-gradient(90deg, var(--teal), var(--teal-bright), var(--gold-bright));
+      width:0; transition:width 0.1s linear;
+    }
+
     /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(13,27,42,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);}
+    nav{position:fixed;top:3px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(13,27,42,0.92);backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid rgba(255,255,255,0.06);transition:padding .3s,background .3s;}
+    nav.scrolled{padding:0.7rem 4rem;background:rgba(13,27,42,0.97);}
     .nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;color:#fff;text-decoration:none;}
     .nav-logo span{color:var(--teal-bright);}
     .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
     .nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;transition:color .2s;}
+    .nav-links a{position:relative;}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--teal-bright);transition:width .3s;}
+    .nav-links a{position:relative;}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--teal-bright);transition:width .3s;}
     .nav-links a:hover,.nav-links a.active{color:var(--teal-bright);}
+    .nav-links a:hover::after{width:100%;}
+    .nav-links a:hover::after{width:100%;}
     .nav-cta{padding:0.5rem 1.25rem;background:var(--teal);color:#fff;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
-    .nav-cta:hover{background:var(--teal-bright);color:var(--navy);}
+    .nav-cta:hover{background:var(--teal-bright);color:var(--navy);transform:translateY(-1px);box-shadow:0 4px 16px rgba(34,211,238,0.3);}
+
+
+    /* Hamburger */
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:210;padding:4px;}
+    .hamburger span{width:24px;height:2px;background:#fff;transition:all .3s;border-radius:1px;}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+
+    /* Hamburger */
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:210;padding:4px;}
+    .hamburger span{width:24px;height:2px;background:#fff;transition:all .3s;border-radius:1px;}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
 
     /* HERO */
     .page-hero{
@@ -101,7 +138,7 @@
     .badminton-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-bottom:2.5rem;}
     .b-card{background:var(--paper-2);border:1px solid var(--border);border-radius:3px;padding:1.75rem;transition:all .2s;}
     .hobby-section:nth-child(even) .b-card{background:var(--paper);}
-    .b-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+    .b-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
     .bc-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:0.6rem;}
     .bc-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:0.75rem;}
     .bc-body{font-size:0.85rem;color:#374151;line-height:1.7;font-weight:300;}
@@ -123,20 +160,40 @@
 
     @media(max-width:768px){
       nav{padding:1rem 1.5rem;}
-      .nav-links{display:none;}
+      .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,27,42,0.98);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;}
+      .nav-links.open{display:flex;}
+      .nav-links a{font-size:1rem;}
+      .hamburger{display:flex;}
       .page-hero,.hobby-section{padding:8rem 1.5rem 4rem;}
       .hobby-header{grid-template-columns:1fr;}
       .markets-grid,.baking-layout,.badminton-layout{grid-template-columns:1fr;}
       .trophy-row{grid-template-columns:1fr 1fr;}
       footer{padding:2rem 1.5rem;flex-direction:column;text-align:center;}
     }
+
+    /* Reduced motion */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important;}
+    }
+
+    /* Reduced motion */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important;}
+    }
   </style>
 </head>
 <body>
 
-<nav>
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<nav id="mainNav">
   <a href="index.html" class="nav-logo">Ishan <span>Suthar</span></a>
-  <ul class="nav-links">
+  <div class="hamburger" id="hamburger" onclick="this.classList.toggle('open');document.getElementById('navLinks').classList.toggle('open')"><span></span><span></span><span></span></div>
+  <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Portfolio</a></li>
     <li><a href="research.html">Research</a></li>
     <li><a href="ai-agents.html">AI Agents</a></li>
@@ -229,10 +286,10 @@
       <span class="bc-highlight">🏆 6 Tournament Trophies</span>
     </div>
     <div class="b-card">
-      <div class="bc-label">Coaching · Charlotte, NC</div>
+      <div class="bc-label">Coaching</div>
       <div class="bc-title">Badminton Coach at Club7</div>
-      <div class="bc-body">Currently coaching at Club7 in Charlotte, NC — working with players across skill levels on technique, footwork, and match strategy. Coaching has sharpened how I break down complex movement patterns and communicate them simply. That skill translates directly to scientific mentorship and teaching.</div>
-      <span class="bc-highlight">Club7 · Charlotte, NC</span>
+      <div class="bc-body">Coached at Club7 in Charlotte, NC, working with players across skill levels on technique, footwork, and match strategy. Coaching sharpened how I break down complex movement patterns and communicate them simply. That skill translates directly to teaching non-technical teams and scientific mentorship.</div>
+      <span class="bc-highlight">Club7</span>
     </div>
   </div>
 
@@ -257,7 +314,7 @@
 </div>
 
 <footer>
-  <p>© 2025 Ishan Suthar · Charlotte, NC</p>
+  <p>&copy; 2026 Ishan Suthar &middot; AI Builder &middot; Chicago, IL</p>
   <p>
     <a href="index.html">← Portfolio</a> &nbsp;·&nbsp;
     <a href="research.html">Research</a> &nbsp;·&nbsp;
@@ -267,7 +324,42 @@
 </footer>
 
 <script>
-  const io = new IntersectionObserver((e)=>{e.forEach(x=>{ if(x.isIntersecting) x.target.classList.add('visible'); });},{threshold:0.08});
+  // Scroll progress + nav shrink
+  const scrollBar = document.getElementById('scrollProgress');
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    if(scrollBar) scrollBar.style.width = pct + '%';
+    if(nav) nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Intersection observer
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+
+  // Close mobile nav on link click
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    });
+  });
+((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+
+  // Close mobile nav on link click
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    });
+  });
+  // Also observe hobby sections
   document.querySelectorAll('.hobby-section').forEach(el=>io.observe(el));
 </script>
 </body>
