@@ -34,119 +34,159 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--paper);
-      color: var(--ink);
-      line-height: 1.6;
-      overflow-x: hidden;
+      background: var(--paper); color: var(--ink);
+      line-height: 1.6; overflow-x: hidden;
     }
 
-    /* NAV */
-    nav {
-      position: fixed; top:0; left:0; right:0; z-index:200;
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 1rem 4rem;
-      background: rgba(13,27,42,0.95);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+    /* ═══ SCROLL PROGRESS BAR ═══ */
+    .scroll-progress {
+      position:fixed; top:0; left:0; height:3px; z-index:300;
+      background:linear-gradient(90deg, var(--teal), var(--teal-bright), var(--gold-bright));
+      width:0; transition:width 0.1s linear;
     }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position:fixed; top:3px; left:0; right:0; z-index:200;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1rem 4rem;
+      background:rgba(13,27,42,0.92); backdrop-filter:blur(20px) saturate(1.4);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      transition:padding 0.3s, background 0.3s;
+    }
+    nav.scrolled { padding:0.7rem 4rem; background:rgba(13,27,42,0.97); }
     .nav-logo {
       font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem;
       color:#fff; text-decoration:none; letter-spacing:-0.01em;
     }
-    .nav-logo span { color: var(--teal-bright); }
+    .nav-logo span { color:var(--teal-bright); }
     .nav-links { display:flex; gap:2rem; list-style:none; align-items:center; }
     .nav-links a {
       font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.1em;
-      text-transform:uppercase; color:rgba(255,255,255,0.55); text-decoration:none; transition:color .2s;
+      text-transform:uppercase; color:rgba(255,255,255,0.55); text-decoration:none;
+      transition:color .2s; position:relative;
     }
-    .nav-links a:hover, .nav-links a.active { color: var(--teal-bright); }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px;
+      background:var(--teal-bright); transition:width .3s;
+    }
+    .nav-links a:hover { color:var(--teal-bright); }
+    .nav-links a:hover::after { width:100%; }
     .nav-cta {
-      padding:0.5rem 1.25rem; background: var(--teal); color:#fff; border-radius:3px;
+      padding:0.5rem 1.25rem; background:var(--teal); color:#fff; border-radius:3px;
       font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.08em;
-      text-transform:uppercase; text-decoration:none; transition:background .2s;
+      text-transform:uppercase; text-decoration:none; transition:all .25s;
     }
-    .nav-cta:hover { background: var(--teal-bright); color: var(--navy); }
+    .nav-cta:hover { background:var(--teal-bright); color:var(--navy); transform:translateY(-1px); box-shadow:0 4px 16px rgba(34,211,238,0.3); }
 
-    /* HERO */
+    /* Hamburger */
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:210; padding:4px; }
+    .hamburger span { width:24px; height:2px; background:#fff; transition:all .3s; border-radius:1px; }
+    .hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+    /* ═══ HERO ═══ */
     #hero {
       min-height:100vh;
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 50%, #0f2a3d 100%);
+      background:linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 50%, #0f2a3d 100%);
       display:grid; grid-template-columns:1fr 1fr;
       align-items:center; padding:9rem 4rem 5rem;
       gap:4rem; position:relative; overflow:hidden;
     }
     #hero::before {
-      content:'';
-      position:absolute; inset:0;
+      content:''; position:absolute; inset:0;
       background-image:
         linear-gradient(rgba(8,145,178,0.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(8,145,178,0.08) 1px, transparent 1px);
       background-size:64px 64px;
-      animation: gridFloat 20s linear infinite;
+      animation:gridFloat 20s linear infinite;
     }
     @keyframes gridFloat { 0%{background-position:0 0} 100%{background-position:64px 64px} }
-    #hero::after {
-      content:''; position:absolute;
-      width:600px; height:600px;
-      background: radial-gradient(circle, rgba(8,145,178,0.15) 0%, transparent 70%);
-      right:-100px; top:50%; transform:translateY(-50%);
-      pointer-events:none;
+
+    /* Cursor-following glow */
+    .hero-glow {
+      position:absolute; width:500px; height:500px; border-radius:50%;
+      background:radial-gradient(circle, rgba(8,145,178,0.18) 0%, transparent 70%);
+      pointer-events:none; transition:transform 0.6s cubic-bezier(0.25,0.1,0.25,1);
+      transform:translate(-50%,-50%); will-change:transform;
     }
 
     .hero-text { position:relative; z-index:1; }
     .hero-eyebrow {
       display:inline-flex; align-items:center; gap:0.6rem;
       font-family:'JetBrains Mono',monospace; font-size:0.7rem;
-      letter-spacing:0.2em; text-transform:uppercase; color: var(--teal-bright);
-      margin-bottom:1.4rem;
+      letter-spacing:0.2em; text-transform:uppercase; color:var(--teal-bright);
+      margin-bottom:1.4rem; opacity:0; animation:slideUp .6s .2s forwards;
     }
     .hero-eyebrow::before { content:''; width:28px; height:1px; background:var(--teal-bright); }
+
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(20px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+
     h1 {
       font-family:'Playfair Display',serif;
-      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+      font-size:clamp(3.2rem, 5.5vw, 5.5rem);
       font-weight:900; line-height:0.95; letter-spacing:-0.03em;
       color:#fff; margin-bottom:0.5rem;
+      opacity:0; animation:slideUp .6s .35s forwards;
     }
-    h1 em { display:block; font-style:italic; font-weight:400; color:var(--teal-bright); }
+    h1 em {
+      display:block; font-style:italic; font-weight:400;
+      background:linear-gradient(90deg, var(--teal-bright), var(--gold-bright));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
     .hero-titles {
       display:flex; flex-wrap:wrap; gap:0.5rem; margin:1.4rem 0;
+      opacity:0; animation:slideUp .6s .5s forwards;
     }
     .hero-badge {
       font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.06em;
       padding:0.3rem 0.75rem; border:1px solid rgba(8,145,178,0.4);
       border-radius:2px; color:rgba(255,255,255,0.65);
+      transition:all .25s;
     }
+    .hero-badge:hover { border-color:var(--teal-bright); color:#fff; background:rgba(8,145,178,0.15); }
     .hero-summary {
       font-size:1.05rem; line-height:1.8; color:rgba(255,255,255,0.65);
       font-weight:300; max-width:480px; margin-bottom:2.5rem;
+      opacity:0; animation:slideUp .6s .6s forwards;
     }
-    .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; }
+    .hero-cta {
+      display:flex; gap:1rem; flex-wrap:wrap;
+      opacity:0; animation:slideUp .6s .7s forwards;
+    }
     .btn {
       display:inline-flex; align-items:center; gap:0.5rem;
       padding:0.85rem 2rem; border-radius:3px;
       font-family:'JetBrains Mono',monospace; font-size:0.72rem;
       letter-spacing:0.08em; text-transform:uppercase;
-      text-decoration:none; border:none; cursor:pointer; transition:all .2s;
+      text-decoration:none; border:none; cursor:pointer; transition:all .25s;
     }
     .btn-primary { background:var(--teal); color:#fff; }
-    .btn-primary:hover { background:var(--teal-bright); color:var(--navy); }
+    .btn-primary:hover { background:var(--teal-bright); color:var(--navy); transform:translateY(-2px); box-shadow:0 6px 20px rgba(34,211,238,0.3); }
     .btn-outline { background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,0.3); }
-    .btn-outline:hover { border-color:var(--teal-bright); color:var(--teal-bright); }
+    .btn-outline:hover { border-color:var(--teal-bright); color:var(--teal-bright); transform:translateY(-2px); }
     .btn-gold { background:var(--gold); color:#fff; }
-    .btn-gold:hover { background:var(--gold-bright); color:var(--navy); }
+    .btn-gold:hover { background:var(--gold-bright); color:var(--navy); transform:translateY(-2px); box-shadow:0 6px 20px rgba(251,191,36,0.3); }
 
-    /* Hero right: stats */
-    .hero-stats { position:relative; z-index:1; }
+    /* Hero stats with 3D tilt */
+    .hero-stats { position:relative; z-index:1; perspective:800px; opacity:0; animation:slideUp .8s .5s forwards; }
     .stats-grid {
       display:grid; grid-template-columns:1fr 1fr; gap:2px;
       background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
-      border-radius:4px; overflow:hidden;
+      border-radius:6px; overflow:hidden;
+      transition:transform 0.4s cubic-bezier(0.25,0.1,0.25,1);
+      transform-style:preserve-3d;
     }
     .stat {
       background:rgba(13,27,42,0.7); backdrop-filter:blur(8px);
-      padding:2rem 1.75rem; transition:background .2s;
+      padding:2rem 1.75rem; transition:all .3s;
     }
-    .stat:hover { background:rgba(8,145,178,0.15); }
+    .stat:hover { background:rgba(8,145,178,0.2); }
     .stat-num {
       font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900;
       color:#fff; line-height:1;
@@ -158,9 +198,9 @@
       color:rgba(255,255,255,0.4); margin-top:0.4rem;
     }
     .stat.wide { grid-column:1/-1; background:rgba(8,145,178,0.12); }
-    .stat.wide .stat-num { font-size:2.2rem; }
+    .stat.wide .stat-num { font-size:1.4rem; letter-spacing:0.02em; }
 
-    /* SHARED SECTION */
+    /* ═══ SECTIONS ═══ */
     section { padding:6rem 4rem; }
     .section-tag {
       font-family:'JetBrains Mono',monospace; font-size:0.65rem;
@@ -173,28 +213,25 @@
       letter-spacing:-0.02em; color:var(--ink); margin-bottom:3rem; line-height:1.1;
     }
     h2 em { font-style:italic; font-weight:400; color:var(--teal); }
-    h2 .gold { color:var(--gold); font-style:italic; font-weight:400; }
 
-    /* ABOUT */
+    /* ═══ ABOUT ═══ */
     #about { background:var(--paper-2); }
     .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
-    .about-text p {
-      font-size:1rem; line-height:1.85; color:#374151; font-weight:300; margin-bottom:1.2rem;
-    }
+    .about-text p { font-size:1rem; line-height:1.85; color:#374151; font-weight:300; margin-bottom:1.2rem; }
     .about-text strong { color:var(--ink); font-weight:600; }
     .credential-row { display:flex; flex-direction:column; gap:0.75rem; margin-top:1rem; }
     .credential {
       display:flex; align-items:center; gap:1rem;
       padding:1rem 1.25rem; background:var(--paper);
       border:1px solid var(--border); border-left:3px solid var(--teal);
-      border-radius:2px; transition:box-shadow .2s;
+      border-radius:2px; transition:all .3s;
     }
-    .credential:hover { box-shadow:var(--shadow); }
+    .credential:hover { box-shadow:var(--shadow); transform:translateX(4px); }
     .cred-title { font-weight:600; font-size:0.9rem; color:var(--ink); }
     .cred-sub { font-size:0.78rem; color:var(--muted); }
     .cred-icon { font-size:1.3rem; flex-shrink:0; }
 
-    /* SKILLS */
+    /* ═══ SKILLS ═══ */
     #skills { background:var(--navy); }
     #skills h2 { color:#fff; }
     #skills h2 em { color:var(--teal-bright); }
@@ -204,42 +241,35 @@
       padding:0.45rem 1rem; border-radius:2px;
       font-family:'JetBrains Mono',monospace; font-size:0.68rem;
       letter-spacing:0.08em; text-transform:uppercase; border:none; cursor:pointer;
-      background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.5); transition:all .2s;
+      background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.5); transition:all .25s;
     }
     .filter-btn.active, .filter-btn:hover { background:var(--teal); color:#fff; }
     .skills-wrap { display:flex; flex-wrap:wrap; gap:0.6rem; }
     .stag {
       padding:0.45rem 1rem; border:1px solid rgba(255,255,255,0.12); border-radius:2px;
       font-size:0.82rem; color:rgba(255,255,255,0.65); cursor:default;
-      transition:all .25s; position:relative;
+      transition:all .3s cubic-bezier(0.25,0.1,0.25,1); position:relative;
     }
     .stag[data-cat="ai"] { border-color:rgba(217,119,6,0.4); }
     .stag[data-cat="methods"] { border-color:rgba(8,145,178,0.35); }
     .stag[data-cat="technical"] { border-color:rgba(124,58,237,0.35); }
     .stag[data-cat="domains"] { border-color:rgba(16,185,129,0.35); }
-    .stag.hidden { opacity:0; pointer-events:none; transform:scale(0.9); }
-    .stag:hover {
-      background:rgba(8,145,178,0.2); border-color:var(--teal-bright); color:#fff;
-    }
+    .stag.hidden { opacity:0; pointer-events:none; transform:scale(0.85) translateY(8px); }
+    .stag:hover { background:rgba(8,145,178,0.2); border-color:var(--teal-bright); color:#fff; transform:translateY(-2px); }
     .stag[data-cat="ai"]:hover { background:rgba(217,119,6,0.2); border-color:var(--gold-bright); }
 
-    /* Proficiency bars */
     .proficiency-row { margin-top:3rem; }
     .prof-label {
       font-family:'JetBrains Mono',monospace; font-size:0.65rem;
-      letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.4);
-      margin-bottom:1.2rem;
+      letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:1.2rem;
     }
     .prof-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
-    .prof-name {
-      display:flex; justify-content:space-between; align-items:center;
-      font-size:0.82rem; color:rgba(255,255,255,0.7); margin-bottom:0.4rem;
-    }
+    .prof-name { display:flex; justify-content:space-between; font-size:0.82rem; color:rgba(255,255,255,0.7); margin-bottom:0.4rem; }
     .prof-pct { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--teal-bright); }
     .prof-bar { height:3px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; }
     .prof-fill { height:100%; background:linear-gradient(90deg,var(--teal),var(--teal-bright)); border-radius:2px; width:0; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
 
-    /* EXPERIENCE */
+    /* ═══ EXPERIENCE ═══ */
     #experience { background:var(--paper); }
     .timeline { position:relative; padding-left:1.5rem; }
     .timeline::before { content:''; position:absolute; left:0; top:0.5rem; bottom:0; width:1px; background:var(--border-bright); }
@@ -252,47 +282,55 @@
       content:''; position:absolute; left:-5px; top:0.5rem;
       width:10px; height:10px; border-radius:50%;
       background:var(--paper); border:2px solid var(--teal);
+      transition:all .3s;
     }
+    .job.visible::before { box-shadow:0 0 0 4px rgba(8,145,178,0.15); }
     .job-meta-row { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
     .job-title { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; color:var(--ink); }
-    .job-date {
-      font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.08em;
-      color:var(--muted); white-space:nowrap;
-    }
+    .job-date { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; color:var(--muted); white-space:nowrap; }
     .job-org { font-size:0.88rem; color:var(--teal); font-weight:600; margin-bottom:0.75rem; }
     .job-tags { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.9rem; }
     .job-tag {
       font-family:'JetBrains Mono',monospace; font-size:0.63rem; letter-spacing:0.06em;
       padding:0.2rem 0.6rem; background:var(--paper-2); border:1px solid var(--border);
-      border-radius:2px; color:var(--muted);
+      border-radius:2px; color:var(--muted); transition:all .2s;
     }
-    .job-desc { font-size:0.88rem; color:#374151; line-height:1.7; font-weight:300; margin-bottom:0.8rem; }
+    .job-tag:hover { border-color:var(--teal); color:var(--teal); }
     .job-bullets { list-style:none; }
     .job-bullets li {
       font-size:0.85rem; color:#374151; line-height:1.7; padding:0.28rem 0 0.28rem 1.3rem;
       position:relative; font-weight:300;
     }
     .job-bullets li::before { content:'\2192'; position:absolute; left:0; color:var(--teal); font-size:0.8rem; }
-    .impact { display:inline-block; background:var(--gold-pale); color:var(--gold);
+    .impact {
+      display:inline-block; background:var(--gold-pale); color:var(--gold);
       border:1px solid rgba(217,119,6,0.2); border-radius:2px; padding:0.1rem 0.45rem;
-      font-family:'JetBrains Mono',monospace; font-size:0.65rem; margin-left:0.3rem; vertical-align:middle; }
+      font-family:'JetBrains Mono',monospace; font-size:0.65rem; margin-left:0.3rem; vertical-align:middle;
+    }
 
-    /* FEATURED PROJECTS */
+    /* ═══ PROJECTS — 3D tilt cards ═══ */
     #projects { background:var(--paper-2); }
     .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:1.5rem; }
     .pcard {
       background:var(--paper); border:1px solid var(--border);
-      border-radius:4px; padding:2rem; position:relative;
-      transition:all .25s; overflow:hidden;
+      border-radius:6px; padding:2rem; position:relative;
+      transition:all .35s cubic-bezier(0.25,0.1,0.25,1); overflow:hidden;
+      transform-style:preserve-3d; perspective:600px;
     }
     .pcard::before {
       content:''; position:absolute; top:0; left:0;
       width:100%; height:3px;
       background:linear-gradient(90deg, var(--teal), var(--teal-bright));
-      transform:scaleX(0); transform-origin:left; transition:transform .3s;
+      transform:scaleX(0); transform-origin:left; transition:transform .4s;
     }
-    .pcard:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+    .pcard::after {
+      content:''; position:absolute; inset:0; border-radius:6px;
+      background:radial-gradient(circle at var(--mouse-x,50%) var(--mouse-y,50%), rgba(8,145,178,0.08) 0%, transparent 60%);
+      opacity:0; transition:opacity .3s; pointer-events:none;
+    }
+    .pcard:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); }
     .pcard:hover::before { transform:scaleX(1); }
+    .pcard:hover::after { opacity:1; }
     .pcard-type { font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--teal); margin-bottom:0.6rem; }
     .pcard-title { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--ink); line-height:1.3; margin-bottom:0.6rem; }
     .pcard-desc { font-size:0.83rem; color:var(--muted); line-height:1.65; font-weight:300; margin-bottom:1rem; }
@@ -300,14 +338,16 @@
     .pcard-tag {
       font-family:'JetBrains Mono',monospace; font-size:0.6rem; padding:0.2rem 0.5rem;
       background:var(--paper-2); border:1px solid var(--border); border-radius:2px; color:var(--muted);
+      transition:all .2s;
     }
+    .pcard:hover .pcard-tag { border-color:rgba(8,145,178,0.3); }
     .pcard-impact {
       display:inline-block; padding:0.25rem 0.7rem; background:var(--gold-pale);
       color:var(--gold); border:1px solid rgba(217,119,6,0.2); border-radius:2px;
       font-family:'JetBrains Mono',monospace; font-size:0.65rem;
     }
 
-    /* HONORS */
+    /* ═══ HONORS ═══ */
     #honors { background:var(--navy); }
     #honors h2 { color:#fff; }
     #honors h2 em { color:var(--gold-bright); }
@@ -320,27 +360,23 @@
     .honor-card {
       background:rgba(13,27,42,0.7); padding:1.5rem 1.75rem;
       display:flex; align-items:flex-start; gap:1rem;
-      transition:background .2s;
+      transition:all .3s;
     }
-    .honor-card:hover { background:rgba(217,119,6,0.1); }
-    .honor-year {
-      font-family:'JetBrains Mono',monospace; font-size:0.62rem;
-      letter-spacing:0.08em; color:var(--gold-bright);
-      white-space:nowrap; margin-top:0.15rem; flex-shrink:0;
-    }
+    .honor-card:hover { background:rgba(217,119,6,0.1); transform:translateX(4px); }
+    .honor-year { font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.08em; color:var(--gold-bright); white-space:nowrap; margin-top:0.15rem; flex-shrink:0; }
     .honor-icon { font-size:1.1rem; flex-shrink:0; margin-top:0.05rem; }
     .honor-title { font-size:0.88rem; color:rgba(255,255,255,0.82); font-weight:500; line-height:1.5; }
     .honor-org { font-size:0.75rem; color:rgba(255,255,255,0.38); font-weight:300; margin-top:0.2rem; }
 
-    /* PUBLICATIONS */
+    /* ═══ PUBLICATIONS ═══ */
     #publications { background:var(--paper); }
     .pub-list { display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:3px; overflow:hidden; }
     .pub-item {
       background:var(--paper); padding:1.5rem 2rem;
       display:grid; grid-template-columns:auto 1fr; gap:1.5rem; align-items:start;
-      transition:background .2s;
+      transition:all .25s;
     }
-    .pub-item:hover { background:var(--paper-2); }
+    .pub-item:hover { background:var(--paper-2); padding-left:2.4rem; }
     .pub-venue-badge {
       font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.1em;
       text-transform:uppercase; padding:0.3rem 0.6rem;
@@ -348,19 +384,18 @@
     }
     .badge-conf { background:rgba(8,145,178,0.1); color:var(--teal); border:1px solid rgba(8,145,178,0.2); }
     .badge-journal { background:var(--gold-pale); color:var(--gold); border:1px solid rgba(217,119,6,0.2); }
-    .badge-prep { background:#f3f4f6; color:var(--muted); border:1px solid var(--border); }
     .pub-title-text { font-size:0.9rem; color:var(--ink); font-weight:500; line-height:1.5; margin-bottom:0.3rem; }
     .pub-authors-text { font-size:0.78rem; color:var(--muted); font-weight:300; }
     .pub-award { display:inline-flex; align-items:center; gap:0.3rem; font-size:0.73rem; color:var(--gold); font-weight:600; margin-left:0.5rem; }
 
-    /* CONTACT */
+    /* ═══ CONTACT ═══ */
     #contact {
       background:linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
       text-align:center; position:relative; overflow:hidden;
     }
     #contact::before {
       content:''; position:absolute; inset:0;
-      background-image: linear-gradient(rgba(8,145,178,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(8,145,178,0.06) 1px, transparent 1px);
+      background-image:linear-gradient(rgba(8,145,178,0.06) 1px, transparent 1px),linear-gradient(90deg,rgba(8,145,178,0.06) 1px, transparent 1px);
       background-size:60px 60px;
     }
     #contact h2 { color:#fff; position:relative; }
@@ -373,11 +408,11 @@
       padding:0.9rem 1.75rem; border:1px solid rgba(255,255,255,0.15);
       border-radius:3px; color:rgba(255,255,255,0.8); text-decoration:none;
       font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.08em;
-      transition:all .2s;
+      transition:all .25s;
     }
-    .contact-link:hover { border-color:var(--teal-bright); color:var(--teal-bright); background:rgba(8,145,178,0.1); }
+    .contact-link:hover { border-color:var(--teal-bright); color:var(--teal-bright); background:rgba(8,145,178,0.1); transform:translateY(-2px); }
 
-    /* FOOTER */
+    /* ═══ FOOTER ═══ */
     footer {
       background:#060e18; padding:2rem 4rem;
       display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
@@ -386,31 +421,46 @@
     footer a { color:rgba(255,255,255,0.2); text-decoration:none; transition:color .2s; }
     footer a:hover { color:var(--teal-bright); }
 
-    /* ANIM */
+    /* ═══ ANIMATIONS ═══ */
     .fade-up { opacity:0; transform:translateY(24px); transition:opacity .6s ease,transform .6s ease; }
     .fade-up.visible { opacity:1; transform:none; }
     .fade-up.d1 { transition-delay:.1s; }
     .fade-up.d2 { transition-delay:.2s; }
     .fade-up.d3 { transition-delay:.3s; }
 
-    /* MOBILE */
+    /* ═══ MOBILE ═══ */
     @media(max-width:768px){
       nav { padding:1rem 1.5rem; }
-      .nav-links { display:none; }
+      nav.scrolled { padding:0.7rem 1.5rem; }
+      .nav-links { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(13,27,42,0.98); flex-direction:column; align-items:center; justify-content:center; gap:2.5rem; }
+      .nav-links.open { display:flex; }
+      .nav-links a { font-size:1rem; }
+      .hamburger { display:flex; }
       #hero { grid-template-columns:1fr; padding:8rem 1.5rem 4rem; }
       section { padding:4rem 1.5rem; }
       .about-grid { grid-template-columns:1fr; }
       .projects-grid { grid-template-columns:1fr; }
       footer { padding:2rem 1.5rem; flex-direction:column; text-align:center; }
     }
+
+    /* Reduced motion */
+    @media(prefers-reduced-motion:reduce) {
+      *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+    }
   </style>
 </head>
 <body>
 
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <!-- NAV -->
-<nav>
+<nav id="mainNav">
   <a href="#" class="nav-logo">Ishan <span>Suthar</span></a>
-  <ul class="nav-links">
+  <div class="hamburger" id="hamburger" onclick="this.classList.toggle('open');document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -424,6 +474,7 @@
 
 <!-- HERO -->
 <section id="hero">
+  <div class="hero-glow" id="heroGlow"></div>
   <div class="hero-text">
     <div class="hero-eyebrow">AI Builder</div>
     <h1>Ishan<br><em>Suthar</em></h1>
@@ -441,7 +492,7 @@
     </div>
   </div>
   <div class="hero-stats">
-    <div class="stats-grid">
+    <div class="stats-grid" id="statsGrid">
       <div class="stat">
         <div class="stat-num" data-count="6"><sup>+</sup></div>
         <div class="stat-label">AI Tools & Agents Built</div>
@@ -459,7 +510,7 @@
         <div class="stat-label">Years in Public Health Programs</div>
       </div>
       <div class="stat wide">
-        <div class="stat-num">HRSA · NIH · CDC · DHEC</div>
+        <div class="stat-num">HRSA &middot; NIH &middot; CDC &middot; DHEC</div>
         <div class="stat-label">Federally funded programs I've worked inside</div>
       </div>
     </div>
@@ -469,50 +520,20 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
-    <div class="about-text">
+    <div class="about-text fade-up">
       <p class="section-tag">Background</p>
       <h2>Physician <em>turned</em><br>AI Builder</h2>
       <p>I started my career as a practicing physician in India, managing 600+ COVID-19 patients before pivoting to population-level evidence. That clinical foundation shapes everything I build: I understand the workflows, the endpoints, and the constraints that frontline staff actually face.</p>
       <p>For the past five years I've been embedded in <strong>federally funded public health programs</strong> (HRSA, NIH, CDC, SC DHEC) during graduate school, doing the work that sits between data systems and the people who use them: building dashboards, training non-technical teams, designing reporting pipelines, and shipping tools that make programs run better.</p>
       <p>More recently, I've been building <strong>AI-powered tools and agents</strong> for the same kinds of organizations: a Claude-powered voice intake system for community health caseworkers, an AI research study design platform, and an intelligent model router that makes LLM access affordable for resource-constrained teams. <a href="ai-agents.html" style="color:var(--teal);font-weight:600;">See what I've built here.</a></p>
     </div>
-    <div>
+    <div class="fade-up d1">
       <div class="credential-row">
-        <div class="credential">
-          <span class="cred-icon">🎓</span>
-          <div>
-            <div class="cred-title">PhD Candidate, Epidemiology (Final Year)</div>
-            <div class="cred-sub">University of South Carolina, Expected 2027</div>
-          </div>
-        </div>
-        <div class="credential">
-          <span class="cred-icon">🎓</span>
-          <div>
-            <div class="cred-title">MPH, Epidemiology</div>
-            <div class="cred-sub">University of South Carolina, 2023</div>
-          </div>
-        </div>
-        <div class="credential">
-          <span class="cred-icon">🩺</span>
-          <div>
-            <div class="cred-title">MBBS (Medicine)</div>
-            <div class="cred-sub">Gujarat University, India, 2019</div>
-          </div>
-        </div>
-        <div class="credential">
-          <span class="cred-icon">🤖</span>
-          <div>
-            <div class="cred-title">Claude Certified (AI Fluency + Claude 101)</div>
-            <div class="cred-sub">Anthropic, 2026</div>
-          </div>
-        </div>
-        <div class="credential">
-          <span class="cred-icon">📊</span>
-          <div>
-            <div class="cred-title">Graduate Certificate in Biostatistics</div>
-            <div class="cred-sub">University of South Carolina, Expected Dec 2026</div>
-          </div>
-        </div>
+        <div class="credential"><span class="cred-icon">🎓</span><div><div class="cred-title">PhD Candidate, Epidemiology (Final Year)</div><div class="cred-sub">University of South Carolina, Expected 2027</div></div></div>
+        <div class="credential"><span class="cred-icon">🎓</span><div><div class="cred-title">MPH, Epidemiology</div><div class="cred-sub">University of South Carolina, 2023</div></div></div>
+        <div class="credential"><span class="cred-icon">🩺</span><div><div class="cred-title">MBBS (Medicine)</div><div class="cred-sub">Gujarat University, India, 2019</div></div></div>
+        <div class="credential"><span class="cred-icon">🤖</span><div><div class="cred-title">Claude Certified (AI Fluency + Claude 101)</div><div class="cred-sub">Anthropic, 2026</div></div></div>
+        <div class="credential"><span class="cred-icon">📊</span><div><div class="cred-title">Graduate Certificate in Biostatistics</div><div class="cred-sub">University of South Carolina, Expected Dec 2026</div></div></div>
       </div>
     </div>
   </div>
@@ -522,7 +543,6 @@
 <section id="skills">
   <p class="section-tag">Expertise</p>
   <h2 style="color:#fff">Core <em>Capabilities</em></h2>
-
   <div class="skill-filter">
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="ai">AI & Engineering</button>
@@ -530,7 +550,6 @@
     <button class="filter-btn" data-filter="methods">Methods</button>
     <button class="filter-btn" data-filter="technical">Data & Analytics</button>
   </div>
-
   <div class="skills-wrap">
     <span class="stag" data-cat="ai">Claude API</span>
     <span class="stag" data-cat="ai">Prompt Engineering</span>
@@ -568,34 +587,15 @@
     <span class="stag" data-cat="technical">Tableau / Power BI</span>
     <span class="stag" data-cat="technical">Dashboards & Automation</span>
   </div>
-
   <div class="proficiency-row">
     <div class="prof-label">Technical Proficiency</div>
     <div class="prof-grid">
-      <div class="prof-item">
-        <div class="prof-name"><span>Python</span><span class="prof-pct">85%</span></div>
-        <div class="prof-bar"><div class="prof-fill" data-w="85"></div></div>
-      </div>
-      <div class="prof-item">
-        <div class="prof-name"><span>SAS</span><span class="prof-pct">95%</span></div>
-        <div class="prof-bar"><div class="prof-fill" data-w="95"></div></div>
-      </div>
-      <div class="prof-item">
-        <div class="prof-name"><span>R</span><span class="prof-pct">92%</span></div>
-        <div class="prof-bar"><div class="prof-fill" data-w="92"></div></div>
-      </div>
-      <div class="prof-item">
-        <div class="prof-name"><span>Claude API / LLMs</span><span class="prof-pct">82%</span></div>
-        <div class="prof-bar"><div class="prof-fill" data-w="82"></div></div>
-      </div>
-      <div class="prof-item">
-        <div class="prof-name"><span>SQL</span><span class="prof-pct">78%</span></div>
-        <div class="prof-bar"><div class="prof-fill" data-w="78"></div></div>
-      </div>
-      <div class="prof-item">
-        <div class="prof-name"><span>REDCap</span><span class="prof-pct">90%</span></div>
-        <div class="prof-bar"><div class="prof-fill" data-w="90"></div></div>
-      </div>
+      <div class="prof-item"><div class="prof-name"><span>Python</span><span class="prof-pct">85%</span></div><div class="prof-bar"><div class="prof-fill" data-w="85"></div></div></div>
+      <div class="prof-item"><div class="prof-name"><span>SAS</span><span class="prof-pct">95%</span></div><div class="prof-bar"><div class="prof-fill" data-w="95"></div></div></div>
+      <div class="prof-item"><div class="prof-name"><span>R</span><span class="prof-pct">92%</span></div><div class="prof-bar"><div class="prof-fill" data-w="92"></div></div></div>
+      <div class="prof-item"><div class="prof-name"><span>Claude API / LLMs</span><span class="prof-pct">82%</span></div><div class="prof-bar"><div class="prof-fill" data-w="82"></div></div></div>
+      <div class="prof-item"><div class="prof-name"><span>SQL</span><span class="prof-pct">78%</span></div><div class="prof-bar"><div class="prof-fill" data-w="78"></div></div></div>
+      <div class="prof-item"><div class="prof-name"><span>REDCap</span><span class="prof-pct">90%</span></div><div class="prof-bar"><div class="prof-fill" data-w="90"></div></div></div>
     </div>
   </div>
 </section>
@@ -605,116 +605,13 @@
   <p class="section-tag">Experience</p>
   <h2>Where I've <em>Worked</em></h2>
   <div class="timeline">
-
-    <div class="job">
-      <div class="job-meta-row">
-        <div class="job-title">Lead Analyst</div>
-        <div class="job-date">Jan 2024 - Present</div>
-      </div>
-      <div class="job-org">PRISMA Health (University of South Carolina) · HRSA Healthy Start ($5M) · Columbia, SC</div>
-      <div class="job-tags">
-        <span class="job-tag">Maternal Health</span><span class="job-tag">Team Training</span>
-        <span class="job-tag">Dashboards</span><span class="job-tag">Claude API</span>
-      </div>
-      <ul class="job-bullets">
-        <li>Trained and supervised a 22-member team of nurses, social workers, and data collectors on data systems, collection standards, and reporting workflows, building internal capacity so the program runs without a dedicated analyst</li>
-        <li>Built automated reporting dashboards (Power BI, SAS, R) that eliminated manual report assembly and ensured <span class="impact">100% on-time</span> federal submissions to HRSA</li>
-        <li>Designed quality improvement checks that reduced data errors by <span class="impact">20%+</span> and reporting mistakes by <span class="impact">30%+</span>, raising overall data accuracy to 95%</li>
-        <li>Designed and prototyped GRACE, a Claude-powered voice intake system for caseworkers, embedding clinical screening protocols (depression, domestic violence) directly in the AI conversation flow</li>
-        <li>Used program data to evaluate effectiveness of community health interventions, producing evidence that shaped staffing, outreach strategy, and resource allocation</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-meta-row">
-        <div class="job-title">Research Scientist (Co-Investigator)</div>
-        <div class="job-date">Aug 2025 - Present</div>
-      </div>
-      <div class="job-org">University of South Carolina · NIH R01 Grant ($1.5M) · Columbia, SC</div>
-      <div class="job-tags">
-        <span class="job-tag">NIH</span><span class="job-tag">Medicaid</span>
-        <span class="job-tag">Cost Modeling</span><span class="job-tag">Multi-Site</span>
-      </div>
-      <ul class="job-bullets">
-        <li>Built a Medicaid cost model estimating per-person treatment costs, projecting <span class="impact">$6k savings/capita/yr</span> to inform payer coverage recommendations</li>
-        <li>Analyzed nationwide Medicaid data to quantify dental care access gaps among pregnant women</li>
-        <li>Authored the full study protocol, written to be understood by clinical and non-technical collaborators across three institutions</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-meta-row">
-        <div class="job-title">Badminton Course Instructor</div>
-        <div class="job-date">Aug 2023 - Dec 2024</div>
-      </div>
-      <div class="job-org">University of South Carolina · Dept. of Physical Education · Columbia, SC</div>
-      <div class="job-tags">
-        <span class="job-tag">Teaching</span><span class="job-tag">Curriculum Design</span><span class="job-tag">Assessment</span>
-      </div>
-      <ul class="job-bullets">
-        <li>Designed and delivered a 15-week undergraduate curriculum for 20+ students/semester, integrating skill development, strategy, and structured assessments across multiple cohorts</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-meta-row">
-        <div class="job-title">Dissertation Researcher</div>
-        <div class="job-date">Aug 2023 - Present</div>
-      </div>
-      <div class="job-org">University of South Carolina · Columbia, SC</div>
-      <div class="job-tags">
-        <span class="job-tag">MIMIC-IV</span><span class="job-tag">Heart Failure</span><span class="job-tag">TTEngine</span>
-      </div>
-      <ul class="job-bullets">
-        <li>Designed a framework to evaluate treatment effectiveness in heart failure patients using real-world EHR data (8,200+ patients, 249 variables)</li>
-        <li>Built TTEngine, a full-stack AI application (FastAPI + React + Claude API) that grew out of this work, translating complex study design methodology into guided protocols for non-specialist researchers</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-meta-row">
-        <div class="job-title">Graduate Research Assistant</div>
-        <div class="job-date">Aug 2022 - Dec 2023</div>
-      </div>
-      <div class="job-org">Center for Applied Research & Evaluation (CARE) · USC · Columbia, SC</div>
-      <div class="job-tags">
-        <span class="job-tag">Program Evaluation</span><span class="job-tag">REDCap</span><span class="job-tag">Multi-Agency</span>
-      </div>
-      <ul class="job-bullets">
-        <li>Supported statewide public health program evaluations across oral health, community health, and education grants, coordinating across HRSA, CDC, and state agencies</li>
-        <li>Managed 4 REDCap projects including instrument design, user access controls, and audit trails across 5+ concurrent community health evaluation initiatives</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-meta-row">
-        <div class="job-title">Graduate Research Assistant</div>
-        <div class="job-date">Aug 2021 - Aug 2022</div>
-      </div>
-      <div class="job-org">SC DHEC · Division of Diabetes & Heart Disease Management · Columbia, SC</div>
-      <div class="job-tags">
-        <span class="job-tag">CDC-Funded</span><span class="job-tag">Diabetes Prevention</span><span class="job-tag">Dashboard</span>
-      </div>
-      <ul class="job-bullets">
-        <li>Evaluated CDC-funded diabetes prevention programs across South Carolina; co-authored 2 peer-reviewed publications on program outcomes</li>
-        <li>Built a SharePoint dashboard from scratch for <span class="impact">60+ statewide users</span>, enabling centralized data sharing and real-time performance tracking across sites</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-meta-row">
-        <div class="job-title">Physician</div>
-        <div class="job-date">Sep 2019 - Jul 2021</div>
-      </div>
-      <div class="job-org">Sunshine Global Hospital & Manjalpur Clinic · Vadodara, India</div>
-      <div class="job-tags">
-        <span class="job-tag">Clinical Medicine</span><span class="job-tag">ICU</span><span class="job-tag">COVID-19</span>
-      </div>
-      <ul class="job-bullets">
-        <li>Managed 600+ COVID-19 patients including ICU cases requiring ventilation and advanced life support</li>
-      </ul>
-    </div>
-
+    <div class="job"><div class="job-meta-row"><div class="job-title">Lead Analyst</div><div class="job-date">Jan 2024 - Present</div></div><div class="job-org">PRISMA Health (University of South Carolina) &middot; HRSA Healthy Start ($5M) &middot; Columbia, SC</div><div class="job-tags"><span class="job-tag">Maternal Health</span><span class="job-tag">Team Training</span><span class="job-tag">Dashboards</span><span class="job-tag">Claude API</span></div><ul class="job-bullets"><li>Trained and supervised a 22-member team of nurses, social workers, and data collectors on data systems, collection standards, and reporting workflows</li><li>Built automated reporting dashboards (Power BI, SAS, R) ensuring <span class="impact">100% on-time</span> federal submissions to HRSA</li><li>Designed quality improvement checks that reduced data errors by <span class="impact">20%+</span> and reporting mistakes by <span class="impact">30%+</span></li><li>Designed and prototyped GRACE, a Claude-powered voice intake system for caseworkers, embedding clinical screening protocols directly in the AI conversation flow</li><li>Used program data to evaluate community health interventions, producing evidence that shaped staffing and outreach strategy</li></ul></div>
+    <div class="job"><div class="job-meta-row"><div class="job-title">Research Scientist (Co-Investigator)</div><div class="job-date">Aug 2025 - Present</div></div><div class="job-org">University of South Carolina &middot; NIH R01 Grant ($1.5M) &middot; Columbia, SC</div><div class="job-tags"><span class="job-tag">NIH</span><span class="job-tag">Medicaid</span><span class="job-tag">Cost Modeling</span></div><ul class="job-bullets"><li>Built a Medicaid cost model projecting <span class="impact">$6k savings/capita/yr</span> to inform payer coverage recommendations</li><li>Analyzed nationwide Medicaid data to quantify dental care access gaps among pregnant women</li><li>Authored the full study protocol, written for clinical and non-technical collaborators across three institutions</li></ul></div>
+    <div class="job"><div class="job-meta-row"><div class="job-title">Badminton Course Instructor</div><div class="job-date">Aug 2023 - Dec 2024</div></div><div class="job-org">University of South Carolina &middot; Dept. of Physical Education &middot; Columbia, SC</div><div class="job-tags"><span class="job-tag">Teaching</span><span class="job-tag">Curriculum Design</span></div><ul class="job-bullets"><li>Designed and delivered a 15-week undergraduate curriculum for 20+ students/semester, integrating skill development and structured assessments</li></ul></div>
+    <div class="job"><div class="job-meta-row"><div class="job-title">Dissertation Researcher</div><div class="job-date">Aug 2023 - Present</div></div><div class="job-org">University of South Carolina &middot; Columbia, SC</div><div class="job-tags"><span class="job-tag">MIMIC-IV</span><span class="job-tag">Heart Failure</span><span class="job-tag">TTEngine</span></div><ul class="job-bullets"><li>Designed a framework to evaluate treatment effectiveness in heart failure using real-world EHR data (8,200+ patients)</li><li>Built TTEngine (FastAPI + React + Claude API), translating complex study design methodology into guided protocols for non-specialist researchers</li></ul></div>
+    <div class="job"><div class="job-meta-row"><div class="job-title">Graduate Research Assistant</div><div class="job-date">Aug 2022 - Dec 2023</div></div><div class="job-org">Center for Applied Research & Evaluation (CARE) &middot; USC &middot; Columbia, SC</div><div class="job-tags"><span class="job-tag">Program Evaluation</span><span class="job-tag">REDCap</span></div><ul class="job-bullets"><li>Supported statewide public health program evaluations, coordinating across HRSA, CDC, and state agencies</li><li>Managed 4 REDCap projects across 5+ concurrent community health evaluation initiatives</li></ul></div>
+    <div class="job"><div class="job-meta-row"><div class="job-title">Graduate Research Assistant</div><div class="job-date">Aug 2021 - Aug 2022</div></div><div class="job-org">SC DHEC &middot; Division of Diabetes & Heart Disease Management &middot; Columbia, SC</div><div class="job-tags"><span class="job-tag">CDC-Funded</span><span class="job-tag">Dashboard</span></div><ul class="job-bullets"><li>Evaluated CDC-funded diabetes prevention programs; co-authored 2 peer-reviewed publications</li><li>Built a SharePoint dashboard for <span class="impact">60+ statewide users</span></li></ul></div>
+    <div class="job"><div class="job-meta-row"><div class="job-title">Physician</div><div class="job-date">Sep 2019 - Jul 2021</div></div><div class="job-org">Sunshine Global Hospital &middot; Vadodara, India</div><div class="job-tags"><span class="job-tag">Clinical Medicine</span><span class="job-tag">ICU</span><span class="job-tag">COVID-19</span></div><ul class="job-bullets"><li>Managed 600+ COVID-19 patients including ICU cases requiring ventilation and advanced life support</li></ul></div>
   </div>
 </section>
 
@@ -722,80 +619,17 @@
 <section id="projects">
   <p class="section-tag">Built End-to-End</p>
   <h2>Featured <em>Projects</em></h2>
-
   <div class="projects-grid">
-
-    <div class="pcard fade-up">
-      <div class="pcard-type">AI Agent · Voice Interface · Healthcare</div>
-      <div class="pcard-title">GRACE: Voice AI Intake for Community Health Workers</div>
-      <div class="pcard-desc">A Claude-powered voice intake system built for Healthy Start SC caseworkers. Conducts structured interviews, screens for depression and domestic violence, and writes data back to REDCap. Designed so non-technical staff interact through conversation, not forms.</div>
-      <div class="pcard-stack">
-        <span class="pcard-tag">Claude API</span><span class="pcard-tag">ElevenLabs</span>
-        <span class="pcard-tag">Flask</span><span class="pcard-tag">JWT</span><span class="pcard-tag">REDCap</span>
-      </div>
-      <span class="pcard-impact">Built for a $5M HRSA program</span>
-    </div>
-
-    <div class="pcard fade-up d1">
-      <div class="pcard-type">AI Platform · Full-Stack · Research</div>
-      <div class="pcard-title">TTEngine: AI-Powered Research Study Design</div>
-      <div class="pcard-desc">A full-stack AI application that helps researchers design rigorous observational studies from real-world data, translating complex methodology into step-by-step guided protocols. Scoped, built, and shipped independently from concept through working product.</div>
-      <div class="pcard-stack">
-        <span class="pcard-tag">FastAPI</span><span class="pcard-tag">React</span>
-        <span class="pcard-tag">Claude API</span><span class="pcard-tag">Python</span>
-      </div>
-      <span class="pcard-impact">Accepted at SER 2026</span>
-    </div>
-
-    <div class="pcard fade-up d2">
-      <div class="pcard-type">AI Infrastructure · Open Source</div>
-      <div class="pcard-title">Project Coffee: AI Model Router & Cost Optimizer</div>
-      <div class="pcard-desc">An open-source AI workstation that routes prompts to the most cost-efficient model based on task complexity. Uses a coffee-shop metaphor where models are "beans" and costs are tracked in a "tips jar," with explicit approval for expensive operations.</div>
-      <div class="pcard-stack">
-        <span class="pcard-tag">Python</span><span class="pcard-tag">OpenRouter</span>
-        <span class="pcard-tag">Multi-Model</span>
-      </div>
-      <span class="pcard-impact">Open-source on GitHub</span>
-    </div>
-
-    <div class="pcard fade-up">
-      <div class="pcard-type">AI Agent · LangGraph · Autonomous</div>
-      <div class="pcard-title">OutreachIQ: Autonomous Networking Agent</div>
-      <div class="pcard-desc">An end-to-end autonomous AI agent that discovers job opportunities, scores fit using LLM evaluation, and drafts personalized outreach emails. Integrates five services into a single LangGraph pipeline with state management and tracking.</div>
-      <div class="pcard-stack">
-        <span class="pcard-tag">LangGraph</span><span class="pcard-tag">Claude API</span>
-        <span class="pcard-tag">Gmail API</span><span class="pcard-tag">PostgreSQL</span>
-      </div>
-      <span class="pcard-impact">5 APIs orchestrated autonomously</span>
-    </div>
-
-    <div class="pcard fade-up d1">
-      <div class="pcard-type">PhD Dissertation · Causal Inference</div>
-      <div class="pcard-title">Sequential Target Trial Emulation for Heart Failure</div>
-      <div class="pcard-desc">Designing a framework to evaluate treatment effectiveness in acutely ill patients using real-world hospital data, correcting for biases that make observational studies unreliable. MIMIC-IV, 8,200+ patients.</div>
-      <div class="pcard-stack">
-        <span class="pcard-tag">R</span><span class="pcard-tag">SAS</span>
-        <span class="pcard-tag">SQL</span><span class="pcard-tag">Git</span>
-      </div>
-      <span class="pcard-impact">Accepted at SER 2026</span>
-    </div>
-
-    <div class="pcard fade-up d2">
-      <div class="pcard-type">HEOR · NIH · Cost-Effectiveness</div>
-      <div class="pcard-title">NIH R01: Periodontal Care in Pregnancy</div>
-      <div class="pcard-desc">Co-investigator on a $1.5M multi-site study evaluating cost-effectiveness of antenatal dental treatment. Built Medicaid cost models, quantified access gaps, and produced policy-ready evidence.</div>
-      <div class="pcard-stack">
-        <span class="pcard-tag">SAS</span><span class="pcard-tag">R</span>
-        <span class="pcard-tag">Medicaid Claims</span>
-      </div>
-      <span class="pcard-impact">$6k/capita projected savings</span>
-    </div>
-
+    <div class="pcard fade-up"><div class="pcard-type">AI Agent &middot; Voice &middot; Healthcare</div><div class="pcard-title">GRACE: Voice AI Intake for Community Health Workers</div><div class="pcard-desc">A Claude-powered voice intake system for Healthy Start SC caseworkers. Conducts structured interviews, screens for depression and domestic violence, writes data back to REDCap. Non-technical staff interact through conversation, not forms.</div><div class="pcard-stack"><span class="pcard-tag">Claude API</span><span class="pcard-tag">ElevenLabs</span><span class="pcard-tag">Flask</span><span class="pcard-tag">JWT</span><span class="pcard-tag">REDCap</span></div><span class="pcard-impact">Built for a $5M HRSA program</span></div>
+    <div class="pcard fade-up d1"><div class="pcard-type">AI Platform &middot; Full-Stack &middot; Research</div><div class="pcard-title">TTEngine: AI-Powered Research Study Design</div><div class="pcard-desc">Full-stack AI application translating complex observational study methodology into step-by-step guided protocols. Scoped, built, and shipped independently from concept through working product.</div><div class="pcard-stack"><span class="pcard-tag">FastAPI</span><span class="pcard-tag">React</span><span class="pcard-tag">Claude API</span><span class="pcard-tag">Python</span></div><span class="pcard-impact">Accepted at SER 2026</span></div>
+    <div class="pcard fade-up d2"><div class="pcard-type">AI Infrastructure &middot; Open Source</div><div class="pcard-title">Project Coffee: AI Model Router & Cost Optimizer</div><div class="pcard-desc">Open-source AI workstation routing prompts to the most cost-efficient model. Coffee-shop metaphor: models are "beans," costs tracked in a "tips jar," with explicit approval for expensive operations.</div><div class="pcard-stack"><span class="pcard-tag">Python</span><span class="pcard-tag">OpenRouter</span><span class="pcard-tag">Multi-Model</span></div><span class="pcard-impact">Open-source on GitHub</span></div>
+    <div class="pcard fade-up"><div class="pcard-type">AI Agent &middot; LangGraph &middot; Autonomous</div><div class="pcard-title">OutreachIQ: Autonomous Networking Agent</div><div class="pcard-desc">End-to-end autonomous agent: discovers opportunities, scores fit via LLM evaluation, drafts personalized outreach. Five services orchestrated through LangGraph with full state management.</div><div class="pcard-stack"><span class="pcard-tag">LangGraph</span><span class="pcard-tag">Claude API</span><span class="pcard-tag">Gmail API</span><span class="pcard-tag">PostgreSQL</span></div><span class="pcard-impact">5 APIs orchestrated autonomously</span></div>
+    <div class="pcard fade-up d1"><div class="pcard-type">PhD Dissertation &middot; Causal Inference</div><div class="pcard-title">Sequential Target Trial Emulation for Heart Failure</div><div class="pcard-desc">Framework to evaluate treatment effectiveness in acutely ill patients using real-world hospital data, correcting for biases in observational studies. MIMIC-IV, 8,200+ patients.</div><div class="pcard-stack"><span class="pcard-tag">R</span><span class="pcard-tag">SAS</span><span class="pcard-tag">SQL</span><span class="pcard-tag">Git</span></div><span class="pcard-impact">Accepted at SER 2026</span></div>
+    <div class="pcard fade-up d2"><div class="pcard-type">HEOR &middot; NIH &middot; Cost-Effectiveness</div><div class="pcard-title">NIH R01: Periodontal Care in Pregnancy</div><div class="pcard-desc">Co-investigator on a $1.5M multi-site study. Built Medicaid cost models, quantified access gaps, produced policy-ready evidence for payer coverage recommendations.</div><div class="pcard-stack"><span class="pcard-tag">SAS</span><span class="pcard-tag">R</span><span class="pcard-tag">Medicaid Claims</span></div><span class="pcard-impact">$6k/capita projected savings</span></div>
   </div>
-
   <div style="text-align:center;margin-top:2.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
     <a href="ai-agents.html" class="btn btn-gold" style="color:#fff">Explore AI Agents in Detail</a>
-    <a href="research.html" class="btn btn-outline" style="color:var(--ink);border-color:var(--border-bright)">View All Research Projects</a>
+    <a href="research.html" class="btn btn-outline" style="color:var(--ink);border-color:var(--border-bright)">View All Research</a>
   </div>
 </section>
 
@@ -804,46 +638,11 @@
   <p class="section-tag">Recognition</p>
   <h2>Honors & <em style="color:var(--gold-bright)">Teaching</em></h2>
   <div class="honors-grid">
-    <div class="honor-card fade-up">
-      <span class="honor-icon">🏆</span>
-      <div>
-        <div class="honor-title">Certificate of Excellence in Oral Health Research</div>
-        <div class="honor-org">American Public Health Association, 2025</div>
-      </div>
-      <span class="honor-year">2025</span>
-    </div>
-    <div class="honor-card fade-up">
-      <span class="honor-icon">🏸</span>
-      <div>
-        <div class="honor-title">Badminton Coach, Club7 Charlotte &amp; USC Course Instructor</div>
-        <div class="honor-org">Teaching sport to non-athletes and curriculum design for 20+ students/semester</div>
-      </div>
-      <span class="honor-year">2023-25</span>
-    </div>
-    <div class="honor-card fade-up">
-      <span class="honor-icon">🎓</span>
-      <div>
-        <div class="honor-title">Arnold Epidemiology Fellowship</div>
-        <div class="honor-org">Arnold School of Public Health, University of South Carolina, 2021</div>
-      </div>
-      <span class="honor-year">2021</span>
-    </div>
-    <div class="honor-card fade-up">
-      <span class="honor-icon">🏸</span>
-      <div>
-        <div class="honor-title">6 Tournament Trophies (Doubles &amp; Singles)</div>
-        <div class="honor-org">Charlotte, NC; Palmetto, SC; Atlanta, GA, 2022-2025</div>
-      </div>
-      <span class="honor-year">2022-25</span>
-    </div>
-    <div class="honor-card fade-up">
-      <span class="honor-icon">🎓</span>
-      <div>
-        <div class="honor-title">KVPY Scholarship, Indian Institute of Science</div>
-        <div class="honor-org">IISc Bengaluru, 2013</div>
-      </div>
-      <span class="honor-year">2013</span>
-    </div>
+    <div class="honor-card fade-up"><span class="honor-icon">🏆</span><div><div class="honor-title">Certificate of Excellence in Oral Health Research</div><div class="honor-org">American Public Health Association, 2025</div></div><span class="honor-year">2025</span></div>
+    <div class="honor-card fade-up"><span class="honor-icon">🏸</span><div><div class="honor-title">Badminton Coach &amp; USC Course Instructor</div><div class="honor-org">Teaching sport to non-athletes; curriculum design for 20+ students/semester</div></div><span class="honor-year">2023-25</span></div>
+    <div class="honor-card fade-up"><span class="honor-icon">🎓</span><div><div class="honor-title">Arnold Epidemiology Fellowship</div><div class="honor-org">Arnold School of Public Health, University of South Carolina</div></div><span class="honor-year">2021</span></div>
+    <div class="honor-card fade-up"><span class="honor-icon">🏸</span><div><div class="honor-title">6 Tournament Trophies (Doubles &amp; Singles)</div><div class="honor-org">Charlotte, NC; Palmetto, SC; Atlanta, GA</div></div><span class="honor-year">2022-25</span></div>
+    <div class="honor-card fade-up"><span class="honor-icon">🎓</span><div><div class="honor-title">KVPY Scholarship, Indian Institute of Science</div><div class="honor-org">IISc Bengaluru</div></div><span class="honor-year">2013</span></div>
   </div>
 </section>
 
@@ -852,50 +651,12 @@
   <p class="section-tag">Scholarship</p>
   <h2>Publications & <em>Presentations</em></h2>
   <div class="pub-list">
-    <div class="pub-item fade-up">
-      <span class="pub-venue-badge badge-conf">SER 2026<br>Accepted</span>
-      <div>
-        <div class="pub-title-text">Causal Decision Modules in the EHR: Sequential Target Trials for Care in Acute Decompensated Heart Failure</div>
-        <div class="pub-authors-text">Ishan Suthar, Society for Epidemiologic Research Annual Meeting, 2026</div>
-      </div>
-    </div>
-    <div class="pub-item fade-up">
-      <span class="pub-venue-badge badge-conf">SER 2025<br>Presented</span>
-      <div>
-        <div class="pub-title-text">Quantifying the Benefits of Preventive Periodontal Care in Pregnancy Using Advanced Causal Inference Methods</div>
-        <div class="pub-authors-text">Suthar I, Merchant A, Rokonuzzaman SM</div>
-      </div>
-    </div>
-    <div class="pub-item fade-up">
-      <span class="pub-venue-badge badge-conf">APHA 2025<br>Presented</span>
-      <div>
-        <div class="pub-title-text">Dental Care Utilization in Childbearing Aged Women with Patient-Reported Systemic Conditions
-          <span class="pub-award">Certificate of Excellence in Oral Health Research</span>
-        </div>
-        <div class="pub-authors-text">Ishan Suthar, American Public Health Association Annual Meeting, 2025</div>
-      </div>
-    </div>
-    <div class="pub-item fade-up">
-      <span class="pub-venue-badge badge-conf">HRSA 2025<br>Presented</span>
-      <div>
-        <div class="pub-title-text">Streamlining Group-Based Education Reporting with REDCap: A Systematic Protocol for Participant Tracking</div>
-        <div class="pub-authors-text">Ishan Suthar, HRSA National All-Grantee Meeting, 2025</div>
-      </div>
-    </div>
-    <div class="pub-item fade-up">
-      <span class="pub-venue-badge badge-journal">JPHMP<br>2024</span>
-      <div>
-        <div class="pub-title-text">Virtual Expansion of the Y-USA Blood Pressure Self-Monitoring Program Using Telehealth</div>
-        <div class="pub-authors-text">Grant B, Myers K, Suthar I, et al. Journal of Public Health Management & Practice</div>
-      </div>
-    </div>
-    <div class="pub-item fade-up">
-      <span class="pub-venue-badge badge-journal">ADCES<br>2023</span>
-      <div>
-        <div class="pub-title-text">The Inner Circle: A Community of Practice for National Diabetes Prevention Program Lifestyle Coaches</div>
-        <div class="pub-authors-text">Ankrom B, Curry K, Mandelbaum J, Suthar I, Myers K, ADCES in Practice</div>
-      </div>
-    </div>
+    <div class="pub-item fade-up"><span class="pub-venue-badge badge-conf">SER 2026<br>Accepted</span><div><div class="pub-title-text">Causal Decision Modules in the EHR: Sequential Target Trials for Care in Acute Decompensated Heart Failure</div><div class="pub-authors-text">Ishan Suthar, Society for Epidemiologic Research, 2026</div></div></div>
+    <div class="pub-item fade-up"><span class="pub-venue-badge badge-conf">SER 2025<br>Presented</span><div><div class="pub-title-text">Quantifying the Benefits of Preventive Periodontal Care in Pregnancy Using Advanced Causal Inference Methods</div><div class="pub-authors-text">Suthar I, Merchant A, Rokonuzzaman SM</div></div></div>
+    <div class="pub-item fade-up"><span class="pub-venue-badge badge-conf">APHA 2025<br>Presented</span><div><div class="pub-title-text">Dental Care Utilization in Childbearing Aged Women with Patient-Reported Systemic Conditions <span class="pub-award">Certificate of Excellence</span></div><div class="pub-authors-text">Ishan Suthar, American Public Health Association, 2025</div></div></div>
+    <div class="pub-item fade-up"><span class="pub-venue-badge badge-conf">HRSA 2025<br>Presented</span><div><div class="pub-title-text">Streamlining Group-Based Education Reporting with REDCap</div><div class="pub-authors-text">Ishan Suthar, HRSA National All-Grantee Meeting, 2025</div></div></div>
+    <div class="pub-item fade-up"><span class="pub-venue-badge badge-journal">JPHMP<br>2024</span><div><div class="pub-title-text">Virtual Expansion of the Y-USA Blood Pressure Self-Monitoring Program Using Telehealth</div><div class="pub-authors-text">Grant B, Myers K, Suthar I, et al.</div></div></div>
+    <div class="pub-item fade-up"><span class="pub-venue-badge badge-journal">ADCES<br>2023</span><div><div class="pub-title-text">The Inner Circle: A Community of Practice for National Diabetes Prevention Program Lifestyle Coaches</div><div class="pub-authors-text">Ankrom B, Curry K, Mandelbaum J, Suthar I, Myers K</div></div></div>
   </div>
 </section>
 
@@ -923,59 +684,118 @@
 </footer>
 
 <script>
-  // Intersection observer for fade-in
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); } });
-  },{threshold:0.1});
-  document.querySelectorAll('.fade-up,.job').forEach(el=>io.observe(el));
+  // ═══ SCROLL PROGRESS BAR ═══
+  const scrollBar = document.getElementById('scrollProgress');
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    scrollBar.style.width = pct + '%';
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
 
-  // Skill filter
-  document.querySelectorAll('.filter-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  // ═══ CURSOR-FOLLOWING GLOW ═══
+  const heroSection = document.getElementById('hero');
+  const heroGlow = document.getElementById('heroGlow');
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    heroGlow.style.transform = `translate(${e.clientX - rect.left}px, ${e.clientY - rect.top}px) translate(-50%,-50%)`;
+  });
+
+  // ═══ 3D TILT ON STATS GRID ═══
+  const statsGrid = document.getElementById('statsGrid');
+  const statsContainer = document.querySelector('.hero-stats');
+  statsContainer.addEventListener('mousemove', (e) => {
+    const rect = statsContainer.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    statsGrid.style.transform = `rotateY(${x*6}deg) rotateX(${-y*6}deg)`;
+  });
+  statsContainer.addEventListener('mouseleave', () => {
+    statsGrid.style.transform = 'rotateY(0) rotateX(0)';
+  });
+
+  // ═══ PROJECT CARD MOUSE GLOW ═══
+  document.querySelectorAll('.pcard').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+      card.style.setProperty('--mouse-y', ((e.clientY - rect.top) / rect.height * 100) + '%');
+    });
+  });
+
+  // ═══ INTERSECTION OBSERVER ═══
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:0.1});
+  document.querySelectorAll('.fade-up,.job').forEach(el => io.observe(el));
+
+  // ═══ SKILL FILTER ═══
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const f=btn.dataset.filter;
-      document.querySelectorAll('.stag').forEach(tag=>{
-        if(f==='all'||tag.dataset.cat===f){ tag.classList.remove('hidden'); }
-        else { tag.classList.add('hidden'); }
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.stag').forEach(tag => {
+        tag.classList.toggle('hidden', f !== 'all' && tag.dataset.cat !== f);
       });
     });
   });
 
-  // Proficiency bars
-  const barObs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.querySelectorAll('.prof-fill').forEach(fill=>{
+  // ═══ PROFICIENCY BARS ═══
+  const barObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.querySelectorAll('.prof-fill').forEach(fill => {
           fill.style.width = fill.dataset.w + '%';
         });
       }
     });
-  },{threshold:0.2});
+  }, {threshold:0.2});
   const profRow = document.querySelector('.proficiency-row');
   if(profRow) barObs.observe(profRow);
 
-  // Counter animation
-  const counterObs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.querySelectorAll('[data-count]').forEach(el=>{
+  // ═══ COUNTER ANIMATION ═══
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.querySelectorAll('[data-count]').forEach(el => {
           const target = parseInt(el.dataset.count);
           const sup = el.querySelector('sup');
-          let count=0;
+          let count = 0;
           const step = Math.ceil(target/40);
-          const sup_html = sup ? sup.outerHTML : '';
-          const t = setInterval(()=>{
-            count = Math.min(count+step,target);
-            el.innerHTML = count + sup_html;
-            if(count>=target) clearInterval(t);
-          },30);
+          const supHtml = sup ? sup.outerHTML : '';
+          const t = setInterval(() => {
+            count = Math.min(count + step, target);
+            el.innerHTML = count + supHtml;
+            if(count >= target) clearInterval(t);
+          }, 30);
         });
       }
     });
-  },{threshold:0.3});
-  const statsGrid = document.querySelector('.stats-grid');
+  }, {threshold:0.3});
   if(statsGrid) counterObs.observe(statsGrid);
+
+  // ═══ ACTIVE NAV HIGHLIGHT ═══
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if(window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // Close mobile nav on link click
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    });
+  });
 </script>
 </body>
 </html>
