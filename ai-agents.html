@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ishan Suthar — AI Agents & Automation</title>
+  <title>Ishan Suthar — AI Tools & Agents I've Built</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -191,41 +191,43 @@
 <!-- PAGE HERO -->
 <div class="page-hero">
   <a href="index.html" class="back-link">← Back to Portfolio</a>
-  <div class="page-hero-eyebrow">Applied AI Engineering</div>
-  <h1>AI Agents &<br><em>Automation</em></h1>
-  <p class="page-hero-sub">3 autonomous AI agents and end-to-end automation systems — built solo, from architecture to deployment — spanning healthcare intake, content automation, and job-search outreach.</p>
+  <div class="page-hero-eyebrow">Built End-to-End</div>
+  <h1>AI Tools &<br><em>Agents</em></h1>
+  <p class="page-hero-sub">5 AI-powered systems built solo, from problem scoping to working product, spanning community health intake, research study design, cost-efficient model routing, autonomous networking, and content automation.</p>
 </div>
 
 <!-- PROJECT NAV -->
 <div class="proj-nav">
   <a href="#grace" class="pnav-btn active">01 · GRACE</a>
-  <a href="#videopipeline" class="pnav-btn">02 · Marketing Video Pipeline</a>
-  <a href="#outreachiq" class="pnav-btn">03 · OutreachIQ</a>
-  <a href="research.html" class="pnav-btn" style="background:var(--teal);color:#fff;border-color:var(--teal)">← Back to Research</a>
+  <a href="#ttengine" class="pnav-btn">02 · TTEngine</a>
+  <a href="#coffee" class="pnav-btn">03 · Project Coffee</a>
+  <a href="#outreachiq" class="pnav-btn">04 · OutreachIQ</a>
+  <a href="#videopipeline" class="pnav-btn">05 · Video Pipeline</a>
+  <a href="research.html" class="pnav-btn" style="background:var(--teal);color:#fff;border-color:var(--teal)">Research</a>
 </div>
 
 <!-- ═══ INTRO ═══ -->
 <div id="intro">
   <p class="section-tag">Why I Build These</p>
-  <h2>Epidemiologic Rigor, <em>Applied to AI Systems</em></h2>
+  <h2>Building AI Tools <em>for Real Organizations</em></h2>
   <div class="intro-layout">
     <div class="intro-text">
-      <p>Epidemiology trained me to think in <strong>workflows and decision logic</strong> — eligibility criteria, structured data capture, safety protocols, audit trails. Building AI agents turned out to be a natural extension of that same skill set: defining clear inputs, decision points, and outputs, then automating the workflow end-to-end.</p>
-      <p>Each of these systems was built solo — architecture, backend, API integrations, and (where relevant) the conversational or decision logic itself. They range from a <strong>voice-based clinical intake agent</strong> built for a federally funded maternal health program, to a <strong>fully autonomous content pipeline</strong>, to a <strong>LangGraph-based job-search agent</strong> that has actively supported my own search for RWE and HEOR roles.</p>
-      <p>I see this as directly complementary to clinical epidemiology and RWE work — the same discipline that produces valid causal estimates also produces AI systems with embedded safety logic, structured outputs, and reproducible behavior.</p>
+      <p>Working inside public health programs taught me to think in <strong>workflows, constraints, and handoffs</strong>: who uses this system, what breaks when they leave, how do you make it survive the person who built it. Building AI tools turned out to be a natural extension of that same thinking.</p>
+      <p>Each of these systems was scoped, designed, and shipped solo. They range from a <strong>Claude-powered voice intake system</strong> built for community health caseworkers, to an <strong>AI research study design platform</strong> that grew out of my dissertation, to an <strong>open-source model router</strong> that makes LLM access affordable for resource-constrained teams.</p>
+      <p>What ties them together: I build things that solve real problems for specific users, I design them so non-technical people can use them, and I think about what happens after I'm gone.</p>
     </div>
     <div class="intro-stats">
       <div class="istat">
-        <div class="istat-num">3</div>
-        <div class="istat-label">Agents built solo, end-to-end</div>
+        <div class="istat-num">5</div>
+        <div class="istat-label">AI tools & agents built end-to-end</div>
       </div>
       <div class="istat">
-        <div class="istat-num">7+</div>
-        <div class="istat-label">External APIs orchestrated (video pipeline alone)</div>
+        <div class="istat-num">10+</div>
+        <div class="istat-label">External APIs integrated</div>
       </div>
       <div class="istat">
-        <div class="istat-num">100%</div>
-        <div class="istat-label">Autonomous daily publishing (video pipeline)</div>
+        <div class="istat-num">1</div>
+        <div class="istat-label">Open-source project (Project Coffee)</div>
       </div>
     </div>
   </div>
@@ -279,9 +281,144 @@
   </div>
 </div>
 
-<!-- ═══ 02 MARKETING VIDEO PIPELINE ═══ -->
-<div id="videopipeline" class="proj-section fade-up">
+<!-- ═══ 02 TTENGINE ═══ -->
+<div id="ttengine" class="proj-section fade-up">
   <div class="proj-num">02</div>
+  <p class="proj-type">AI Platform · Full-Stack · Research Tools</p>
+  <h2>TTEngine — <em>AI-Powered Research Study Design</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">A full-stack AI application that helps researchers design rigorous observational studies from real-world data. Born out of my own dissertation work, where I realized the methodology I was using (target trial emulation) was powerful but inaccessible to most researchers without deep causal inference training. TTEngine translates that complexity into guided, step-by-step protocols.</p>
+      <div class="flow-strip">
+        <span class="flow-step">Research question input</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Claude API protocol generation</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Interactive study design</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Exportable protocol document</span>
+      </div>
+      <ul class="proj-bullets">
+        <li>Scoped, architected, and shipped independently from concept through working product, including <strong>FastAPI backend</strong>, <strong>React frontend</strong>, and <strong>Claude API</strong>-driven protocol generation</li>
+        <li>Designed for non-specialist researchers: the system walks users through study design decisions that would normally require a causal inference methodologist, producing structured protocols they can follow and share</li>
+        <li>Related work accepted at <strong>SER 2026</strong> (Society for Epidemiologic Research), validating the underlying methodology</li>
+        <li>Addresses a real gap: most research teams lack access to target trial emulation expertise, and existing tools assume deep statistical knowledge</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <span class="status-pill">Working product, actively developed</span>
+      <div class="sidebar-card">
+        <div class="sc-label">Stack</div>
+        <div class="sc-tags">
+          <span class="sc-tag">Python</span><span class="sc-tag">FastAPI</span><span class="sc-tag">React</span>
+          <span class="sc-tag">Claude API</span><span class="sc-tag">Vite</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Origin</div>
+        <div class="sc-value">Grew out of my PhD dissertation on target trial emulation for heart failure</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">What It Solves</div>
+        <div class="sc-value">Makes advanced causal inference methodology accessible to researchers who don't have the training to do it from scratch</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03 PROJECT COFFEE ═══ -->
+<div id="coffee" class="proj-section fade-up">
+  <div class="proj-num">03</div>
+  <p class="proj-type">AI Infrastructure · Open Source · Cost Optimization</p>
+  <h2>Project Coffee — <em>AI Model Router & Cost Optimizer</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">An open-source personal AI workstation that intelligently routes prompts to the most cost-efficient model based on task complexity. Built around a playful coffee-shop metaphor: models are "beans," costs are tracked in a "tips jar," and any operation above a cost threshold requires explicit user approval before running.</p>
+      <div class="flow-strip">
+        <span class="flow-step">User prompt</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Task complexity analysis</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Model selection (cost-optimized)</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Approval gate (if expensive)</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Response</span>
+      </div>
+      <ul class="proj-bullets">
+        <li>Built and <strong>open-sourced on GitHub</strong> as a tool that solves a real adoption barrier: organizations that want to use powerful AI models but need cost predictability and transparency</li>
+        <li>Designed the routing logic to balance quality and cost, particularly relevant for <strong>resource-constrained organizations</strong> (nonprofits, public agencies, small teams) exploring LLM adoption for the first time</li>
+        <li>Features a <strong>collapsible animated coffee-counter UI</strong> with a barista character that reacts to backend pipeline states, streaming response display, and a prompt interface with model-alias "beans" and cost tracking</li>
+        <li>Explicit <strong>cost-approval threshold</strong> prevents surprise spending, giving users control over when to escalate to more expensive models</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <span class="status-pill">Open-source on GitHub</span>
+      <div class="sidebar-card">
+        <div class="sc-label">Stack</div>
+        <div class="sc-tags">
+          <span class="sc-tag">Python</span><span class="sc-tag">OpenRouter API</span>
+          <span class="sc-tag">Multi-Model</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Why It Matters</div>
+        <div class="sc-value">Makes AI accessible without surprise costs, especially for teams and orgs with limited budgets</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">UI Concept</div>
+        <div class="sc-value">Coffee-shop metaphor: beans (models), tips jar (costs), barista (status), with explicit approval for expensive operations</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 04 OUTREACHIQ ═══ -->
+<div id="outreachiq" class="proj-section fade-up">
+  <div class="proj-num">04</div>
+  <p class="proj-type">AI Agent · Job Search Automation · LangGraph</p>
+  <h2>OutreachIQ — <em>Autonomous Networking Agent</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">An end-to-end autonomous AI agent that discovers job opportunities, analyzes requirements, scores fit against a candidate profile using LLM-based evaluation, and drafts personalized outreach emails, all without manual intervention between steps.</p>
+      <div class="flow-strip">
+        <span class="flow-step">Job discovery</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">LLM fit scoring</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Personalized email draft</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Gmail send</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">PostgreSQL tracking</span>
+      </div>
+      <ul class="proj-bullets">
+        <li>Integrated <strong>five external services</strong> (web search, Gmail, LLM scoring, contact discovery, PostgreSQL tracking) into a single <strong>LangGraph pipeline</strong> that maintains state across the full workflow</li>
+        <li>Automated personalized outreach workflows, generating tailored <strong>networking emails, cover letters, and faculty introductions</strong> based on each job description, research interests, and institutional priorities</li>
+        <li>Built as a self-directed tool to scale my own job search, demonstrating autonomous multi-step agent architecture with real-world integration</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <span class="status-pill">Actively used in my own job search</span>
+      <div class="sidebar-card">
+        <div class="sc-label">Stack</div>
+        <div class="sc-tags">
+          <span class="sc-tag">Python</span><span class="sc-tag">Claude API</span><span class="sc-tag">OpenAI API</span>
+          <span class="sc-tag">LangGraph</span><span class="sc-tag">Gmail API</span>
+          <span class="sc-tag">Google Custom Search</span><span class="sc-tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Architecture</div>
+        <div class="sc-value">5 services orchestrated through LangGraph with full state management and tracking</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 05 MARKETING VIDEO PIPELINE ═══ -->
+<div id="videopipeline" class="proj-section fade-up">
+  <div class="proj-num">05</div>
   <p class="proj-type">AI Agent · Content Automation · Multi-API Orchestration</p>
   <h2>Automated Marketing <em>Video Pipeline</em></h2>
   <div class="proj-detail">
@@ -329,65 +466,19 @@
   </div>
 </div>
 
-<!-- ═══ 03 OUTREACHIQ ═══ -->
-<div id="outreachiq" class="proj-section fade-up">
-  <div class="proj-num">03</div>
-  <p class="proj-type">AI Agent · Job Search Automation · LangGraph</p>
-  <h2>OutreachIQ — <em>Networking Outreach AI Agent</em></h2>
-  <div class="proj-detail">
-    <div>
-      <p class="proj-desc">An autonomous agent built to scale and systematize my own job search — finding relevant research, epidemiology, biostatistics, and public health roles, scoring fit against my qualifications, and drafting personalized outreach without manual effort for every application.</p>
-      <div class="flow-strip">
-        <span class="flow-step">🔎 Job discovery</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-step">LLM fit scoring</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-step">Personalized email/cover letter draft</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-step">📧 Gmail send</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-step">PostgreSQL tracking</span>
-      </div>
-      <ul class="proj-bullets">
-        <li>Developed an autonomous agent using <strong>LangGraph</strong> that identifies relevant research, epidemiology, biostatistics, and public health job opportunities, analyzes job requirements, and scores candidate fit using <strong>LLM-based profile matching</strong></li>
-        <li>Automated personalized outreach workflows — generating tailored <strong>networking emails, cover letters, and faculty introductions</strong> based on each job description, research interests, publication history, and institutional priorities</li>
-        <li>Integrated <strong>Gmail API, Google Custom Search</strong>, and recruiter/faculty discovery pipelines to identify hiring contacts, track outreach status, and maintain a structured <strong>PostgreSQL database</strong> of applications, responses, and follow-up actions</li>
-        <li>Built as a self-directed tool to scale my own multi-track search across <strong>pharma RWE/HEOR, clinical epidemiology, and academic research roles</strong></li>
-      </ul>
-    </div>
-    <div class="proj-sidebar">
-      <span class="status-pill">Actively used in my own job search</span>
-      <div class="sidebar-card">
-        <div class="sc-label">Stack</div>
-        <div class="sc-tags">
-          <span class="sc-tag">Python</span><span class="sc-tag">Claude API</span><span class="sc-tag">OpenAI API</span>
-          <span class="sc-tag">LangGraph</span><span class="sc-tag">Gmail API</span>
-          <span class="sc-tag">Google Custom Search</span><span class="sc-tag">PostgreSQL</span>
-        </div>
-      </div>
-      <div class="sidebar-card">
-        <div class="sc-label">Function</div>
-        <div class="sc-value">Job discovery → LLM fit scoring → personalized outreach → application tracking</div>
-      </div>
-      <div class="sidebar-card">
-        <div class="sc-label">Built For</div>
-        <div class="sc-value">My own RWE / HEOR / clinical epidemiology job search</div>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <!-- ═══ CLOSING CTA ═══ -->
 <div id="closing">
   <p class="section-tag" style="color:var(--teal-bright)">Let's Talk</p>
   <h2>Interested in <em>How I Build?</em></h2>
-  <p>Whether it's causal inference on real-world data or an autonomous agent orchestrating a dozen APIs, I like building things that work end-to-end. Happy to walk through the architecture of any of these.</p>
+  <p>I scope problems inside real organizations, build AI solutions for non-technical users, and design them to survive after I leave. Happy to walk through the architecture of any of these.</p>
   <a href="https://linktr.ee/i.ishan.2812" target="_blank" class="btn btn-primary">Connect with Me ↗</a>
   <a href="research.html" class="btn btn-outline">View Research Projects →</a>
 </div>
 
 <footer>
-  <p>© 2026 Ishan Suthar · Clinical Epidemiologist · RWE & HEOR · Charlotte, NC</p>
+  <p>&copy; 2026 Ishan Suthar &middot; AI Builder &middot; Public Health Researcher &middot; Chicago, IL</p>
   <p>
     <a href="index.html">← Portfolio</a> &nbsp;·&nbsp;
     <a href="research.html">Research</a> &nbsp;·&nbsp;
@@ -403,7 +494,7 @@
   document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
 
   // Highlight active proj nav on scroll
-  const sections=['grace','videopipeline','outreachiq'];
+  const sections=['grace','ttengine','coffee','outreachiq','videopipeline'];
   const pnavBtns = document.querySelectorAll('.proj-nav .pnav-btn[href^="#"]');
   window.addEventListener('scroll',()=>{
     let current='';
