@@ -224,15 +224,18 @@
   <a href="index.html" class="back-link">← Back to Portfolio</a>
   <div class="page-hero-eyebrow">Built End-to-End</div>
   <h1>AI Tools &<br><em>Agents</em></h1>
-  <p class="page-hero-sub">4 AI-powered systems built solo, from problem scoping to working product, spanning community health intake, cost-efficient model routing, autonomous networking, and content automation.</p>
+  <p class="page-hero-sub">7 AI-powered systems built solo, from problem scoping to working product, spanning community health intake, causal study design, multi-agent extraction, cost-efficient model routing, autonomous outreach, quantitative research, and content automation.</p>
 </div>
 
 <!-- PROJECT NAV -->
 <div class="proj-nav">
   <a href="#grace" class="pnav-btn active">01 · GRACE</a>
-  <a href="#coffee" class="pnav-btn">02 · Project Coffee</a>
-  <a href="#outreachiq" class="pnav-btn">03 · OutreachIQ</a>
-  <a href="#videopipeline" class="pnav-btn">04 · Video Pipeline</a>
+  <a href="#autodag" class="pnav-btn">02 · AutoDAG</a>
+  <a href="#deepscraper" class="pnav-btn">03 · DeepScraper</a>
+  <a href="#coffee" class="pnav-btn">04 · Project Coffee</a>
+  <a href="#outreachiq" class="pnav-btn">05 · OutreachIQ</a>
+  <a href="#liquidai" class="pnav-btn">06 · LiquidAI</a>
+  <a href="#videopipeline" class="pnav-btn">07 · Video Pipeline</a>
   <a href="research.html" class="pnav-btn" style="background:var(--teal);color:#fff;border-color:var(--teal)">Research</a>
 </div>
 
@@ -243,12 +246,12 @@
   <div class="intro-layout">
     <div class="intro-text">
       <p>Working inside public health programs taught me to think in <strong>workflows, constraints, and handoffs</strong>: who uses this system, what breaks when they leave, how do you make it survive the person who built it. Building AI tools turned out to be a natural extension of that same thinking.</p>
-      <p>Each of these systems was scoped, designed, and shipped solo. They range from a <strong>Claude-powered voice intake system</strong> built for community health caseworkers, to an <strong>autonomous research and outreach agent</strong> orchestrated through LangGraph, to an <strong>open-source model router</strong> that makes LLM access affordable for resource-constrained teams.</p>
+      <p>Each of these systems was scoped, designed, and shipped solo. They range from a <strong>Claude-powered voice intake system</strong> built for community health caseworkers, to a <strong>causal study design platform</strong> that surfaces the confounders a dataset never measured, to an <strong>open-source model router</strong> that makes LLM access affordable for resource-constrained teams.</p>
       <p>What ties them together: I build things that solve real problems for specific users, I design them so non-technical people can use them, and I think about what happens after I'm gone.</p>
     </div>
     <div class="intro-stats">
       <div class="istat">
-        <div class="istat-num">4</div>
+        <div class="istat-num">7</div>
         <div class="istat-label">AI tools & agents built end-to-end</div>
       </div>
       <div class="istat">
@@ -311,9 +314,105 @@
   </div>
 </div>
 
-<!-- ═══ 02 PROJECT COFFEE ═══ -->
-<div id="coffee" class="proj-section fade-up">
+
+<!-- ═══ 02 AUTODAG ═══ -->
+<div id="autodag" class="proj-section fade-up">
   <div class="proj-num">02</div>
+  <p class="proj-type">AI Platform &middot; Causal Inference &middot; Full-Stack</p>
+  <h2>AutoDAG &mdash; <em>LLM-Assisted Causal Diagram Design</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">A web application that turns a free-text observational research question plus a variable inventory into a causal directed acyclic graph, an adjustment set, and an explicit account of what it cannot adjust for. Built because the hardest part of an observational study is not fitting the model, it is knowing which variables to condition on and which confounders your data never measured in the first place.</p>
+      <div class="flow-strip">
+        <span class="flow-step">Research question</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Literature-grounded concept map</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Variable overlay</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">DAG + adjustment set</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Residual confounding report</span>
+      </div>
+      <ul class="proj-bullets">
+        <li><strong>Concept-first, not inventory-first.</strong> The system retrieves causal structure from the literature before it sees your data, then overlays your variables onto it. Confounders you did not measure appear as <strong>latent nodes with explicit cannot-adjust warnings</strong> rather than silently vanishing from a DAG that looks complete</li>
+        <li>Adjustment sets are <strong>graph-derived via the backdoor criterion</strong> with d-separation, not assembled from role labels, and every set carries a provenance badge saying which method produced it</li>
+        <li>Structural validators run on every design: acyclicity, temporal ordering, collider detection, role consistency, and a thin-adjustment-set guard, each emitting categorized warnings tied to the specific nodes involved</li>
+        <li>Built an <strong>evaluation harness before the generator</strong>, scoring output against gold-standard fixtures with a known hidden confounder, plus a stability harness measuring run-to-run variance across repeated generations</li>
+        <li>Experts can <strong>edit the DAG</strong> and every edit is persisted, replayed through the same validators as model output, and marked by origin in the exported report</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <span class="status-pill">Working product, demoed on MIMIC-IV</span>
+      <div class="sidebar-card">
+        <div class="sc-label">Stack</div>
+        <div class="sc-tags">
+          <span class="sc-tag">Python</span><span class="sc-tag">FastAPI</span><span class="sc-tag">React</span>
+          <span class="sc-tag">React Flow</span><span class="sc-tag">Claude API</span><span class="sc-tag">SQLite</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">What It Solves</div>
+        <div class="sc-value">Unmeasured confounding is the failure mode that sinks observational studies. AutoDAG makes it visible at design time instead of at peer review</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Engineering Note</div>
+        <div class="sc-value">Test-first throughout: 350+ backend and 60+ frontend tests, with a frozen regression fixture gating changes to the causal logic</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03 DEEPSCRAPER ═══ -->
+<div id="deepscraper" class="proj-section fade-up">
+  <div class="proj-num">03</div>
+  <p class="proj-type">Multi-Agent System &middot; Structured Extraction &middot; Food Safety</p>
+  <h2>DeepScraper &mdash; <em>Multi-Agent Allergen Extraction</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">A multi-agent pipeline that crawls food supplier catalogues and turns unstructured product pages into a structured allergen database. Built for a food-tech startup where the underlying problem is that allergen information exists on thousands of supplier sites in no consistent format, and getting it wrong has real consequences for someone with a severe allergy.</p>
+      <div class="flow-strip">
+        <span class="flow-step">Crawl (Playwright / httpx)</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">LLM extraction agents</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Allergen mapping</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Taxonomy normalization</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Structured output</span>
+      </div>
+      <ul class="proj-bullets">
+        <li>Handles both static and JavaScript-rendered sites through a <strong>Playwright and httpx crawler layer</strong>, with agents specialized by extraction task rather than one prompt trying to do everything</li>
+        <li>Maps extracted ingredients onto the <strong>FDA Big 9</strong> and <strong>EU 14</strong> allergen taxonomies, so output is normalized against regulatory standards rather than whatever wording a supplier happened to use</li>
+        <li>Built on the <strong>Anthropic API</strong> directly with a smaller model as the extraction workhorse, a deliberate cost decision for a pipeline that runs across thousands of pages</li>
+        <li>Substantial passing test suite on the production build, because a silent extraction failure in this domain is worse than a loud one</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <span class="status-pill">Production build, test suite passing</span>
+      <div class="sidebar-card">
+        <div class="sc-label">Stack</div>
+        <div class="sc-tags">
+          <span class="sc-tag">Python</span><span class="sc-tag">Playwright</span><span class="sc-tag">httpx</span>
+          <span class="sc-tag">Anthropic API</span><span class="sc-tag">Multi-Agent</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Use Case</div>
+        <div class="sc-value">Allergen-safe menu and supplier matching for a food-tech startup I advise on AI and workflow design</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Where It Goes</div>
+        <div class="sc-value">Generalizing toward a domain-agnostic extraction engine with a common structured output format</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 04 PROJECT COFFEE ═══ -->
+<div id="coffee" class="proj-section fade-up">
+  <div class="proj-num">04</div>
   <p class="proj-type">AI Infrastructure · Open Source · Cost Optimization</p>
   <h2>Project Coffee — <em>AI Model Router & Cost Optimizer</em></h2>
   <div class="proj-detail">
@@ -358,9 +457,9 @@
   </div>
 </div>
 
-<!-- ═══ 03 OUTREACHIQ ═══ -->
+<!-- ═══ 05 OUTREACHIQ ═══ -->
 <div id="outreachiq" class="proj-section fade-up">
-  <div class="proj-num">03</div>
+  <div class="proj-num">05</div>
   <p class="proj-type">AI Agent · Job Search Automation · LangGraph</p>
   <h2>OutreachIQ — <em>Autonomous Networking Agent</em></h2>
   <div class="proj-detail">
@@ -401,9 +500,57 @@
   </div>
 </div>
 
-<!-- ═══ 05 MARKETING VIDEO PIPELINE ═══ -->
+
+<!-- ═══ 06 LIQUIDAI ═══ -->
+<div id="liquidai" class="proj-section fade-up">
+  <div class="proj-num">06</div>
+  <p class="proj-type">Quantitative Research &middot; Backtesting &middot; Market Microstructure</p>
+  <h2>LiquidAI &mdash; <em>Options Research &amp; Backtesting Engine</em></h2>
+  <div class="proj-detail">
+    <div>
+      <p class="proj-desc">A quantitative research platform for options markets, currently focused on whether dealer gamma exposure carries any predictive signal for forward SPY returns. This is the project where I practise the discipline that matters most in my day job: pre-specifying what would count as a result, then believing the answer.</p>
+      <div class="flow-strip">
+        <span class="flow-step">Historical options data</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Feature construction</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Discrimination gate</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Backtest</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">Verdict</span>
+      </div>
+      <ul class="proj-bullets">
+        <li>Full-stack platform in <strong>FastAPI and Next.js</strong> with market data integration, screening across the S&amp;P 500, and systematic backtesting infrastructure</li>
+        <li>Rebuilt around a single question using <strong>eleven years of per-contract open interest data</strong>, after evaluating and rejecting several data vendors on coverage and cost</li>
+        <li><strong>Reported the negative result.</strong> The backtest returned <strong>-77.5% against SPY's +28.2%</strong> and I published that number rather than tuning parameters until it looked better. The later gamma-exposure gate also failed: no feature predicted forward returns, though a volatility relationship did appear</li>
+        <li>The transferable part is not the trading. It is pre-registering a hypothesis, defining the failure criterion before running the test, and treating a null result as information rather than an embarrassment</li>
+      </ul>
+    </div>
+    <div class="proj-sidebar">
+      <span class="status-pill">Research project, gate failed honestly</span>
+      <div class="sidebar-card">
+        <div class="sc-label">Stack</div>
+        <div class="sc-tags">
+          <span class="sc-tag">Python</span><span class="sc-tag">FastAPI</span><span class="sc-tag">Next.js</span>
+          <span class="sc-tag">TypeScript</span><span class="sc-tag">Pandas</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Why It's Here</div>
+        <div class="sc-value">Systematic backtesting and pre-specified hypothesis testing are the same muscles as trial simulation and analysis-plan discipline</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-label">Current State</div>
+        <div class="sc-value">Signal gate failed. Choosing between a volatility-based pivot, more data, or stopping. Documenting either way</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 07 MARKETING VIDEO PIPELINE ═══ -->
 <div id="videopipeline" class="proj-section fade-up">
-  <div class="proj-num">04</div>
+  <div class="proj-num">07</div>
   <p class="proj-type">AI Agent · Content Automation · Multi-API Orchestration</p>
   <h2>Automated Marketing <em>Video Pipeline</em></h2>
   <div class="proj-detail">
@@ -497,7 +644,7 @@
   });
 
   // Highlight active proj nav on scroll
-  const sections=['grace','coffee','outreachiq','videopipeline'];
+  const sections=['grace','autodag','deepscraper','coffee','outreachiq','liquidai','videopipeline'];
   const pnavBtns = document.querySelectorAll('.proj-nav .pnav-btn[href^="#"]');
   window.addEventListener('scroll',()=>{
     let current='';
