@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Examples | Ishan Suthar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#0d1b2a;--navy-2:#132035;--navy-3:#1a2d45;--teal:#0891b2;--teal-bright:#22d3ee;--gold:#d97706;--paper:#fff;--paper-2:#f0f6fa;--ink:#0d1b2a;--muted:#64748b;--border:rgba(13,27,42,.12);--shadow:0 4px 24px rgba(13,27,42,.1)}
+    *{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth} body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);line-height:1.6;background:var(--paper)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(13,27,42,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff;text-decoration:none}.nav-logo span{color:var(--teal-bright)}.nav-links{display:flex;gap:1.45rem;list-style:none;align-items:center}.nav-links a{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);text-decoration:none}.nav-links a:hover,.nav-links a.active{color:var(--teal-bright)}.nav-cta{padding:.5rem 1rem;background:var(--teal);color:#fff!important;border-radius:3px}
+    .page-hero{min-height:52vh;display:flex;flex-direction:column;justify-content:flex-end;padding:9rem 4rem 4.5rem;background:linear-gradient(135deg,var(--navy),var(--navy-3) 60%,#0f2a3d);position:relative;overflow:hidden}.page-hero:before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(8,145,178,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(8,145,178,.08) 1px,transparent 1px);background-size:64px 64px}.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-bright);position:relative;margin-bottom:1rem}.eyebrow:before{content:'';display:inline-block;width:28px;height:1px;background:var(--teal-bright);vertical-align:middle;margin-right:.75rem}.page-hero h1{position:relative;font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5rem);line-height:.95;color:#fff;letter-spacing:-.03em}.page-hero h1 em{font-weight:400;color:var(--teal-bright)}.page-hero p{position:relative;max-width:650px;margin-top:1.25rem;color:rgba(255,255,255,.65);font-weight:300}
+    main{max-width:1180px;margin:auto;padding:5rem 2rem 6rem}.intro{display:grid;grid-template-columns:1fr 280px;gap:4rem;padding-bottom:4rem;border-bottom:1px solid var(--border)}.intro h2,.section-title{font-family:'Playfair Display',serif;font-size:2rem;line-height:1.15;margin-bottom:1rem}.intro p{color:#374151;font-weight:300;max-width:680px}.method-box{border-left:3px solid var(--teal);padding:1.25rem;background:var(--paper-2)}.method-box .label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.45rem}.method-box p{font-size:.82rem;color:#374151}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:4.5rem 0 1.5rem}.section-tag{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:.4rem}.section-title{margin:0}.code-card{border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:2rem;box-shadow:var(--shadow)}.card-head{display:flex;justify-content:space-between;align-items:start;gap:1rem;padding:1.5rem 1.6rem;background:var(--paper-2);border-bottom:1px solid var(--border)}.card-kicker{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.35rem}.card-head h3{font-family:'Playfair Display',serif;font-size:1.35rem}.card-head p{font-size:.83rem;color:#4b5563;max-width:590px;margin-top:.35rem}.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.85rem}.tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.06em;color:var(--teal);background:rgba(8,145,178,.08);border:1px solid rgba(8,145,178,.2);padding:.2rem .5rem;border-radius:2px}.copy-btn{flex-shrink:0;border:1px solid rgba(8,145,178,.35);background:#fff;color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.5rem .75rem;border-radius:2px;cursor:pointer}.copy-btn:hover{background:var(--teal);color:#fff}pre{overflow:auto;background:#07111f;color:#d7e6f0;padding:1.55rem 1.6rem;font-family:'JetBrains Mono',monospace;font-size:.76rem;line-height:1.75;tab-size:2}.kw{color:#7dd3fc}.fn{color:#fbbf24}.str{color:#86efac}.cm{color:#7c93a8}.num{color:#c4b5fd}
+    .note{display:flex;gap:1rem;margin-top:4rem;padding:1.3rem 1.5rem;background:#fff8e7;border:1px solid rgba(217,119,6,.2);border-left:3px solid var(--gold);font-size:.84rem;color:#5b4a24}.note strong{color:#593e09}.contact{margin-top:4rem;padding:2.6rem 2rem;background:var(--navy);text-align:center;color:#fff}.contact h2{font-family:'Playfair Display',serif;font-size:2rem}.contact p{color:rgba(255,255,255,.6);margin:.7rem auto 1.4rem;max-width:590px}.btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:.8rem 1.25rem;border-radius:3px}.btn:hover{background:var(--teal-bright);color:var(--navy)}footer{padding:2rem 4rem;background:#060e18;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:rgba(255,255,255,.3)}footer a{color:rgba(255,255,255,.4);text-decoration:none}footer a:hover{color:var(--teal-bright)}
+    @media(max-width:800px){nav{padding:1rem 1.5rem}.nav-links{gap:.8rem}.nav-links a{font-size:.56rem}.page-hero{padding:8rem 1.5rem 3.5rem}.intro{grid-template-columns:1fr;gap:2rem}main{padding:3.5rem 1.5rem}.card-head{flex-direction:column}footer{padding:2rem 1.5rem;flex-direction:column}.nav-links li:nth-child(3),.nav-links li:nth-child(4){display:none}}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo">Ishan <span>Suthar</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Portfolio</a></li><li><a href="research.html">Research</a></li><li><a href="code-examples.html" class="active">Code</a></li><li><a href="ai-agents.html">AI Agents</a></li><li><a href="hobbies.html">Hobbies</a></li><li><a href="index.html#contact" class="nav-cta">Connect</a></li>
+    </ul>
+  </nav>
+  <header class="page-hero">
+    <div class="eyebrow">Applied Statistical Programming</div>
+    <h1>Code <em>Examples</em></h1>
+    <p>Representative, de-identified R workflows from clinical and epidemiologic research. Each example emphasizes transparent assumptions, reproducibility, and data-quality safeguards.</p>
+  </header>
+  <main>
+    <section class="intro">
+      <div><h2>From research question to reproducible evidence.</h2><p>My analytic work spans longitudinal clinical trials, causal inference, and EHR-derived cohorts. These examples are intentionally reduced from larger research pipelines: they show methodological approach and code quality without disclosing patient-level data, protected variables, project-specific paths, or unpublished results.</p></div>
+      <aside class="method-box"><div class="label">What you will see</div><p>Clear function boundaries, explicit modeling decisions, validation-minded transforms, and output designed for review by another analyst.</p></aside>
+    </section>
+    <div class="section-head"><div><div class="section-tag">01 / Causal Inference</div><h2 class="section-title">Stabilized IPCW and g-estimation</h2></div></div>
+    <article class="code-card">
+      <div class="card-head"><div><div class="card-kicker">R / Longitudinal trial analysis</div><h3>Estimate a causal effect under informative follow-up</h3><p>Fits stabilized inverse-probability-of-censoring weights, then estimates the structural nested-model parameter using a weighted treatment model.</p><div class="tags"><span class="tag">dplyr</span><span class="tag">glm</span><span class="tag">IPCW</span><span class="tag">g-estimation</span></div></div><button class="copy-btn" data-copy="code1">Copy code</button></div>
+      <pre id="code1"><code><span class="fn">estimate_psi</span> &lt;- <span class="kw">function</span>(d, outcome, censor, covariates) {
+  denominator_formula &lt;- <span class="fn">reformulate</span>(
+    <span class="fn">c</span>(<span class="str">"treatment"</span>, covariates), response = censor
+  )
+
+  denominator_fit &lt;- <span class="fn">glm</span>(denominator_formula, data = d,
+                         family = <span class="fn">binomial</span>())
+  numerator_fit &lt;- <span class="fn">glm</span>(<span class="fn">reformulate</span>(<span class="str">"treatment"</span>, response = censor),
+                       data = d, family = <span class="fn">binomial</span>())
+
+  weighted &lt;- d |&gt;
+    dplyr::<span class="fn">mutate</span>(
+      p_denom = <span class="fn">predict</span>(denominator_fit, type = <span class="str">"response"</span>),
+      p_num   = <span class="fn">predict</span>(numerator_fit, type = <span class="str">"response"</span>),
+      sw      = p_num / p_denom
+    ) |&gt;
+    dplyr::<span class="fn">filter</span>(.data[[censor]] == <span class="num">0</span>, <span class="fn">is.finite</span>(sw))
+
+  treatment_fit &lt;- <span class="fn">glm</span>(<span class="fn">reformulate</span>(covariates, response = <span class="str">"treatment"</span>),
+                       data = weighted, family = <span class="fn">binomial</span>(), weights = sw)
+  p_treatment &lt;- <span class="fn">predict</span>(treatment_fit, type = <span class="str">"response"</span>)
+  y &lt;- weighted[[outcome]]
+
+  <span class="fn">sum</span>(weighted$sw * y * (weighted$treatment - p_treatment)) /
+    <span class="fn">sum</span>(weighted$sw * weighted$treatment *
+          (weighted$treatment - p_treatment))
+}</code></pre>
+    </article>
+    <div class="section-head"><div><div class="section-tag">02 / Data Quality</div><h2 class="section-title">Build a reviewable longitudinal analysis file</h2></div></div>
+    <article class="code-card">
+      <div class="card-head"><div><div class="card-kicker">R / Research data management</div><h3>Standardize records before modeling</h3><p>Illustrates an explicit preparation step: preserve a deterministic participant identifier, enforce one record per visit, flag duplicates, and retain a concise audit summary.</p><div class="tags"><span class="tag">data cleaning</span><span class="tag">validation</span><span class="tag">audit trail</span></div></div><button class="copy-btn" data-copy="code2">Copy code</button></div>
+      <pre id="code2"><code><span class="fn">prepare_longitudinal_file</span> &lt;- <span class="kw">function</span>(visits) {
+  cleaned &lt;- visits |&gt;
+    dplyr::<span class="fn">mutate</span>(
+      participant_id = <span class="fn">as.character</span>(participant_id),
+      visit_number   = <span class="fn">as.integer</span>(visit_number),
+      visit_date     = <span class="fn">as.Date</span>(visit_date)
+    ) |&gt;
+    dplyr::<span class="fn">filter</span>(!<span class="fn">is.na</span>(participant_id), !<span class="fn">is.na</span>(visit_number))
+
+  duplicates &lt;- cleaned |&gt;
+    dplyr::<span class="fn">count</span>(participant_id, visit_number) |&gt;
+    dplyr::<span class="fn">filter</span>(n &gt; <span class="num">1</span>)
+
+  <span class="kw">if</span> (<span class="fn">nrow</span>(duplicates) &gt; <span class="num">0</span>) {
+    <span class="fn">stop</span>(<span class="str">"Resolve duplicate participant-visit records before analysis."</span>)
+  }
+
+  list(
+    analytic_data = cleaned |&gt; dplyr::<span class="fn">arrange</span>(participant_id, visit_number),
+    audit = list(rows = <span class="fn">nrow</span>(cleaned),
+                 participants = dplyr::<span class="fn">n_distinct</span>(cleaned$participant_id),
+                 duplicate_pairs = <span class="num">0</span>)
+  )
+}</code></pre>
+    </article>
+    <div class="section-head"><div><div class="section-tag">03 / EHR Analytics</div><h2 class="section-title">Define a clinical cohort before outcome analysis</h2></div></div>
+    <article class="code-card">
+      <div class="card-head"><div><div class="card-kicker">R / EHR-derived cohort construction</div><h3>Make eligibility and temporal rules explicit</h3><p>A concise pattern for creating a reproducible cohort table from linked hospital records while retaining the derivation logic needed for audit and review.</p><div class="tags"><span class="tag">EHR</span><span class="tag">SQL-ready logic</span><span class="tag">target trial</span><span class="tag">reproducibility</span></div></div><button class="copy-btn" data-copy="code3">Copy code</button></div>
+      <pre id="code3"><code><span class="fn">build_cohort</span> &lt;- <span class="kw">function</span>(admissions, encounters, index_events) {
+  admissions |&gt;
+    dplyr::<span class="fn">inner_join</span>(encounters, by = <span class="str">c("patient_id", "admission_id")</span>) |&gt;
+    dplyr::<span class="fn">inner_join</span>(index_events, by = <span class="str">c("patient_id", "admission_id")</span>) |&gt;
+    dplyr::<span class="fn">mutate</span>(
+      age_at_admission = <span class="fn">as.numeric</span>(admit_date - birth_date) / <span class="num">365.25</span>,
+      eligible_age     = age_at_admission &gt;= <span class="num">18</span>,
+      event_in_window  = event_time &gt;= admit_date &amp; event_time &lt;= discharge_date,
+      index_time       = <span class="fn">pmax</span>(event_time, admit_date)
+    ) |&gt;
+    dplyr::<span class="fn">filter</span>(eligible_age, event_in_window) |&gt;
+    dplyr::<span class="fn">group_by</span>(patient_id, admission_id) |&gt;
+    dplyr::<span class="fn">slice_min</span>(index_time, n = <span class="num">1</span>, with_ties = <span class="kw">FALSE</span>) |&gt;
+    dplyr::<span class="fn">ungroup</span>()
+}</code></pre>
+    </article>
+    <div class="note"><div>◈</div><div><strong>Privacy and provenance.</strong> These examples are original, representative excerpts inspired by my analytic workflows. They use generic field names and synthetic structure; no protected health information, restricted-use data, or unpublished study results are included.</div></div>
+    <section class="contact"><h2>Interested in the full analytic approach?</h2><p>I am happy to discuss study design, reproducible workflows, causal methods, and the decisions behind these examples.</p><a class="btn" href="https://linktr.ee/i.ishan.2812" target="_blank">Connect with me ↗</a></section>
+  </main>
+  <footer><span>&copy; 2026 Ishan Suthar · Epidemiology & Data Science · Chicago, IL</span><span><a href="index.html">Portfolio</a> · <a href="research.html">Research</a> · <a href="ai-agents.html">AI Agents</a></span></footer>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(button => button.addEventListener('click', async () => {
+      const code = document.getElementById(button.dataset.copy).innerText;
+      await navigator.clipboard.writeText(code);
+      const original = button.textContent; button.textContent = 'Copied';
+      setTimeout(() => button.textContent = original, 1400);
+    }));
+  </script>
+</body>
+</html>
