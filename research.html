@@ -53,12 +53,12 @@
         <dl>
           <dt>Role</dt><dd>Lead investigator, PhD dissertation</dd>
           <dt>Data</dt><dd>MIMIC-IV critical-care EHR</dd>
-          <dt>Methods</dt><dd>Sequential target trial emulation, inverse probability weighting, cloning with grace periods</dd>
+          <dt>Methods</dt><dd>Target trial emulation, inverse probability weighting, cloning with grace periods</dd>
           <dt>Tools</dt><dd>SQL, R, Git</dd>
         </dl>
       </aside>
       <div>
-        <h2>Sequential target trials for acute decompensated heart failure</h2>
+        <h2>Target trial emulation for acute decompensated heart failure</h2>
         <p class="sub">University of South Carolina, Aug 2023 to now</p>
         <p>Can we rigorously emulate a randomized trial from hospital records for acutely ill patients, when the sickness that drives treatment also drives outcomes? My dissertation compares treatment strategies for acute decompensated heart failure by specifying the trial first, then emulating it from observational data.</p>
         <ul class="points">
@@ -66,6 +66,7 @@
           <li>Built SQL extraction and derivation pipelines from raw relational tables, version-controlled so every analysis dataset can be rebuilt and traced to source</li>
           <li>Used inverse probability weighting for time-varying confounding and cloning with grace periods to remove immortal time bias</li>
           <li>Designed as a clinical decision module: estimates for the decision points clinicians actually face, not just population averages</li>
+          <li>Built so the framework can extend into a sequential target trial emulation workflow across successive treatment decisions</li>
         </ul>
         <p class="small muted">This work is the foundation for <a href="ai-agents.html#triemulate">TriEmulate</a>. Full methods and findings are being prepared for publication.</p>
       </div>
